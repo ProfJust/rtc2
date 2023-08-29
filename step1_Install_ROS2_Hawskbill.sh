@@ -34,9 +34,8 @@ sudo apt update && sudo apt install -y \
    python3-pytest-repeat \
    python3-pytest-rerunfailures
    
-   
-   mkdir -p ~/turtlebot3_ws/src
-cd ~/ros2_humble
+mkdir -p ~/turtlebot3_ws/src
+cd ~/turtlebot3_ws
 vcs import --input https://raw.githubusercontent.com/ros2/ros2/humble/ros2.repos src
 
 sudo apt upgrade
