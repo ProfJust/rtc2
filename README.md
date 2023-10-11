@@ -10,15 +10,15 @@ erstelle den Ordner `~/turtlebot3_ws/src`
 * `$ cd src`
 
 clone rtc2 dorthin
-  $ git clone https://github.com/ProfJust/rtc2
+  `$ git clone https://github.com/ProfJust/rtc2`
   
 
 mache step1....sh und step2....sh ausführbar
 und führe sie aus
 
-$ cd ~/turtlebot3_ws/src
-$ ./step1...
-$ ./step2...
+* $ cd ~/turtlebot3_ws/src
+* $ ./step1...
+* $ ./step2... 
 
 # usage
 to be done
