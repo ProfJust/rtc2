@@ -22,6 +22,7 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-a
 sudo apt install ros-humble-desktop
 sudo apt install ros-humble-ros-base
 sudo apt install ros-dev-tools
+sudo apt install ros-humble-turtlesim
 # Replace ".bash" with your shell if you're not using bash
 # Possible values are: setup.bash, setup.sh, setup.zsh
 source /opt/ros/humble/setup.bash
