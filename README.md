@@ -21,5 +21,9 @@ und führe sie aus
 * $ ./step2... 
 
 # usage
-to be done
+build and run simple publisher "say_temp"
 
+* cd turtlebot3_ws/
+* colcon build --packages-select rtc2
+* source install/setup.bash 
+* ros2 run rtc2 say_temp 
