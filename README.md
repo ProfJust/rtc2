@@ -1,5 +1,5 @@
 # rtc2
-Ruhr Turtlebot Competition mit ROS2
+Ruhr Turtlebot Competition, TurtleBot3 mit ROS2 Humble
 
 # installation
 erstelle den Ordner `~/turtlebot3_ws/src`
