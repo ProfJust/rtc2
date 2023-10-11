@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-        'say_hello = rtc2.hello_world:main'
+        'say_temp= rtc2.pub_temp:main'
         ],
     },
 )
