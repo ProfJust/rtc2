@@ -1,3 +1,8 @@
+mkdir -p ~/turtlebot3_ws/src && cd ~/turtlebot3_ws/src
+echo 'source /opt/ros/humble/setup.bash' >> ~/.bashrc
+source ~/.bashrc
+#c olcon build --symlink-install --parallel-workers 1
+
 sudo apt install ros-humble-gazebo-* -y
 sudo apt install ros-humble-cartographer -y
 sudo apt install ros-humble-cartographer-ros -y
