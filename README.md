@@ -3,11 +3,11 @@ Ruhr Turtlebot Competition mit ROS2
 
 # installation
 erstelle den Ordner `~/turtlebot3_ws/src`
-` $ cd ~ ` 
-  $ mkdir turtlebot3_ws
-  $ cd turtlebot3_ws
-  $ mkdir src
-  $ cd src
+* ` $ cd ~ ` 
+* ` $ mkdir turtlebot3_ws `
+* `$ cd turtlebot3_ws`
+* `$ mkdir src`
+* `$ cd src`
 
 clone rtc2 dorthin
   $ git clone https://github.com/ProfJust/rtc2
