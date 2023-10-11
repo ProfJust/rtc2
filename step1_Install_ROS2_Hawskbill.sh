@@ -31,8 +31,7 @@ source /opt/ros/humble/setup.bash
 sudo apt update && sudo apt install -y \
   python3-flake8-docstrings \
   python3-pip \
-  python3-pytest-cov \
-  ros-dev-tools
+  python3-pytest-cov
   
   sudo apt install -y \
    python3-flake8-blind-except \
