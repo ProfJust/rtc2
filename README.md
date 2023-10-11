@@ -2,8 +2,8 @@
 Ruhr Turtlebot Competition mit ROS2
 
 # installation
-erstelle den Ordner  ~/turtlebot3_ws/src
-  $ cd ~
+erstelle den Ordner `~/turtlebot3_ws/src`
+` $ cd ~ ` 
   $ mkdir turtlebot3_ws
   $ cd turtlebot3_ws
   $ mkdir src
