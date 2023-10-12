@@ -23,7 +23,7 @@ sudo apt install ros-humble-desktop
 sudo apt install ros-humble-ros-base
 sudo apt install ros-dev-tools
 sudo apt install ros-humble-turtlesim
-sudo apt install ros-humble-tutorials
+# sudo apt install ros-humble-tutorials
 # Replace ".bash" with your shell if you're not using bash
 # Possible values are: setup.bash, setup.sh, setup.zsh
 source /opt/ros/humble/setup.bash

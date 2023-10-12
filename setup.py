@@ -21,6 +21,8 @@ setup(
     entry_points={
         'console_scripts': [
         'say_temp= rtc2.pub_temp:main'
+        'min_pub= rtc2.publisher_member_function:main'
+        'move_turtlesim= rtc2.move_turtle:main'
         ],
     },
 )
