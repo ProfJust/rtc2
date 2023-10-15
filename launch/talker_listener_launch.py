@@ -7,4 +7,9 @@ def generate_launch_description():
             package='rtc2',
             executable='talk',
             name='talker'),
+        launch_ros.actions.Node(
+            package='rtc2',
+            executable='listen',
+            name='listener'),
   ])
+
