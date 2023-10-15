@@ -45,6 +45,8 @@ sudo apt update && sudo apt install -y \
    python3-flake8-quotes \
    python3-pytest-repeat \
    python3-pytest-rerunfailures
+
+  pip install -U setuptools
    
 mkdir -p ~/turtlebot3_ws/src
 cd ~/turtlebot3_ws
