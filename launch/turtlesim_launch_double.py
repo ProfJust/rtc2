@@ -1,3 +1,6 @@
+https://roboticscasual.com/tutorial-ros2-launch-files-all-you-need-to-know/
+https://roboticscasual.com/tutorial-ros2-launch-files-all-you-need-to-know/#launch-event-handler-list
+
 from launch import LaunchDescription
 from launch.actions import RegisterEventHandler
 from launch_ros.actions import Node
@@ -12,17 +15,17 @@ def generate_launch_description():
         name='turtlesim1'
     )
  
-    move = Node(
-        package="rtc2",
-        executable="move_turtlesim",
-        name='move_node'
+    turtlesim2 = Node(
+        package="turtlesim",
+        executable="turtlesim_node",
+        name='turtlesim2'
     )
  
     return LaunchDescription([
         RegisterEventHandler(
             event_handler=OnProcessStart(
                 target_action=turtlesim1,
-                on_start=[move],
+                on_start=[turtlesim2],
             )
         ),
         turtlesim1
