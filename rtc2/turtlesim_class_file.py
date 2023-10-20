@@ -46,11 +46,11 @@ class MoveTurtlesimNode(Node):
         
     def update_pose(self, msg):  # called when msg is received
         self.numbofmsg +=1
-        # Debug Ausgabe
-        # self.get_logger().info(' Turtle is at Position x "%f"' % msg.x)
-        # self.get_logger().info('                       y "%f"' % msg.y)
-        # self.get_logger().info('                   theta "%f"' % msg.theta)
-        
+        """ Debug Ausgabe
+        self.get_logger().info(' Turtle is at Position x "%f"' % msg.x)
+        self.get_logger().info('                       y "%f"' % msg.y)
+        self.get_logger().info('                   theta "%f"' % msg.theta)
+        """
         # Pose global speichern
         self.pose.x = round(msg.x, 4)
         self.pose.y = round(msg.y, 4)
@@ -133,17 +133,4 @@ class MoveTurtlesimNode(Node):
 
         # Publishing our vel_msg
         self.cmd_vel_publisher_.publish(vel_msg)  # ..senden
-
         
-def main(args=None):
-    rclpy.init(args=args)    
-    node = MoveTurtlesimNode()  # Instanzierung
-    while True:
-        try:
-            rclpy.spin(node)
-        except:
-            break
-    rclpy.shutdown()
-
-if __name__ == "__main__":
-    main()
