@@ -32,7 +32,8 @@ setup(
         # 'min_pub= rtc2.publisher_member_function:main',
         'talk= rtc2.talker:main',
         'listen= rtc2.listener:main',
-        'move_turtlesim= rtc2.move_turtle:main'
+        'move_turtlesim= rtc2.move_turtle:main',
+        'p2_turtlesim_move_distance= rtc2.move_turtle_distance:main'
         ],
     },
 )
