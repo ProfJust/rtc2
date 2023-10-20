@@ -16,4 +16,5 @@ sudo apt install ros-humble-turtlebot3-msgs -y
 sudo apt install ros-humble-turtlebot3 -y
 
 echo 'export ROS_DOMAIN_ID=30 #TURTLEBOT3' >> ~/.bashrc
+echo "export PYTHONPATH=${PYTHONPATH}:~/turtlebot3_ws/src/rtc2/rtc2_dist_packages" >> ~/.bashrc
 source ~/.bashrc
