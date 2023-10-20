@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-
-# move_turtle_distance.py
+#
+#   move_turtle_distance.py
+# -------------------------------------------
 #   for rtc2
 #   by oj, 20.10.23
 #   Westfälische Hochschule - Campus Bocholt
@@ -9,8 +10,8 @@
 # $1 ros2 run turtlesim turtlesim_node 
 # $2 ros2 run rtc2 p2_turtlesim_move_distance
 # -------------------------------------------
-# First example to publish and subscribe
-# messages form a Robot (Turtlesim)
+# Let Turtle Move a given distance 
+# (relative from start posotion)
 # -------------------------------------------
 import rclpy
 from rclpy.node import Node
@@ -134,8 +135,7 @@ class MoveTurtlesimNode(Node):
         self.cmd_vel_publisher_.publish(vel_msg)  # ..senden
         
 def main(args=None):
-    rclpy.init(args=args)
-    
+    rclpy.init(args=args)    
     node = MoveTurtlesimNode()  # Instanzierung
     while True:
         try:
