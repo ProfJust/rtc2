@@ -128,9 +128,7 @@ class MoveTurtlesimNode(Node):
                 vel_msg.linear.x = 0.0
                 vel_msg.angular.z = 0.0
                 self.cmd_vel_publisher_.publish(vel_msg)  # ..senden        
-                exit() #Programm beenden
-        
-
+                exit() #Programm beenden     
 
         # Publishing our vel_msg
         self.cmd_vel_publisher_.publish(vel_msg)  # ..senden
