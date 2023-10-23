@@ -20,7 +20,8 @@ from geometry_msgs.msg import Twist
 from turtlesim.msg import Pose
 from math import pow, atan2, sqrt, pi
 
-from turtlesim_class_file import MoveTurtlesimNode
+# "/opt/ros/humble/local/lib/python3.10/dist-packages/rtc2/turtlesim_class_file"
+from .turtlesim_class_file import MoveTurtlesimNode
 
         
 def main(args=None):

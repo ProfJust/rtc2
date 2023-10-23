@@ -50,26 +50,26 @@ class clVector:
         self.y = g.y - p.y
 
     # https://www.programiz.com/python-programming/operator-overloading
-    def __lshift__(self, p):
-        self.x = self.x - p.x
-        self.y = self.y - p.y
+    def __lshift__(self, g, p):
+        self.x = g.x - p.x
+        self.y = g.y - p.y
         return self
 
 
 s = clVector() # Instanzierung
 
-theta2goal = math.atan2(goal.y - pose.y, goal.y - pose.x)
+theta2goal = math.atan2(goal.y - pose.y, goal.x - pose.x)
 print("Winkel zum Ziel: ", theta2goal," ",round(rad2deg(theta2goal), 3)) 
 
 s.getVect( goal, pose)  # Vektor zum Ziel
 
 print("Vektor: ", s.x," ", s.y) #, end="")  # kein Zeilenumbruch
 
-s2 = clVector(goal) # Instanzierung
-s2.x = goal.x
-s2.y = goal.y
+s2 = clVector() # Instanzierung
+# s2.x = goal.x
+# s2.y = goal.y
 
-s2 << (pose)  # Überladener Operator LSHIFT
+s2 << (goal, pose)  # Überladener Operator LSHIFT
 # # https://www.programiz.com/python-programming/operator-overloading
 
 print("Vektor2: ", s2.x," ", s2.y) #, end="")  # kein Zeilenumbruch

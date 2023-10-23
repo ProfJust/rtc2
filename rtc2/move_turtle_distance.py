@@ -42,7 +42,6 @@ class MoveTurtlesimNode(Node):
                               self.update_pose,
                               10)
         self.subscription  # prevent unused variable warning
-
         
     def update_pose(self, msg):  # called when msg is received
         self.numbofmsg +=1

@@ -13,6 +13,9 @@
 # Let Turtle Move a given distance 
 # (relative from start posotion)
 # -------------------------------------------
+# ==>> /opt/ros/humble/local/lib/python3.10/dist-packages
+
+ 
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
