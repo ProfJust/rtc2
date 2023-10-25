@@ -20,7 +20,7 @@ from geometry_msgs.msg import Twist
 from turtlesim.msg import Pose
 from math import pow, atan2, sqrt, pi
 
-from .turtlesim_class_file import MoveTurtlesimNode
+from .my_class_files.turtlesim_class_file import MoveTurtlesimNode
 # Wichtig, den "." nicht vergessen !!!!
         
 def main(args=None):
