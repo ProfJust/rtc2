@@ -21,5 +21,5 @@ echo 'export TURTLEBOT3_MODEL=burger' >> ~/.bashrc
 
 # echo "export PYTHONPATH=${PYTHONPATH}:~/turtlebot3_ws/src/rtc2/rtc2_dist_packages" >> ~/.bashrc
 source ~/.bashrc
-ros2 launch turtlebot3_gazebo turtlebot3_house.launch.py
+
 
