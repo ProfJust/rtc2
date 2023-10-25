@@ -1,7 +1,7 @@
 mkdir -p ~/turtlebot3_ws/src && cd ~/turtlebot3_ws/src
 echo 'source /opt/ros/humble/setup.bash' >> ~/.bashrc
 source ~/.bashrc
-#c olcon build --symlink-install --parallel-workers 1
+
 
 sudo apt install ros-humble-gazebo-* -y
 sudo apt install ros-humble-cartographer -y
@@ -21,3 +21,5 @@ echo 'export TURTLEBOT3_MODEL=burger' >> ~/.bashrc
 
 # echo "export PYTHONPATH=${PYTHONPATH}:~/turtlebot3_ws/src/rtc2/rtc2_dist_packages" >> ~/.bashrc
 source ~/.bashrc
+ros2 launch turtlebot3_gazebo turtlebot3_house.launch.py
+

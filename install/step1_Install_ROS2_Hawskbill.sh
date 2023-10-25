@@ -78,4 +78,6 @@ rosdep update
 source ~/.bashrc
 cd ~/turtlebot3_ws/
 colcon build --symlink-install
+# wenn schwacher PC nur mit 1 Kern kompilieren =>
+# colcon build --symlink-install --parallel-workers 1
 source ~/turtlebot3_ws/install/local_setup.bash
