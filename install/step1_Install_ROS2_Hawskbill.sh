@@ -1,5 +1,5 @@
 # bisher from http://docs.ros.org/en/humble/Installation/Alternatives/Ubuntu-Development-Setup.html
-# doppelte Packete 
+# doppelte Packete im turtlebot3_ws/src Ordner
 # =>
 # am 25.10.23 geändert
 # https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html
