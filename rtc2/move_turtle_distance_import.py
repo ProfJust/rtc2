@@ -21,7 +21,8 @@ from turtlesim.msg import Pose
 from math import pow, atan2, sqrt, pi
 
 from turtlesim_class_file import MoveTurtlesimNode
-# Wichtig, den "." nicht vergessen !!!!
+# Wichtig, den "." nicht vergessen wenn das File im selben Ordner liegt
+# besser: Unterordner für Klassen erstellen => mkdir
         
 def main(args=None):
     rclpy.init(args=args)    
