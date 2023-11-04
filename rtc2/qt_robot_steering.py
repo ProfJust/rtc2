@@ -28,7 +28,6 @@ from PyQt5.QtCore import Qt, QTimer
 
 
 class clTurtleBot(Node):  # erbt von Node
-    # vel_msg = Twist() # Instanziiere Message mit cmd_vel
     def __init__(self):
         rclpy.init(args=None) 
         super().__init__("robot_steering_node")
@@ -84,10 +83,11 @@ class clTurtleBot(Node):  # erbt von Node
         print("vel_msg published", x, z)
       
 
-class MainWindow(QWidget):
-    def __init__(self, robot, parent=None): #Konstruktor mit Übergabe des Turtlebot-Objekts
-        super(MainWindow, self).__init__(parent)  
-        MainWindow.resize(self, 800, 400)
+class myQtWindow(QWidget):
+    # Konstruktor mit Übergabe des Turtlebot-Objekts robot
+    def __init__(self, robot, parent=None): 
+        super(myQtWindow, self).__init__(parent)  
+        # myQtWindow.resize(self, 800, 400)
         self.initUI()
         self.show()  
         self.robot = robot
@@ -157,11 +157,10 @@ class MainWindow(QWidget):
         self.qtimer.start(100)
         
 
-def main():
-    
+def main():    
     tb3 = clTurtleBot()  
     app = QApplication(sys.argv)
-    win = MainWindow(tb3) # Turtlebot dem Konstrukor übergeben
+    win = myQtWindow(tb3) # Turtlebot dem Konstrukor übergeben
     win.show()
     sys.exit(app.exec_())
 
