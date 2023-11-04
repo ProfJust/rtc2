@@ -8,7 +8,7 @@
 # -------------------------------------------
 # usage
 # $1 ros2 launch turtlebot3_gazebo empty_world.launch.py
-#
+# $2 ros2 run rtc2 ue4_qt_robot_steering 
 # -------------------------------------------
 #  GUI for robot-steering
 # https://github.com/tasada038/pyqt_ros2_app/blob/master/main_pyqt_ros2.py
@@ -152,7 +152,9 @@ class MainWindow(QWidget):
     def SlotGo(self):
         # Hier geht die Turtle ab 
         print("slotGo")   
+        # Nachricht setzen
         tb3.move_turtle(self.sld.value(), 0.0)
+        # Timer zum wiederholten Senden starten
         self.qtimer.start(100)
         
 
