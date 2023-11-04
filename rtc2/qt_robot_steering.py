@@ -45,7 +45,7 @@ class clTurtleBot(Node):  # erbt von Node
         timer_period = 0.2  # 200 msec
         self.cmd_timer = self.create_timer(
                             timer_period,
-                            self.timer_cb_move_turtle)
+                            self.timer_cb_move)
         
         self.subscription = self.create_subscription(
                               Odometry,
@@ -68,12 +68,12 @@ class clTurtleBot(Node):  # erbt von Node
         self.pose.theta = self.quaternion_to_euler(ox, oy, oz, ow)
         # print(self.pose)
 
-    def timer_cb_move_turtle(self):   # wird durch Timer regelmäßig aufgerufen
+    def timer_cb_move(self):   # wird durch Timer regelmäßig aufgerufen
         # Linear velocity in the x-axis.
         # print("Timer Callback")
         self.cmd_vel_publisher.publish(self.vel_msg)
 
-    def move_turtle(self,x,z):
+    def move(self,x,z):
         self.vel_msg.linear.x = float(x)/10.0
         self.vel_msg.linear.y = 0.0 # must be float, don't use only 0
         self.vel_msg.linear.z = 0.0 # must be float, don't use only 0    
@@ -84,17 +84,16 @@ class clTurtleBot(Node):  # erbt von Node
         print("vel_msg published", x, z)
       
 
-tb3 = clTurtleBot()  # globale Definition
-
 class MainWindow(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, robot, parent=None): #Konstruktor mit Übergabe des Turtlebot-Objekts
         super(MainWindow, self).__init__(parent)  
         MainWindow.resize(self, 800, 400)
         self.initUI()
         self.show()  
+        self.robot = robot
         # create Qt timer
         self.qtimer = QTimer(self)   
-        self.qtimer.timeout.connect(tb3.timer_cb_move_turtle)  
+        self.qtimer.timeout.connect(robot.timer_cb_move)  
 
     def initUI(self):
         #Instanziierung der Widgets
@@ -153,16 +152,16 @@ class MainWindow(QWidget):
         # Hier geht die Turtle ab 
         print("slotGo")   
         # Nachricht setzen
-        tb3.move_turtle(self.sld.value(), 0.0)
+        self.robot.move(self.sld.value(), 0.0)
         # Timer zum wiederholten Senden starten
         self.qtimer.start(100)
         
 
 def main():
     
-    
+    tb3 = clTurtleBot()  
     app = QApplication(sys.argv)
-    win = MainWindow()
+    win = MainWindow(tb3) # Turtlebot dem Konstrukor übergeben
     win.show()
     sys.exit(app.exec_())
 
