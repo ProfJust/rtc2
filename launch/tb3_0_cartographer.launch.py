@@ -39,10 +39,7 @@ def generate_launch_description():
     # https://docs.python.org/3/library/os.path.html
     rviz_config_dir = os.path.join(os.path.expanduser('~/turtlebot3_ws/src/rtc2'),
                                    'rviz',
-                                   'tb3_0_cartographer.rviz')
-    
-    #rviz_config_dir = os.path.join('/home/oj/turtlebot3_ws/src/rtc2',
-    #                               'rviz', 'tb3_0_cartographer.rviz')
+                                   'tb3_0_cartographer.rviz')    
 
     return LaunchDescription([
         DeclareLaunchArgument(
