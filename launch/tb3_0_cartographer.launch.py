@@ -37,8 +37,12 @@ def generate_launch_description():
     publish_period_sec = LaunchConfiguration('publish_period_sec', default='1.0')
 
     # https://docs.python.org/3/library/os.path.html
-    rviz_config_dir = os.path.join('/home/oj/turtlebot3_ws/src/rtc2',
-                                   'rviz', 'tb3_0_cartographer.rviz')
+    rviz_config_dir = os.path.join(os.path.expanduser('~/turtlebot3_ws/src/rtc2'),
+                                   'rviz',
+                                   'tb3_0_cartographer.rviz')
+    
+    #rviz_config_dir = os.path.join('/home/oj/turtlebot3_ws/src/rtc2',
+    #                               'rviz', 'tb3_0_cartographer.rviz')
 
     return LaunchDescription([
         DeclareLaunchArgument(
