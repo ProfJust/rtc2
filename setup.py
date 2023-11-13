@@ -37,6 +37,7 @@ setup(
         'p2_turtlesim_move_distance_import= rtc2.move_turtle_distance_import:main',
         'p3_turtlesim_move_2_goal= rtc2.move_turtle_2_goal:main',
         'ue4_qt_robot_steering= rtc2.qt_robot_steering:main',
+        'tb3_joypad_steering= rtc2.tb3_0_Joypad:main',
 
         ],
     },
