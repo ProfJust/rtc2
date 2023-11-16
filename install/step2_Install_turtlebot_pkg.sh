@@ -42,13 +42,13 @@ cd ~/turtlebot3_ws/src/
 git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3.git -y
 git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
 git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git -y
+git clone -b humble-devel https://github.com/ROBOTIS-GIT/DynamixelSDK.git -y
 
-
+# schon in den packages enthalten sind:
 # git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_teleop.git
 # git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_naviagtion.git
 # git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_description.git
 # git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_cartographer.git
-
 
 cd ~/turtlebot3_ws && colcon build --symlink-install
 
@@ -59,7 +59,7 @@ cd ~/turtlebot3_ws && colcon build --symlink-install
 # This means your ROS 2 system, and its topics, services, and actions will not be visible to other computers
 # on the local network. Using ROS_LOCALHOST_ONLY is helpful in certain settings, 
 # such as classrooms, where multiple robots may publish to the same topic causing strange behaviors. 
-# echo 'export ROS_LOCALHOST_ONLY=1' >> ~/.bashrc
+ echo 'export ROS_LOCALHOST_ONLY=0' >> ~/.bashrc
  echo '# this environment variable allows you to limit ROS 2 communication to localhost only.' >> ~/.bashrc
 
 # echo "export PYTHONPATH=${PYTHONPATH}:~/turtlebot3_ws/src/rtc2/rtc2_dist_packages" >> ~/.bashrc
