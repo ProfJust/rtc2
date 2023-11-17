@@ -32,10 +32,10 @@ sudo apt install ros-humble-navigation2 -y
 # sudo apt remove ros-humble-turtlebot3 -y
 
 # more recent from source
-# sudo apt remove ros-humble-turtlebot3-teleop  -y
-# sudo apt remove ros-humble-turtlebot3-navigation -y
-# sudo apt remove ros-humble-turtlebot3-description -y
-# sudo apt remove ros-humble-turtlebot3-cartographer -y
+ sudo apt remove ros-humble-turtlebot3-teleop  -y
+ sudo apt remove ros-humble-turtlebot3-navigation -y
+ sudo apt remove ros-humble-turtlebot3-description -y
+ sudo apt remove ros-humble-turtlebot3-cartographer -y
 
 
 
