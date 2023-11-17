@@ -11,38 +11,54 @@ sudo apt install ros-humble-navigation2 -y
 
 # sudo apt install ros-humble-nav2-bringup -y
 # more recent from sourc
-sudo apt remove ros-humble-nav2-bringup -y
-cd ~/turtlebot3_ws/src/
-git clone -b humble https://github.com/ros-planning/navigation2.git -y
+#sudo apt remove ros-humble-nav2-bringup -y
+#cd ~/turtlebot3_ws/src/
+#git clone -b humble https://github.com/ros-planning/navigation2.git -y
 
-# sudo apt install ros-humble-dynamixel-sdk -y
+# sudo apt install ros-humble-dynamixel-sdk -y#
 # more recent from sourc
-sudo apt remove ros-humble-dynamixel-sdk -y
-cd ~/turtlebot3_ws/src/
-git clone -b humble-devel https://github.com/ROBOTIS-GIT/DynamixelSDK.git -y
+#sudo apt remove ros-humble-dynamixel-sdk -y
+#cd ~/turtlebot3_ws/src/
+#git clone -b humble-devel https://github.com/ROBOTIS-GIT/DynamixelSDK.git -y
 
 # sudo apt install ros-humble-turtlebot3-msgs -y
 # more recent from sourc
-sudo apt remove ros-humble-turtlebot3-msgs -y
-cd ~/turtlebot3_ws/src/
-git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git -y
+#sudo apt remove ros-humble-turtlebot3-msgs -y
+#cd ~/turtlebot3_ws/src/
+#git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git -y
 
 # sudo apt install ros-humble-turtlebot3 -y
 # more recent from source
-sudo apt remove ros-humble-turtlebot3 -y
+# sudo apt remove ros-humble-turtlebot3 -y
 
 # more recent from source
-sudo apt remove ros-humble-turtlebot3-teleop  -y
-sudo apt remove ros-humble-turtlebot3-navigation -y
-sudo apt remove ros-humble-turtlebot3-description -y
-sudo apt remove ros-humble-turtlebot3-cartographer -y
+# sudo apt remove ros-humble-turtlebot3-teleop  -y
+# sudo apt remove ros-humble-turtlebot3-navigation -y
+# sudo apt remove ros-humble-turtlebot3-description -y
+# sudo apt remove ros-humble-turtlebot3-cartographer -y
+
 
 
 cd ~/turtlebot3_ws/src/
+# Robotis
 git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3.git -y
 git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
 git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git -y
 git clone -b humble-devel https://github.com/ROBOTIS-GIT/DynamixelSDK.git -y
+
+# ROS2 Humble => https://index.ros.org/search/?term=rclcpp
+# git clone -b humble https://github.com/ros-planning/navigation2.git
+# git clone -b humble https://github.com/ros2/rcl_interfaces.git
+# git clone -b humble https://github.com/ros2/test_interface_files.git
+# git clone -b humble https://github.com/ament/ament_cmake.git
+# git clone -b humble https://github.com/ament/ament_package.git
+# git clone -b humble https://github.com/ros2/common_interfaces.git
+# git clone -b humble https://github.com/ros2/rosidl_defaults.git
+# git clone -b humble https://github.com/ros2/urdf.git
+# git clone -b humble https://github.com/ros2/ament_cmake_ros
+# git clone -b humble https://github.com/ros2/rclcpp.git
+# git clone -b humble https://github.com/ament/ament_lint.git
+# git clone -b humble https://github.com/ros2/rosidl.git
 
 # schon in den packages enthalten sind:
 # git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_teleop.git

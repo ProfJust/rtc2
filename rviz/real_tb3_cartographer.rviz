@@ -77,7 +77,7 @@ Visualization Manager:
       Max Color: 255; 255; 255
       Max Intensity: 236
       Min Color: 0; 0; 0
-      Min Intensity: 64
+      Min Intensity: 66
       Name: LaserScan
       Position Transformer: XYZ
       Selectable: true
@@ -90,7 +90,7 @@ Visualization Manager:
         Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Best Effort
-        Value: /tb3_0/scan
+        Value: /scan
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
@@ -131,7 +131,7 @@ Visualization Manager:
         Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /tb3_0/odom
+        Value: /odom
       Value: true
     - Alpha: 0.699999988079071
       Class: rviz_default_plugins/Map
@@ -145,13 +145,13 @@ Visualization Manager:
         Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /tb3_0/map
+        Value: /map
       Update Topic:
         Depth: 5
         Durability Policy: Volatile
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /tb3_0/map_updates
+        Value: /map_updates
       Use Timestamp: false
       Value: true
     - Class: rviz_common/Group
@@ -382,7 +382,7 @@ Visualization Manager:
         Durability Policy: Volatile
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /tb3_0/robot_description
+        Value: /robot_description
       Enabled: true
       Links:
         All Links Enabled: true
