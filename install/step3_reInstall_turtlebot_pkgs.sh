@@ -6,10 +6,10 @@
 
 # remove apt-packages, more recent from source
  sudo apt-get update
- sudo apt remove ros-humble-turtlebot3-teleop  -y
- sudo apt remove ros-humble-turtlebot3-navigation -y
- sudo apt remove ros-humble-turtlebot3-description -y
- sudo apt remove ros-humble-turtlebot3-cartographer -y
+ sudo apt remove ros-humble-turtlebot3-teleop 
+ sudo apt remove ros-humble-turtlebot3-navigation 
+ sudo apt remove ros-humble-turtlebot3-description 
+ sudo apt remove ros-humble-turtlebot3-cartographer 
 
 cd ~/turtlebot3_ws/src/
 rm -r turtlebot3_simulations
