@@ -1,21 +1,23 @@
 # Installation via apt
-sudo apt install ros-humble-gazebo-* -y
-sudo apt install ros-humble-cartographer -y
-sudo apt install ros-humble-cartographer-ros -y
-sudo apt install ros-humble-navigation2 -y
+# sudo apt install ros-humble-gazebo-* -y
+# sudo apt install ros-humble-cartographer -y
+# sudo apt install ros-humble-cartographer-ros -y
+# sudo apt install ros-humble-navigation2 -y
 
 # remove apt-packages, more recent from source
+ sudo apt-get update
  sudo apt remove ros-humble-turtlebot3-teleop  -y
  sudo apt remove ros-humble-turtlebot3-navigation -y
  sudo apt remove ros-humble-turtlebot3-description -y
  sudo apt remove ros-humble-turtlebot3-cartographer -y
 
 cd ~/turtlebot3_ws/src/
+rm -r turtlebot3_simulations
 # Robotis
-git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3.git -y
+git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3.git 
 git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
-git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git -y
-git clone -b humble-devel https://github.com/ROBOTIS-GIT/DynamixelSDK.git -y
+git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git 
+git clone -b humble-devel https://github.com/ROBOTIS-GIT/DynamixelSDK.git
 
 # ROS2 Humble => https://index.ros.org/search/?term=rclcpp
 # git clone -b humble https://github.com/ros-planning/navigation2.git
@@ -37,7 +39,8 @@ git clone -b humble-devel https://github.com/ROBOTIS-GIT/DynamixelSDK.git -y
 # git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_description.git
 # git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_cartographer.git
 
-cd ~/turtlebot3_ws && colcon build --symlink-install
+cd ~/turtlebot3_ws 
+colcon build --symlink-install
 
  # echo 'export ROS_DOMAIN_ID=30 #TURTLEBOT3' >> ~/.bashrc
  # echo 'export TURTLEBOT3_MODEL=burger' >> ~/.bashrc
@@ -50,6 +53,6 @@ cd ~/turtlebot3_ws && colcon build --symlink-install
  # echo '# this environment variable allows you to limit ROS 2 communication to localhost only.' >> ~/.bashrc
 
 # echo "export PYTHONPATH=${PYTHONPATH}:~/turtlebot3_ws/src/rtc2/rtc2_dist_packages" >> ~/.bashrc
- gedit ~/.bashrc
+# gedit ~/.bashrc
 
 
