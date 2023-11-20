@@ -7,7 +7,7 @@
 # remove apt-packages, more recent from source
  sudo apt-get update
  sudo apt remove ros-humble-turtlebot3-teleop 
- sudo apt remove ros-humble-turtlebot3-navigation2 
+ # sudo apt remove ros-humble-turtlebot3-navigation2 
  sudo apt remove ros-humble-turtlebot3-description 
  # kann OK nicht klicken:  =>>> USE TAB KEY
  sudo apt remove ros-humble-turtlebot3-cartographer 
