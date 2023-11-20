@@ -9,6 +9,7 @@
  sudo apt remove ros-humble-turtlebot3-teleop 
  sudo apt remove ros-humble-turtlebot3-navigation 
  sudo apt remove ros-humble-turtlebot3-description 
+ # kann OK nicht klicken:  =>>> USE TAB KEY
  sudo apt remove ros-humble-turtlebot3-cartographer 
 
 cd ~/turtlebot3_ws/src/
