@@ -7,6 +7,12 @@ sudo apt install ros-humble-gazebo-* -y
 sudo apt install ros-humble-cartographer -y
 sudo apt install ros-humble-cartographer-ros -y
 sudo apt install ros-humble-navigation2 -y
+sudo apt install ros-humble-nav2-bringup -y
+sudo apt install ros-humble-rmw-cyclonedds-cpp -y
+echo 'export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp' >> ~/.bashrc
+
+sudo apt install python3-transforms3d 
+sudo apt install ros-humble-tf-transformations
 # git clone -b humble https://github.com/ros-planning/navigation2.git -y
 
 # sudo apt install ros-humble-nav2-bringup -y
@@ -32,19 +38,18 @@ sudo apt install ros-humble-navigation2 -y
 # sudo apt remove ros-humble-turtlebot3 -y
 
 # more recent from source
+# already has  robot_model_type: "nav2_amcl::DifferentialMotionModel"
  sudo apt remove ros-humble-turtlebot3-teleop  -y
  sudo apt remove ros-humble-turtlebot3-navigation -y
  sudo apt remove ros-humble-turtlebot3-description -y
  sudo apt remove ros-humble-turtlebot3-cartographer -y
-
-
 
 cd ~/turtlebot3_ws/src/
 # Robotis
 git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3.git -y
 git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
 git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git -y
-git clone -b humble-devel https://github.com/ROBOTIS-GIT/DynamixelSDK.git -y
+# git clone -b humble-devel https://github.com/ROBOTIS-GIT/DynamixelSDK.git -y
 
 # ROS2 Humble => https://index.ros.org/search/?term=rclcpp
 # git clone -b humble https://github.com/ros-planning/navigation2.git
