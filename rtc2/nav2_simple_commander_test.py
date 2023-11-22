@@ -37,8 +37,8 @@ def main():
     goal_pose.header.frame_id = 'map'
     goal_pose.header.stamp = nav.get_clock().now().to_msg()
     # goal for turtlebot_world
-    goal_pose.pose.position.x = 3.5
-    goal_pose.pose.position.y = 0.5
+    goal_pose.pose.position.x = 2.5
+    goal_pose.pose.position.y = 1.0
     goal_pose.pose.orientation.w = 1.0
 
     path = nav.getPath(initial_pose, goal_pose)
