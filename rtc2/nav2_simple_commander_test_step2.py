@@ -8,6 +8,11 @@ from geometry_msgs.msg import PoseStamped
 # sudo apt install ros-humble-tf-transformations
 import tf_transformations
 
+
+#usage
+# first start Gazebo and NAV2
+#ros2 launch turtlebot3_navigation2 navigation2.launch.py
+
 def main():
     rclpy.init()
     
