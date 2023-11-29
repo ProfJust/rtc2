@@ -40,20 +40,24 @@ source ~/turtlebot3_ws/install/setup.bash
 
 
 # install Raspicam Driver for ROS2 on TB3
-sudo apt-get install ros-${ROS_DISTRO}-v4l2-camera
-sudo nano /boot/firmware/config.txt
+$ sudo apt-get install ros-${ROS_DISTRO}-v4l2-camera
+
+$ sudo nano /boot/firmware/config.txt
    => Set   camera_autodetect=0
-sudo apt install v4l-utils
-v4l2-ctl -D
 
+$ sudo apt install v4l-utils
+$ v4l2-ctl -D
 
+# Error Faile Stream start =>
 sudo apt install v4l2loopback-dkms
 sudo modprobe v4l2loopback
+
+
 
 #usage
 ubuntu@ubuntu:~$ ros2 run v4l2_camera v4l2_camera_node
 
-=> Wrong Pixel Format use Param.file
+=>ERROR Wrong Pixel Format use Param.file
 
 
 $ v4l2-ctl -d /dev/video0 --all
@@ -102,4 +106,10 @@ User Controls
                     keep_format 0x0098f900 (bool)   : default=0 value=0
               sustain_framerate 0x0098f901 (bool)   : default=0 value=0
                         timeout 0x0098f902 (int)    : min=0 max=100000 step=1 default=0 value=0
-               timeout_image_io 0x0098f903 (bool)   : default=0 value=0
+               timeout_image_io 0x0098f903 (bool)   : 
+               
+$ ros2 run v4l2_camera v4l2_camera_node -ros-args --params-file /home/ubuntu/ros2ws/v4l2_camera_params.yaml
+
+
+ros2 run v4l2_camera v4l2_camera_node  -ros-args --params-file /home/ubuntu/v4l2_camera_params.yaml
+
