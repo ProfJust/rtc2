@@ -154,7 +154,7 @@ class MainWindow(QTabWidget):
         self.tKsCav.setTickPosition(QSlider.TicksBelow)
         self.tKsCav.setTickInterval(1)
         self.lKsCav2 = QLabel("1-10", self)
-        # --- Delation ---
+        # --- Dilation ---
         self.lKsDel = QLabel("Kernel Size for Dilation", self)
         self.tKsDel = QSlider(Qt.Horizontal)
         self.tKsDel = QSlider(Qt.Horizontal)

@@ -145,7 +145,7 @@ see https://jeffzzq.medium.com/ros2-image-pipeline-tutorial-3b18903e7329
 === TB3 ===
  # Install openCV
   $ sudo apt update
-  $ sudo apt dist-upgrade -y
+  $ sudo apt dist-upgrade    # dauert 20 Minuten
   $ sudo apt install libopencv-dev python3-opencv
   $ export OpenCV_DIR=/usr/share/OpenCV
 
