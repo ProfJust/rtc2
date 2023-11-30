@@ -151,13 +151,31 @@ see https://jeffzzq.medium.com/ros2-image-pipeline-tutorial-3b18903e7329
 
  # Humble Version, sonst kompiliert es nicht
   cd turtlebot3_ws/src
-  git clone -b humble https://github.com/ros-perception/image_pipeline.git
-  git clone -b humble https://github.com/ros-perception/image_common.git
-  git clone https://github.com/clydemcqueen/opencv_cam.git
+  # git clone -b humble https://github.com/ros-perception/image_pipeline.git
+  # git clone -b humble https://github.com/ros-perception/image_common.git
+
+  # ==>> since colcon build has errors use apt packages
+  sudo apt install ros-humble-image-pipeline
+  sudo apt install ros-humble-image-common
+  
+  # no apt packages available
   git clone https://github.com/ptrmu/ros2_shared.git
+  
+				# causes Error with colcon build
+				# fatal error: camera_calibration_parsers/parse.hpp: No such file or directory
+				# unter /opt/ros/humble/include/camera_calibration_parsers/camera_calibration_parsers
+				# liegt die Datei
+				# => Pfade setzen, wie ?
+				# ? PATH=PATH:"/opt/ros/humble/include/camera_calibration_parsers/camera_calibration_parsers"
+
+				CMAKE_PREFIX_PATH=/home/ubuntu/turtlebot3_ws/install/turtlebot3_bringup:/home/ubuntu/turtlebot3_ws/install/turtlebot3_node:/home/ubuntu/turtlebot3_ws/install/turtlebot3_description:/home/ubuntu/turtlebot3_ws/install/tracetools_image_pipeline:/home/ubuntu/turtlebot3_ws/install/ros2_shared:/home/ubuntu/turtlebot3_ws/install/my_tb3_launcher:/home/ubuntu/turtlebot3_ws/install/ld08_driver:/home/ubuntu/turtlebot3_ws/install/image_transport:/home/ubuntu/turtlebot3_ws/install/camera_info_manager:/home/ubuntu/turtlebot3_ws/install/camera_calibration_parsers:/opt/ros/humble/include/camera_calibration_parsers/camera_calibration_parsers
+
+  git clone https://github.com/clydemcqueen/opencv_cam.git
 
   cd turtlebot3_ws
-  colcon build --symlink-install --parallel-workers 1
+  colcon build    # ohne symlink und parralel
+  
+  --symlink-install --parallel-workers 1
   . install/setup.bash
  
  # welche Videos sinv vorhanden?  => index:=0 ?
