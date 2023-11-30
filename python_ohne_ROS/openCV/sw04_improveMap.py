@@ -100,7 +100,13 @@ im_bw = cv2.threshold(image, thresh, 255, cv2.THRESH_BINARY)[1]
 
 cv2.namedWindow("Final", cv2.WINDOW_NORMAL)
 cv2.imshow("Final", im_bw)
+#print(im_bw)
 
+
+# portable bitmap(.pgm) expects gray image in function 'write'
+# https://docs.opencv.org/3.4/d8/d01/group__imgproc__color__conversions.html
+gray_img = cv2.cvtColor(im_bw, cv2.COLOR_BGR2GRAY)
+cv2.imwrite('map_improved.pgm', gray_img)
 
 
 cv2.waitKey(0)
