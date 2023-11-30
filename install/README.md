@@ -113,3 +113,27 @@ $ ros2 run v4l2_camera v4l2_camera_node -ros-args --params-file /home/ubuntu/ros
 
 ros2 run v4l2_camera v4l2_camera_node  -ros-args --params-file /home/ubuntu/v4l2_camera_params.yaml
 
+
+
+##################### Install opencv_cam Driver #####################
+see https://jeffzzq.medium.com/ros2-image-pipeline-tutorial-3b18903e7329
+
+=== TB3 ===
+ cd turtlebot3_ws/src
+ git clone -b humble https://github.com/ros-perception/image_pipeline.git
+ git clone -b humble https://github.com/ros-perception/image_common.git
+ git clone https://github.com/clydemcqueen/opencv_cam.git
+ git clone https://github.com/ptrmu/ros2_shared.git
+
+cd ..
+colcon build --symlink-install --parallel-workers 1
+. install/setup.bash
+
+ls /dev/video*
+
+ros2 run opencv_cam opencv_cam_main --ros-args --param index:=4
+
+
+=== Remote PC ===
+$ ros2 topic list
+$ ros2 run image_view image_view --ros-args --remap /image:=/image_raw
