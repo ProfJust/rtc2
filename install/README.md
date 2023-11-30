@@ -161,7 +161,7 @@ see https://jeffzzq.medium.com/ros2-image-pipeline-tutorial-3b18903e7329
   # no apt packages available
   git clone https://github.com/ptrmu/ros2_shared.git
   
-				# causes Error with colcon build
+				# causes Error with colcon build --symlink-install --parallel-workers 1
 				# fatal error: camera_calibration_parsers/parse.hpp: No such file or directory
 				# unter /opt/ros/humble/include/camera_calibration_parsers/camera_calibration_parsers
 				# liegt die Datei
@@ -173,14 +173,18 @@ see https://jeffzzq.medium.com/ros2-image-pipeline-tutorial-3b18903e7329
   git clone https://github.com/clydemcqueen/opencv_cam.git
 
   cd turtlebot3_ws
-  colcon build    # ohne symlink und parralel
-  
-  --symlink-install --parallel-workers 1
+  colcon build    # ohne symlink und parralel funktioniert es
   . install/setup.bash
  
  # welche Videos sinv vorhanden?  => index:=0 ?
   ls /dev/video*
+
+  => keine camera dran
+
+
   ros2 run opencv_cam opencv_cam_main --ros-args --param index:=0
+  => [opencv_cam]: cannot open device 0
+
 
 
 === Remote PC ===
