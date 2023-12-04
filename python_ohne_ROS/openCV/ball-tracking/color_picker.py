@@ -1,7 +1,12 @@
 import argparse
 import cv2
-import imutils
+import imutils  #pip install imutils
 import numpy as np
+
+# usage
+# python color_picker.py –i bildname.jpg
+# python3 color_picker.py -i IMG_1964.JPG
+
 
 colors = []
 lower = np.array([0, 0, 0])
