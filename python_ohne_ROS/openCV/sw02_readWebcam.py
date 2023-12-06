@@ -5,6 +5,10 @@ import cv2
 cam = cv2.VideoCapture(0)
  
 # lese ein Bild von der WebCam
+# mehrfach da WebCam Zeit zum starten braucht und das erste Bild oft 
+# Fehler aufweist
+ret, image = cam.read()
+ret, image = cam.read()
 ret, image = cam.read()
 
 # zeige das Bild an
