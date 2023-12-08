@@ -1,3 +1,7 @@
+using files from 
+https://github.com/mlherd/ros2_turtlebot3_waffle_intel_realsense
+
+
 To install a realsense depth-Camera to the Gazebo Simulation 
 and use the information in the NAV2 package - Localmap
 
