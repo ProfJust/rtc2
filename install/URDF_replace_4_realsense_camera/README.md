@@ -12,7 +12,7 @@ replace the original files in the given paths by the files from here
 ~/turtlebot3_ws/src/turtlebot3_simulations/turtlebot3_gazebo/models/turtlebot3_burger
 
 
-2.) Move turtlebot3_burger.urdf.urdf t
+2.) Move turtlebot3_burger.urdf
  ~/turtlebot3_ws/src/turtlebot3_simulations/turtlebot3_gazebo/urdf
  
 3.) to get the PointCloud in the NAV2 Localmap replace the burger.yaml file in this path
@@ -21,3 +21,10 @@ replace the original files in the given paths by the files from here
  
  with the one from here
  
+ 
+ DON'T FORGET TO RECOMPILE!!!!
+ ========================================
+ $ cd turtlebot3_ws
+ $ colcon build
+ $ . install/setup.bash
+

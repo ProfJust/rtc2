@@ -1,0 +1,6 @@
+Important ros2 commands
+
+ros2 launch turtlebot3_navigation2 navigation2.launch.py map:=$HOME/turtlebot3_ws/src/rtc2/maps/turtlebot3_house/map.yaml
+
+# Falls Zeit-Fehler bzw. Gazebo
+ros2 launch turtlebot3_navigation2 navigation2.launch.py map:=$HOME/map.yaml use_sim_time:=True
