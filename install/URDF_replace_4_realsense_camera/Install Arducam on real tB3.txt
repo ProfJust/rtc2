@@ -1,0 +1,47 @@
+Install  Camera Driver on tB3:
+
+Ubuntu 22.04. Jammy Jellyfish with Desktop !
+and ROS2-Humble Instaallation
+
+
+Step 1. *Pull the repository.*
+
+git clone https://github.com/ArduCAM/Arducam_tof_camera.git
+
+Step 2. Change the directory to Arducam_tof_camera
+
+cd Arducam_tof_camera
+
+Step 3. *Installation (Driver, Dependencies, SDK, OpenCV)*
+
+Edit all paths in Install_dependencies.sh  => /boot/firmware/config.txt
+
+./Install_dependencies.sh
+
+
+When you see the reboot prompt, enter y. Raspberry Pi will automatically reboot.
+Step 4. Compile & run
+
+./compile.sh
+
+
+
+====== ROS2 =====
+cd Arducam_tof_camera/ros2_publisher
+colcon build --merge-install
+
+. install/setup.bash 
+ros2 run arducam tof_pointcl
+
+ERROR:
+ros2 run arducam tof_pointcloud 
+open ***WARNING*** Could not open device node /dev/video0. Please check for permissions.
+initialize fail
+[ros2run]: Process exited with failure 255
+
+SOLUTION:
+sudo usermod -a -G video oj   (oj is my user, change it to yours)
+reboot
+
+
+
