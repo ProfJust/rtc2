@@ -1,6 +1,14 @@
 Important ros2 commands
 ----------------------------------------------
+# Karte erstellen
+ros2 launch  turtlebot3_cartographer cartographer.launch.py 
+$ ros2 run turtlebot3_teleop teleop_keyboard 
+ros2 run nav2_map_server map_saver_cli -f ~/map3
+
+
 # Starte Naviagtion mit Karte 
+
+ros2 launch turtlebot3_navigation2 navigation2.launch.py map:=$HOME/map3.yaml
 
  $ ros2 launch turtlebot3_navigation2 navigation2.launch.py map:=$HOME/turtlebot3_ws/src/rtc2/maps/turtlebot3_house/map.yaml
 
@@ -11,3 +19,24 @@ Important ros2 commands
 # Shell Ausgabe in eine Datei schreiben
  $ ros2 topic echo /point_cloud  > log_pointcloud.txt
 
+ros2 run nav2_map_server map_saver_cli -f ~/map
+ros2 run turtlebot3_teleop teleop_keyboard 
+
+rviz2 
+$ history|grep nav2
+ros2 service call /map_server/load_map nav2_msgs/srv/LoadMap "{map_url: /home/map1.yaml}"
+ros2 run nav2_map_server map_saver_cli -f ~/map2
+
+
+
+
+
+# on tb3
+
+ssh oj@192.168.1.150
+
+oj@tb3:~$ ros2 launch turtlebot3_bringup robot.launch.py 
+oj@tb3:~$ ros2 run arducam tof_pointcloud 
+
+oj@tb3:~/Arducam_tof_camera/ros2_publisher$ nano ~/Arducam_tof_camera/ros2_publisher/src/arducam/src/tof_pointcloud.cpp
+oj@tb3:~/Arducam_tof_camera/ros2_publisher$ colcon build --merge-install

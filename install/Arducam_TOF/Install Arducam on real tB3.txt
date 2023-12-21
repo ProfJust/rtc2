@@ -40,8 +40,10 @@ initialize fail
 [ros2run]: Process exited with failure 255
 
 SOLUTION:
-sudo usermod -a -G video oj   (oj is my user, change it to yours)
-reboot
+sudo usermod -a -G video oj       ## oj is my user, change it to yours
+sudo reboot now
+
+could be a hardware problem !? Cable to camera not correctly fixed   (blue to grey)?
 
 ==== Check ====
 oj@tb3:~$ v4l2-ctl -d /dev/video0 --all
@@ -149,7 +151,7 @@ Add sensor_frame
   <joint name="arducam_joint" type="fixed">
     <parent link="base_link"/>
     <child link="sensor_frame"/>
-    <origin xyz="0.10 0.0 0.09" rpy="1.57079632679 0.0 1.57079632679"/>
+    <origin xyz="0.09 0.0 0.09" rpy="1.57079632679 0.0 1.57079632679"/>
   </joint>
 
 
