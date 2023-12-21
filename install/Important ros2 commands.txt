@@ -1,6 +1,13 @@
 Important ros2 commands
+----------------------------------------------
+# Starte Naviagtion mit Karte 
 
-ros2 launch turtlebot3_navigation2 navigation2.launch.py map:=$HOME/turtlebot3_ws/src/rtc2/maps/turtlebot3_house/map.yaml
+ $ ros2 launch turtlebot3_navigation2 navigation2.launch.py map:=$HOME/turtlebot3_ws/src/rtc2/maps/turtlebot3_house/map.yaml
 
 # Falls Zeit-Fehler bzw. Gazebo
-ros2 launch turtlebot3_navigation2 navigation2.launch.py map:=$HOME/map.yaml use_sim_time:=True
+ $ ros2 launch turtlebot3_navigation2 navigation2.launch.py map:=$HOME/map.yaml use_sim_time:=True
+
+
+# Shell Ausgabe in eine Datei schreiben
+ $ ros2 topic echo /point_cloud  > log_pointcloud.txt
+
