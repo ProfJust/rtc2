@@ -19,7 +19,8 @@ ArducamTOFCamera tof;
 class TOFPublisher : public rclcpp::Node
 {
 public:
-    TOFPublisher() : Node("arducam"), pointsize_(43200)   // Konstruktor
+//*** Konstruktor **//
+    TOFPublisher() : Node("arducam"), pointsize_(43200)   
     {
         pc2_msg_ = std::make_shared<sensor_msgs::msg::PointCloud>();
         pc2_msg_->points.resize(pointsize_);
@@ -29,21 +30,21 @@ public:
         // add PointCloud 2
         pc3_msg_ = std::make_shared<sensor_msgs::msg::PointCloud2>();
         
-        depth_msg_ = std::make_shared<std_msgs::msg::Float32MultiArray>();
+       /*  depth_msg_ = std::make_shared<std_msgs::msg::Float32MultiArray>();
         depth_msg_->layout.dim.resize(2);
         depth_msg_->layout.dim[0].label = "height";
         depth_msg_->layout.dim[0].size = 180;
         depth_msg_->layout.dim[0].stride = 43200;
         depth_msg_->layout.dim[1].label = "width";
         depth_msg_->layout.dim[1].size = 240;
-        depth_msg_->layout.dim[1].stride = 240;
+        depth_msg_->layout.dim[1].stride = 240; */
         
-        publisher_ = this->create_publisher<sensor_msgs::msg::PointCloud>("point_cloud", 10);
+        // publisher_ = this->create_publisher<sensor_msgs::msg::PointCloud>("point_cloud", 10);
         publisher_2 = this->create_publisher<sensor_msgs::msg::PointCloud2>("point_cloud2", 10);
-        publisher_depth_ = this->create_publisher<std_msgs::msg::Float32MultiArray>("depth_frame", 10);
+        // publisher_depth_ = this->create_publisher<std_msgs::msg::Float32MultiArray>("depth_frame", 10);
 
         timer_ = this->create_wall_timer(
-            50ms, std::bind(&TOFPublisher::update, this));
+            100ms, std::bind(&TOFPublisher::update, this));  //OJU was 50ms
     }
 
 private:
@@ -52,7 +53,7 @@ private:
         ArducamFrameBuffer *frame;
         do
         {
-            frame = tof.requestFrame(200);
+            frame = tof.requestFrame(200);  
         } while (frame == nullptr);
         depth_frame.clear();
         float *depth_ptr = (float *)frame->getData(FrameType::DEPTH_FRAME);
@@ -82,31 +83,31 @@ private:
         tof.releaseFrame(frame);
         pc2_msg_->header.frame_id = frame_id_;
 
-        depth_msg_->data = depth_frame;
+       // depth_msg_->data = depth_frame;
     }
     void update()
     {
         generateSensorPointCloud();
         pc2_msg_->header.stamp = now();
-        publisher_->publish(*pc2_msg_);
+        // publisher_->publish(*pc2_msg_);
         // Add Point Cloud2
         convertPointCloudToPointCloud2(*pc2_msg_, *pc3_msg_);
         publisher_2->publish(*pc3_msg_);
-        publisher_depth_->publish(*depth_msg_);
+        // publisher_depth_->publish(*depth_msg_);
     }
     std::string frame_id_ = "sensor_frame";
     std::vector<float> depth_frame;
     sensor_msgs::msg::PointCloud::SharedPtr pc2_msg_;
     // Add PointCloud2
      sensor_msgs::msg::PointCloud2::SharedPtr pc3_msg_;
-    std_msgs::msg::Float32MultiArray::SharedPtr depth_msg_;
+    //std_msgs::msg::Float32MultiArray::SharedPtr depth_msg_;
 
     size_t pointsize_;
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Publisher<sensor_msgs::msg::PointCloud>::SharedPtr publisher_;
     // Add PointCloud2
-     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr publisher_2;
-    rclcpp::Publisher<std_msgs::msg::Float32MultiArray>::SharedPtr publisher_depth_;
+    rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr publisher_2;
+    //rclcpp::Publisher<std_msgs::msg::Float32MultiArray>::SharedPtr publisher_depth_;
 
     float fx = 240 / (2 * tan(0.5 * M_PI * 64.3 / 180));
     float fy = 180 / (2 * tan(0.5 * M_PI * 50.4 / 180));
@@ -131,7 +132,7 @@ int main(int argc, char *argv[])
     }
     tof.setControl(CameraCtrl::RANGE,4);
 
-    printf("pointcloud publisher start\n");
+    printf("pointcloud2 publisher start\n");
 
     setvbuf(stdout, NULL, _IONBF, BUFSIZ);
     rclcpp::spin(std::make_shared<TOFPublisher>());
