@@ -15,7 +15,8 @@ erstelle den Ordner `~/turtlebot3_ws/src` mit folgende Shell-Befehlen => $
 
 clone rtc2 dorthin
   ` $ git clone https://github.com/ProfJust/rtc2.git`
-  falls das git-Software-Paket noch nicht installiert ist, installieren Sie es mit
+  
+  Falls das git-Software-Paket noch nicht installiert ist, installieren Sie es mit
   $ sudo apt install git
   
 
