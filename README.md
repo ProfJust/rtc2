@@ -1,7 +1,7 @@
 # rtc2
 Ruhr Turtlebot Competition, TurtleBot3 mit ROS2 Humble auf Ubuntu 22.04 - Jammy Jellyfish
 
-![ruhr_turtle_bot_final_150dpi_RGB](https://github.com/user-attachments/assets/53d738e4-be12-474b-a5c9-de4fb63bd619)
+![RTC-Logo klein](https://github.com/user-attachments/assets/d6a17f16-8c45-4dc8-b8c4-b778b112c7e3)
 
 ## Installation RTC2-Turtlebot3 - Paket
 ### Voraussetzung
