@@ -1,11 +1,11 @@
 # rtc2
 Ruhr Turtlebot Competition, TurtleBot3 mit ROS2 Humble auf Ubuntu 22.04 - Jammy Jellyfish
 
+## Installation RTC2-Turtlebot3 - Paket
 ### Voraussetzung
 Ubuntu 22.04 ist installiert (als Dual Boot System, keine Virtual Box o.ä.) , 
-Öffnen einer Shell mit STRG+ALT+T
 
-## installation
+### Öffnen einer Shell mit STRG+ALT+T
 erstelle den Ordner `~/turtlebot3_ws/src` mit folgende Shell-Befehlen => $
 * ` $ cd ~ ` 
 * ` $ mkdir turtlebot3_ws `
