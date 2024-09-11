@@ -49,6 +49,8 @@ cd ~/turtlebot3_ws/src/
 git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3.git -y
 git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
 git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git -y
+sudo apt install ros-humble-turtlebot3-msgs -y
+
 # git clone -b humble-devel https://github.com/ROBOTIS-GIT/DynamixelSDK.git -y
 
 # ROS2 Humble => https://index.ros.org/search/?term=rclcpp

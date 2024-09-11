@@ -12,12 +12,14 @@ class TemperatureSensorNode(Node):
             Int64, "temperature", 10)
         self.temperature_timer_ = self.create_timer(
             2.0, self.publish_temperature)
+        print(" Node 'temperature_sensor' started to publish random value 'temperature'")
 
     def publish_temperature(self):
         temperature = random.randint(20, 30)
         msg = Int64()
         msg.data = temperature
         self.temperature_publisher_.publish(msg)
+        print(temperature)
 
 def main(args=None):
     rclpy.init(args=args)
