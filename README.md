@@ -1,5 +1,5 @@
 # rtc2
-Ruhr Turtlebot Competition, TurtleBot3 mit ROS2 Humble
+Ruhr Turtlebot Competition, TurtleBot3 mit ROS2 Humble auf Ubuntu 22.04 - Jammy Jellyfish
 
 # installation
 erstelle den Ordner `~/turtlebot3_ws/src`
