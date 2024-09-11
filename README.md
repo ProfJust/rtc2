@@ -17,7 +17,7 @@ clone rtc2 dorthin
   ` $ git clone https://github.com/ProfJust/rtc2.git`
   
   Falls das git-Software-Paket noch nicht installiert ist, installieren Sie es mit
-  $ sudo apt install git
+  ` $ sudo apt install git`
   
 
 mache step1....sh und step2....sh ausführbar
