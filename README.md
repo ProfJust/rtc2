@@ -38,7 +38,10 @@ oder
 - $ ros2 launch rtc2 turtlesim_launch.py
 
 Unsere Gazebo-Umgebung starteb wir mit
-- $ ros2 launch turtlebot3_gazebo turtlebot3_house-launch.py
+- $ ros2 launch turtlebot3_gazebo turtlebot3_house.launch.py
+  
+  ![Screenshot from 2024-09-11 12-43-56](https://github.com/user-attachments/assets/207e0f12-7db6-4db3-9078-2dc2b160b19c)
+
 
 Ohne Alias
 - $ cd turtlebot3_ws/
