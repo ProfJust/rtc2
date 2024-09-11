@@ -30,6 +30,11 @@ und führe sie aus
 ### usage
 build and run simple publisher "say_temp"
 
+Mit Alias "build", definiert in der .bashrc
+- $ build 
+- $ ros2 run rtc2 say_temp 
+
+Ohne Alias
 - $ cd turtlebot3_ws/
 - $ colcon build --packages-select rtc2
 - $ source install/setup.bash 
@@ -37,17 +42,3 @@ build and run simple publisher "say_temp"
 
 
 Formatting: https://docs.github.com/de/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
-
-
-# usage important commands
-
-nur das rtc2 - Paket übersetzen
-
-`cd ~/turtlebot3_ws`
-`colcon build --packages-select rtc2`
-`source install/setup.bash`
-
-ausführen
-
-`ros2 run rtc2 talk`
-
