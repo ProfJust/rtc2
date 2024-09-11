@@ -23,7 +23,7 @@ clone rtc2 dorthin
 mache step1....sh und step2....sh ausführbar
 und führe sie aus
 
-* $ cd ~/turtlebot3_ws/src
+* $ cd ~/turtlebot3_ws/src/rtc2/install
 * $ ./step1...
 * $ ./step2... 
 
