@@ -1,4 +1,6 @@
 # rtc2
+![RTC-Logo sehr klein](https://github.com/user-attachments/assets/770f9a44-890e-4c6b-9a44-0eb2e61a87c7)
+
 Ruhr Turtlebot Competition, TurtleBot3 mit ROS2 Humble auf Ubuntu 22.04 - Jammy Jellyfish
 
 ## Installation RTC2-Turtlebot3 - Paket
@@ -30,6 +32,20 @@ und führe sie aus
 ### usage
 build and run simple publisher "say_temp"
 
+Mit Alias "build", definiert in der .bashrc
+- $ build 
+- $ ros2 run rtc2 say_temp
+
+oder
+- $ ros2 launch rtc2 turtlesim_launch.py
+
+Unsere Gazebo-Umgebung starteb wir mit
+- $ ros2 launch turtlebot3_gazebo turtlebot3_house.launch.py
+  
+  ![Screenshot from 2024-09-11 12-43-56](https://github.com/user-attachments/assets/207e0f12-7db6-4db3-9078-2dc2b160b19c)
+
+
+Ohne Alias
 - $ cd turtlebot3_ws/
 - $ colcon build --packages-select rtc2
 - $ source install/setup.bash 
@@ -37,17 +53,3 @@ build and run simple publisher "say_temp"
 
 
 Formatting: https://docs.github.com/de/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
-
-
-# usage important commands
-
-nur das rtc2 - Paket übersetzen
-
-`cd ~/turtlebot3_ws`
-`colcon build --packages-select rtc2`
-`source install/setup.bash`
-
-ausführen
-
-`ros2 run rtc2 talk`
-
