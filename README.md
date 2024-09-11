@@ -32,7 +32,10 @@ build and run simple publisher "say_temp"
 
 Mit Alias "build", definiert in der .bashrc
 - $ build 
-- $ ros2 run rtc2 say_temp 
+- $ ros2 run rtc2 say_temp
+
+oder
+- $ ros2 launch rtc2 turtlesim_launch.py
 
 Ohne Alias
 - $ cd turtlebot3_ws/
