@@ -37,6 +37,9 @@ Mit Alias "build", definiert in der .bashrc
 oder
 - $ ros2 launch rtc2 turtlesim_launch.py
 
+Unsere Gazebo-Umgebung starteb wir mit
+- $ ros2 launch turtlebot3_gazebo turtlebot3_house-launch.py
+
 Ohne Alias
 - $ cd turtlebot3_ws/
 - $ colcon build --packages-select rtc2
