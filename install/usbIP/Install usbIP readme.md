@@ -68,3 +68,10 @@ Abholen der Daten auf dem Remote PC (getestet mit Astra Orbbec)
             $ ...
             $ rqt
             $ rviz2
+
+Quellen:
+    Die Idee kommt von hier:
+    https://www.mybotshop.de/Turtlebot3-3D-SLAM
+
+    USBIP wird hier beschrieben
+    https://wiki.ubuntuusers.de/USBIP/
