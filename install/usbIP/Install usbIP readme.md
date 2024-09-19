@@ -13,8 +13,11 @@ Dazu Server - Installation auf dem TB3 / Raspberry PI (getestet mit Astra Orbbec
         $ sudo apt-get install usbip
 
     2.) Add/remove Module from Kernel
-    Grundsätzlich besitzt der Linux-Kernel einen monolithischen Aufbau, allerdings bietet er auch die Möglichkeit, Module mit dem Befehl modprobe zur Laufzeit zu laden und entladen.
-    modprobe löst dabei automatisch Abhängigkeiten auf, d.h. wenn das zu ladende Modul andere Module voraussetzt, werden diese automatisch in der richtigen Reihenfolge mit geladen bzw. werden Module automatisch mit entfernt, welche nur aus Abhängigkeitsgründen geladen wurden.
+    Grundsätzlich besitzt der Linux-Kernel einen monolithischen Aufbau, allerdings bietet er auch die Möglichkeit, 
+    Module mit dem Befehl modprobe zur Laufzeit zu laden und entladen.
+    modprobe löst dabei automatisch Abhängigkeiten auf, d.h. wenn das zu ladende Modul andere Module voraussetzt, 
+    werden diese automatisch in der richtigen Reihenfolge mit geladen bzw. werden Module automatisch mit entfernt, 
+    welche nur aus Abhängigkeitsgründen geladen wurden.
  
         $ sudo modprobe usbip-host 
 
@@ -35,10 +38,10 @@ Abholen der Daten auf dem Remote PC (getestet mit Astra Orbbec)
     1.) Installation von https://github.com/orbbec/OrbbecSDK_ROS2
       ..
       Achtung! Astra Orbbec funktioniert nicht mit dem OrbbecSDK_ROS2
-      Am besten die Kamera am Rmeote PC testen (ohne usbIP)
+      Am besten die Kamera zunächt direkt am Remote PC testen (ohne usbIP) um die Funktion zu prüfen.
 
     2.) Installation von usbIP auf dem Remote PC (als Client)
-        Richtige Version heruasfinden, abhängig vom installierten Image
+        Richtige Version herausfinden, abhängig vom installierten Image
             $ apt list 'linux-image-*' --installed
         
             $ sudo apt-get install hwdata linux-tools-generic-hwe
