@@ -8,8 +8,10 @@ USBIP leitet die über USB herinkommenden Daten über das WLAN weiter an den Rem
 Dazu Server - Installation auf dem TB3 / Raspberry PI (getestet mit Astra Orbbec)
 
      1.) Richtige Version heruasfinden, abhängig vom installierten Image
+        $ sudo apt-get update
         $ apt list 'linux-image-*' --installed 
         $ sudo apt-get install hwdata linux-tools-raspi linux-tools-5.15.0-1043-raspi
+        $ sudo apt install linux-tools-generic
         $ sudo apt-get install usbip
 
     2.) Add/remove Module from Kernel
