@@ -10,10 +10,11 @@ Dazu Server - Installation auf dem TB3 / Raspberry PI (getestet mit Astra Orbbec
      1.) Richtige Version heruasfinden, abhängig vom installierten Image
         $ sudo apt-get update
         $ apt list 'linux-image-*' --installed 
-        $ sudo apt-get install hwdata linux-tools-raspi linux-tools-5.15.0-1043-raspi
-        $ sudo apt install linux-tools-raspi
 
-        $ sudo apt-get install usbip
+        ggf. updaten des Inages: $ sudo apt install linux-image-raspi
+
+        $ sudo apt-get install hwdata
+        $ sudo apt install linux-tools-raspi
 
     2.) Add/remove Module from Kernel
     Grundsätzlich besitzt der Linux-Kernel einen monolithischen Aufbau, allerdings bietet er auch die Möglichkeit, 
@@ -45,14 +46,17 @@ Abholen der Daten auf dem Remote PC (getestet mit Astra Orbbec)
 
     2.) Installation von usbIP auf dem Remote PC (als Client)
         Richtige Version herausfinden, abhängig vom installierten Image
+            $ sudo apt-get update
+
             $ apt list 'linux-image-*' --installed
-        
-            $ sudo apt-get install hwdata linux-tools-generic-hwe
+
+            $ sudo apt install linux-tools-6.5.0-35-generic
+      
             $ sudo apt-get install hwdata linux-tools-generic
-            $ sudo apt-get install usbip
+                   
         
         Testen ob usbip funktioniert, Liste aller direkt angeschlossenen UBSs
-            $ usb $ usbip list -l
+            $ usbip list -l
 
 
 
@@ -62,7 +66,7 @@ Abholen der Daten auf dem Remote PC (getestet mit Astra Orbbec)
 
         Prüfen ob Daten hereinkommen
 
-           $ usbip list --remote 192.168.178.33 
+           $ usbip list --remote 10.1.33.45                 192.168.178.33 
         
         Daten als virtuellen USB am Remote PC hinzufügen
 
@@ -75,6 +79,11 @@ Abholen der Daten auf dem Remote PC (getestet mit Astra Orbbec)
             $ ...
             $ rqt
             $ rviz2
+
+        Imported USB devices
+        $ usbip port 
+
+
 
 Quellen:
     Die Idee kommt von hier:
