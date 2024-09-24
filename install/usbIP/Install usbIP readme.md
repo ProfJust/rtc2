@@ -70,7 +70,7 @@ Abholen der Daten auf dem Remote PC (getestet mit Astra Orbbec)
 
         Kamera und ros2 starten, als ob direkt am Remote-PC angeschlossen
 
-            $ ros2 launch astra_camera astra.launch.xml    bzw. ros2 launch realsense2_camera rs_launch.py depth_module.depth_profile:=1280x720x30 pointcloud.enable:=true
+            $ ros2 launch astra_camera astra.launch.xml    bzw. bei der Realsense Camera   ros2 launch realsense2_camera rs_launch.py depth_module.depth_profile:=1280x720x30 pointcloud.enable:=true
 
             $ ...
             $ rqt
