@@ -11,7 +11,8 @@ Dazu Server - Installation auf dem TB3 / Raspberry PI (getestet mit Astra Orbbec
         $ sudo apt-get update
         $ apt list 'linux-image-*' --installed 
         $ sudo apt-get install hwdata linux-tools-raspi linux-tools-5.15.0-1043-raspi
-        $ sudo apt install linux-tools-*generic*
+        $ sudo apt install linux-tools-raspi
+
         $ sudo apt-get install usbip
 
     2.) Add/remove Module from Kernel
@@ -69,7 +70,7 @@ Abholen der Daten auf dem Remote PC (getestet mit Astra Orbbec)
 
         Kamera und ros2 starten, als ob direkt am Remote-PC angeschlossen
 
-            $ ros2 launch astra_camera astra.launch.xml
+            $ ros2 launch astra_camera astra.launch.xml    bzw. 
             $ ...
             $ rqt
             $ rviz2
