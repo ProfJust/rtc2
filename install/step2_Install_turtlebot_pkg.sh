@@ -1,3 +1,7 @@
+# Error trailing zero => Chat GPT Lösung
+# ai.w-hs.de
+pip install --upgrade packaging
+
 mkdir -p ~/turtlebot3_ws/src && cd ~/turtlebot3_ws/src
 echo 'source /opt/ros/humble/setup.bash' >> ~/.bashrc
 source ~/.bashrc
