@@ -54,7 +54,14 @@ class clVector:
     #def __lshift__(self, g, p):
     #    self.x = g.x - p.x
     #    self.y = g.y - p.y
-     #   return self
+    #   return self
+    # ==> TypeError: clVector.__lshift__() missing 1 required positional argument: 'p'
+    # AI.w-hs.de: Die Methode `lshift` ist so definiert, dass sie drei Argumente erwartet (einschließlich `self`),
+    # aber in der Tat sollte sie nur zwei Argumente akzeptieren: `self` und ein anderes Objekt, 
+    # mit dem der Operator verwendet wird. In Python wird bei der Überladung von Operatoren im Allgemeinen immer
+    # nur ein zusätzliches Argument übergeben, weil das erste `self` das linke Operand des Operators ist. 
+    # Die Lösung besteht darin, die Methode `lshift` so zu ändern, dass sie nur das zweite Objekt erwartet, 
+    # etwa als Tupel. Hier ist, wie Sie den Code umschreiben können, um das Problem zu beheben:
 
     def __lshift__(self, other):
         g, p = other  # Erwarte ein Tupel von goal und pose
