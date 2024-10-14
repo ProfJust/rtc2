@@ -3,17 +3,16 @@
 # -----------------------------------
 #  9.11.2020 by OJ
 # -----------------------------------
+# Die Tabelle in einer konstanten Liste gespeichert (Tupel)
+matrix = ((19, 25, 35, 45, 55, 65),  # Alter Untergrenze Intervall
+          (19, 20, 21, 22, 23, 24),  # Untergrenze BMI
+          (24, 25, 26, 27, 28, 29))  # Obergrenze BMI
 
 def bmi(m, le):
     bmi = m/(le**2)
     return bmi
 
-
-def bewertung(b, a):
-    # Die Tabelle in einer konstanten Liste gespeichert (Tupel)
-    matrix = ((19, 25, 35, 45, 55, 65),  # Alter Untergrenze Intervall
-              (19, 20, 21, 22, 23, 24),  # Untergrenze BMI
-              (24, 25, 26, 27, 28, 29))  # Obergrenze BMI
+def bewertung(b, a):    
     i = 0
     while a >= matrix[0][i]:
         i += 1
