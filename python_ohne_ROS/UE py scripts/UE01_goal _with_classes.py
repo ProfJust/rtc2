@@ -24,18 +24,19 @@ print("Vektor: ", sx," ", sy) #, end="")  # kein Zeilenumbruch
 #### OOP Code ######
 # Pose der Turtle als Klasse
 class clPose:
-    def __init__(self): # Konstruktor
-        self.x = 5.5
-        self.y = 5.5
-        self.theta = 0.0
+    def __init__(self, x, y, t): # Konstruktor
+        self.x = x
+        self.y = y
+        self.theta = t
 
-pose = clPose() # Instanzierung
+pose = clPose(5.5, 5.5, 0.0) # Instanzierung
+pose2 = clPose(5.5, 7.5, 0.0) # Instanzierung
 
 # Goal als Klasse
 class clGoal:
-    def __init__(self, _x, _y): # Konstruktor mit Parametern
-        self.x = _x
-        self.y = _y
+    def __init__(self, x, y): # Konstruktor mit Parametern
+        self.x = x
+        self.y = y
     
 goal = clGoal(7.5, 7.5)
     
@@ -50,11 +51,16 @@ class clVector:
         self.y = g.y - p.y
 
     # https://www.programiz.com/python-programming/operator-overloading
-    def __lshift__(self, g, p):
+    #def __lshift__(self, g, p):
+    #    self.x = g.x - p.x
+    #    self.y = g.y - p.y
+     #   return self
+
+    def __lshift__(self, other):
+        g, p = other  # Erwarte ein Tupel von goal und pose
         self.x = g.x - p.x
         self.y = g.y - p.y
         return self
-
 
 s = clVector() # Instanzierung
 
@@ -70,6 +76,7 @@ s2 = clVector() # Instanzierung
 # s2.y = goal.y
 
 s2 << (goal, pose)  # Überladener Operator LSHIFT
+# TypeError: clVector.__lshift__() missing 1 required positional argument: 'p'
 # # https://www.programiz.com/python-programming/operator-overloading
 
 print("Vektor2: ", s2.x," ", s2.y) #, end="")  # kein Zeilenumbruch
