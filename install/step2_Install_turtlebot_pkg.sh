@@ -93,3 +93,9 @@ cd ~/turtlebot3_ws && colcon build --symlink-install
  source ~/.bashrc
 
 
+ sudo apt install ros-humble-rqt* -y
+
+
+ printf " Installation fuer RTC2 WS24 ist fertig, nicht vergessen zu kompilieren " 
+
+
