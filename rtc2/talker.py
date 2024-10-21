@@ -32,6 +32,7 @@ def main(args=None):
 
     minimal_publisher = MinimalPublisher()  # Objekt instanzieren
 
+    # Execute work and block until the context associated with the executor is shutdown.
     rclpy.spin(minimal_publisher)
 
     # Destroy the node explicitly
