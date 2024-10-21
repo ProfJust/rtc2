@@ -7,12 +7,14 @@ import random
 
 class TemperatureSensorNode(Node):
     def __init__(self):
-        super().__init__("temperature_sensor")
+        super().__init__("node_temperature_sensor")
         self.temperature_publisher_ = self.create_publisher(
-            Int64, "temperature", 10)
+            Int64, "topic_temperature", 10)
+        
         self.temperature_timer_ = self.create_timer(
             2.0, self.publish_temperature)
-        print(" Node 'temperature_sensor' started to publish random value 'temperature'")
+        
+        print(" Node 'node_temperature_sensor' started to publish random value 'topic_temperature'")
 
     def publish_temperature(self):
         temperature = random.randint(20, 30)

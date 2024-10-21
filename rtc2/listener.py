@@ -12,7 +12,6 @@ from std_msgs.msg import String
 
 
 class MinimalSubscriber(Node):
-
     def __init__(self):
         super().__init__('listener_node')
         self.subscription = self.create_subscription(
@@ -31,6 +30,7 @@ def main(args=None):
 
     minimal_subscriber = MinimalSubscriber()
 
+    # Execute work and block until the context associated with the executor is shutdown.
     rclpy.spin(minimal_subscriber)
 
     # Destroy the node explicitly
