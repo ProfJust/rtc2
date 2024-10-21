@@ -92,7 +92,7 @@ source ~/.bashrc
 # source ~/turtlebot3_ws/install/local_setup.bash
 source ~/turtlebot3_ws/install/setup.bash
 
-printf " Installation aller verfuegbarer RQT-Plugins " 
-sudo apt install ros-humble-rqt* -y  
+printf " Installation des Robot-Steering-Plugins fuer RQT " 
+sudo apt install ros-humble-rqt-robot-steering -y  
 printf " Um die Plugins zu sehen: Erster Start von rqt mit /n  $ rqt ---force-discover"
 
