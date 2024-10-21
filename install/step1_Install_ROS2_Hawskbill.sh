@@ -94,4 +94,5 @@ source ~/turtlebot3_ws/install/setup.bash
 
 printf " Installation aller verfuegbarer RQT-Plugins " 
 sudo apt install ros-humble-rqt* -y  
+printf " Um die Plugins zu sehen: Erster Start von rqt mit /n  $ rqt ---force-discover"
 
