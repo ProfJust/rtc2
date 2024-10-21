@@ -4,6 +4,15 @@
 # am 25.10.23 geändert
 # https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html
 
+# Version für das WS24
+printf " Installation der RTC2- Umgebung,   Version für das WS24" 
+
+# Error trailing zero => Chat GPT Lösung
+# ai.w-hs.de
+printf " Error trailing zero => pip upgraden"
+pip install --upgrade packaging
+
+
 locale  # check for UTF-8
 
 sudo apt update && sudo apt install locales
@@ -45,8 +54,6 @@ echo 'source ~/turtlebot3_ws/install/local_setup.bash' >> ~/.bashrc
 echo 'alias build="cd ~/turtlebot3_ws; colcon build --mixin release;  source ~/turtlebot3_ws/install/local_setup.bash"' >> ~/.bashrc
 echo 'source /usr/share/gazebo/setup.sh' >> ~/.bashrc
 
-
-# Install development tools and ROS tools
 sudo apt update && sudo apt install -y \
   python3-flake8-docstrings \
   python3-pip \
@@ -84,3 +91,7 @@ source ~/.bashrc
 # colcon build --symlink-install --parallel-workers 1
 # source ~/turtlebot3_ws/install/local_setup.bash
 source ~/turtlebot3_ws/install/setup.bash
+
+printf " Installation aller verfuegbarer RQT-Plugins " 
+sudo apt install ros-humble-rqt* -y  
+

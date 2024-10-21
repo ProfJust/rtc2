@@ -1,6 +1,5 @@
-# Error trailing zero => Chat GPT Lösung
-# ai.w-hs.de
-pip install --upgrade packaging
+# Version für das WS24
+ printf " Installation der TurtleBot- Pakete,  Version für das WS24 " 
 
 mkdir -p ~/turtlebot3_ws/src && cd ~/turtlebot3_ws/src
 echo 'source /opt/ros/humble/setup.bash' >> ~/.bashrc
@@ -92,10 +91,7 @@ cd ~/turtlebot3_ws && colcon build --symlink-install
 # echo "export PYTHONPATH=${PYTHONPATH}:~/turtlebot3_ws/src/rtc2/rtc2_dist_packages" >> ~/.bashrc
  source ~/.bashrc
 
-
- sudo apt install ros-humble-rqt* -y
-
-
+ 
  printf " Installation fuer RTC2 WS24 ist fertig, nicht vergessen zu kompilieren " 
 
 
