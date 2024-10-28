@@ -49,13 +49,7 @@ class clTurtleBot(Node):  # erbt von Node
                               'odom',
                               self.update_odom,
                               10)
-        self.subscription2 = self.create_subscription(
-                              LaserScan,
-                              'scan',
-                              self.get_scan,
-                              10)
-        self.subscription  # prevent unused variable warning
-        self.subscription2  # prevent unused variable warning
+        # HIER CODE EINFÜGEN
 
     def update_odom(self, msg):
         """Callback function which is called when a new message of type Pose is
@@ -71,24 +65,10 @@ class clTurtleBot(Node):  # erbt von Node
         self.pose.theta = self.quaternion_to_euler(ox, oy, oz, ow)
         # print(self.pose)
 
-    def get_scan(self, scan):
-        # print("getscan")
-        # https://github.com/ros2/rclpy/blob/rolling/rclpy/rclpy/wait_for_message.py
-        # In ROS-Rolling gäbe es
-        # scan = rclpy.wait_for_message('scan', LaserScan, 10)  # time_to_wait in sec
-        #scan_filtered = [1.0, 1.0, 2.1, 1.3]
-        # numbOfScans = len(scan.ranges) 
-        # print("numbofscans")
-        # print(numbOfScans)
+    def get_scan(self, scan):       
+        self.ranges = 0 # HIER CODE EINFÜGEN
         
-        self.ranges = scan.ranges
-        
-        # nan (not a number) und inf (Infinity) durch Zahlen ersetzen
-        #for i in range(self.ranges):
-        #     if self.ranges[i] == float('Inf'):
-        #         self.ranges[i] = 20
-        #     elif isnan(self.ranges[i]):
-        #         self.ranges[i] = 0
+     
 
     def euclidean_distance(self, goal):
         x = goal.x - self.pose.x
@@ -127,31 +107,17 @@ class clTurtleBot(Node):  # erbt von Node
         end_programm_flag = False
         if not self.obstacle_detected():
             if self.euclidean_distance(self.goal) >= self.distance_tolerance:
-                # Linear velocity in the x-axis.
-                self.vel_msg.linear.x = self.linear_vel(self.goal)
-                self.vel_msg.linear.y = 0.0 # must be float, don't use only 0
-                self.vel_msg.linear.z = 0.0 # must be float, don't use only 0
-
-                # Angular velocity in the z-axis.
-                self.vel_msg.angular.x = 0.0 # must be float, don't use only 0
-                self.vel_msg.angular.y = 0.0 # must be float, don't use only 0
-                self.vel_msg.angular.z = self.angular_vel(self.goal)
+               # HIER CODE EINFÜGEN
                 print(" move robot ")
                 self.get_logger().info(f"Current lin_vel_x= {self.vel_msg.linear.x} ang_vel_z ={self.vel_msg.angular.z}")
             else: 
                 # Stopping our robot after the movement is over.
-                self.vel_msg.linear.x = 0.0 # must be float, don't use only 0
-                self.vel_msg.angular.z = 0.0 # must be float, don't use only 0
+               # HIER CODE EINFÜGEN
                 print(" stop robot - end programm ")
                 end_programm_flag = True
         else:
             # Stopping our robot because an obstacle is in the way
-                self.vel_msg.linear.x = 0.0 # must be float, don't use only 0
-                self.vel_msg.linear.y = 0.0 # must be float, don't use only 0
-                self.vel_msg.linear.z = 0.0 # must be float, don't use only 0
-                self.vel_msg.angular.x = 0.0 # must be float, don't use only 0
-                self.vel_msg.angular.y = 0.0 # must be float, don't use only 0
-                self.vel_msg.angular.z = 0.0 # must be float, don't use only 0
+               # HIER CODE EINFÜGEN
                 print(" stop robot - obstacle detected ") 
                 # end_programm_flag = True               
 
