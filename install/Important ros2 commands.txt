@@ -40,3 +40,23 @@ oj@tb3:~$ ros2 run arducam tof_pointcloud
 
 oj@tb3:~/Arducam_tof_camera/ros2_publisher$ nano ~/Arducam_tof_camera/ros2_publisher/src/arducam/src/tof_pointcloud.cpp
 oj@tb3:~/Arducam_tof_camera/ros2_publisher$ colcon build --merge-install
+
+
+CHeck USB-Connections
+
+lsusb
+
+oj@robotiklab3-HP:~/turtlebot3_ws$ lsusb
+Bus 002 Device 002: ID 05e3:0746 Genesys Logic, Inc. USB Storage
+Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 001 Device 003: ID 0461:4e8d Primax Electronics, Ltd HP USB Optical Mouse
+Bus 001 Device 002: ID 03f0:564a HP, Inc HP 125 Wired Keyboard
+Bus 001 Device 021: ID 2bc5:0508 Orbbec 3D Technology International, Inc USB 2.0 Camera
+Bus 001 Device 020: ID 2bc5:0608 Orbbec 3D Technology International, Inc ORBBEC Depth Sensor
+Bus 001 Device 019: ID 05e3:0608 Genesys Logic, Inc. Hub
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+
+
+$ ros2 launch orbbec_camera astra.launch.py
+
+=>  Current found device(s): (0)

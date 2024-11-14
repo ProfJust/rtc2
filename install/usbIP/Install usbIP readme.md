@@ -15,6 +15,7 @@ Dazu Server - Installation auf dem TB3 / Raspberry PI (getestet mit Astra Orbbec
 
         $ sudo apt-get install hwdata
         $ sudo apt install linux-tools-raspi
+        $ sudo apt install linux-tools-common 
 
     2.) Add/remove Module from Kernel
     Grundsätzlich besitzt der Linux-Kernel einen monolithischen Aufbau, allerdings bietet er auch die Möglichkeit, 
@@ -26,7 +27,7 @@ Dazu Server - Installation auf dem TB3 / Raspberry PI (getestet mit Astra Orbbec
         $ sudo modprobe usbip-host 
 
     3.) Server-Daemon starten
-        $  sudo usbipd --daemon 
+        $  sudo usbip --daemon 
 
     4.) Auswahl des USB der angebunden werden soll
         $ usbip list --local
