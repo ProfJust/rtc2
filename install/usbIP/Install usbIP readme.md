@@ -10,12 +10,15 @@ Dazu Server - Installation auf dem TB3 / Raspberry PI (getestet mit Astra Orbbec
      1.) Richtige Version heruasfinden, abhängig vom installierten Image
         $ sudo apt-get update
         $ apt list 'linux-image-*' --installed 
-
+     
         ggf. updaten des Inages: $ sudo apt install linux-image-raspi
 
         $ sudo apt-get install hwdata
-        $ sudo apt install linux-tools-raspi
-        $ sudo apt install linux-tools-common 
+        $ sudo apt-get linux-tools-raspi
+
+         => for kernel 5.15.0-1044
+        $ sudo apt install linux-tools-5.15.0-1044-raspi
+
 
     2.) Add/remove Module from Kernel
     Grundsätzlich besitzt der Linux-Kernel einen monolithischen Aufbau, allerdings bietet er auch die Möglichkeit, 
@@ -26,8 +29,8 @@ Dazu Server - Installation auf dem TB3 / Raspberry PI (getestet mit Astra Orbbec
  
         $ sudo modprobe usbip-host 
 
-    3.) Server-Daemon starten
-        $  sudo usbip --daemon 
+    3.) Server-Daemon starten  usbipd ist kein Tippfehler !!
+        $  sudo usbipd --daemon 
 
     4.) Auswahl des USB der angebunden werden soll
         $ usbip list --local
@@ -61,17 +64,18 @@ Abholen der Daten auf dem Remote PC (getestet mit Astra Orbbec)
 
 
 
-    3.) Lesen der Camera Daten die über usbIP hereinkommen, Client starten
+    3.) Remote PC: Lesen der Camera Daten die über usbIP hereinkommen, Client starten
 
            $ sudo modprobe vhci-hcd
 
         Prüfen ob Daten hereinkommen
 
-           $ usbip list --remote 10.1.33.45                 192.168.178.33 
+           $ usbip list --remote 192.168.0.149
+           
         
         Daten als virtuellen USB am Remote PC hinzufügen
 
-           $ sudo usbip attach --remote 192.168.178.33 --busid 1-1.2 
+           $ sudo usbip attach --remote 192.168.0.149 --busid 2-2 
 
         Kamera und ros2 starten, als ob direkt am Remote-PC angeschlossen
 

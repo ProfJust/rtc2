@@ -1,0 +1,19 @@
+   On Raspberry PI4 to get TurtleBot3 running
+   
+    1  sudo apt update
+    2  sudo nano /etc/apt/apt.conf.d/20auto-upgrades
+    3  systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+    4  reboot
+    6  sudo apt upgrade
+    
+    
+    get pga-Key from Remote-PC via SCP-Command on Raspberry PI
+    to avoid this error on PC
+    	oj@robotiklab3-HP:~$ ssh ubuntu@192.168.0.196
+	ubuntu@192.168.0.196: Permission denied (publickey).
+ 
+    
+    7  scp oj@192.168.0.183:~/.ssh/id_rsa.pub ~/.ssh/authorized_keys  
+    8  chmod 700 ~/.ssh
+    9  chmod 600 ~/.ssh/authorized_keys   
+    
