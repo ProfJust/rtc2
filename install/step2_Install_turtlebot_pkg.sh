@@ -42,10 +42,10 @@ sudo apt install ros-humble-tf-transformations
 
 # more recent from source
 # already has  robot_model_type: "nav2_amcl::DifferentialMotionModel"
- sudo apt remove ros-humble-turtlebot3-teleop  -y
- sudo apt remove ros-humble-turtlebot3-navigation -y
- sudo apt remove ros-humble-turtlebot3-description -y
- sudo apt remove ros-humble-turtlebot3-cartographer -y
+#  sudo apt remove ros-humble-turtlebot3-teleop  -y
+#  sudo apt remove ros-humble-turtlebot3-navigation -y
+#  sudo apt remove ros-humble-turtlebot3-description -y
+#  sudo apt remove ros-humble-turtlebot3-cartographer -y
 
 cd ~/turtlebot3_ws/src/
 # Robotis
