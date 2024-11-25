@@ -71,8 +71,8 @@ sudo apt install ros-humble-turtlebot3-msgs -y
 source ~/.bashrc
 
  
- printf " Installation der Navigation fuer RTC2 WS24 ist fertig "
- printf "Kompilieren nicht vergessen    cd ~/turtlebot3_ws  &&  colcon build --symlink-install"
+ printf " Installation der Navigation fuer RTC2 WS24 ist fertig \n"
+ printf "Kompilieren nicht vergessen \n  cd ~/turtlebot3_ws  &&  colcon build --symlink-install"
  printf "$1 ros2 launch turtlebot3_gazebo turtlebot3_house.launch.py "
  printf "$2 ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=True map:=$HOME/turtlebot3_ws/src/rtc2/maps/map.yaml"
  printf "Als erstes in Gazebo ein Pose Estimate durchführen!"
