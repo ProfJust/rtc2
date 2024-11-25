@@ -49,10 +49,11 @@ sudo apt install ros-humble-turtlesim
 # Possible values are: setup.bash, setup.sh, setup.zsh
 
 mkdir -p ~/turtlebot3_ws/src
-echo 'source /opt/ros/humble/setup.bash' >> ~/.bashrc
-echo 'source ~/turtlebot3_ws/install/local_setup.bash' >> ~/.bashrc
-echo 'alias build="cd ~/turtlebot3_ws; colcon build --mixin release;  source ~/turtlebot3_ws/install/local_setup.bash"' >> ~/.bashrc
 echo 'source /usr/share/gazebo/setup.sh' >> ~/.bashrc
+echo 'source /opt/ros/humble/setup.bash' >> ~/.bashrc
+echo 'source ~/turtlebot3_ws/install/setup.bash' >> ~/.bashrc
+echo 'alias build="cd ~/turtlebot3_ws; colcon build --mixin release;  source ~/turtlebot3_ws/install/local_setup.bash"' >> ~/.bashrc
+
 
 sudo apt update && sudo apt install -y \
   python3-flake8-docstrings \

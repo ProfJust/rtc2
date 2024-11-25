@@ -67,12 +67,13 @@ sudo apt install ros-humble-turtlebot3-msgs -y
 # git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_description.git
 # git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_cartographer.git
 
-
+echo 'source ~/turtlebot3_ws/install/setup.bash' >> ~/.bashrc
 source ~/.bashrc
 
  
  printf " Installation der Navigation fuer RTC2 WS24 ist fertig \n"
  printf "Kompilieren nicht vergessen \n  cd ~/turtlebot3_ws  &&  colcon build --symlink-install"
+ printf " ...und sourcen   source ~/turtlebot3_ws/install/setup.bash \n"
  printf "$1 ros2 launch turtlebot3_gazebo turtlebot3_house.launch.py "
  printf "$2 ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=True map:=$HOME/turtlebot3_ws/src/rtc2/maps/map.yaml"
  printf "Als erstes in Gazebo ein Pose Estimate durchführen!"
