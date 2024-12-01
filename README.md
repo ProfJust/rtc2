@@ -19,6 +19,7 @@ clone rtc2 dorthin
   ` $ git clone https://github.com/ProfJust/rtc2.git`
   
   Falls das git-Software-Paket noch nicht installiert ist, installieren Sie es mit
+  ` $ sudo apt update`
   ` $ sudo apt install git`
   
 
@@ -26,8 +27,8 @@ mache step1....sh und step2....sh ausführbar
 und führe sie aus
 
 * $ cd ~/turtlebot3_ws/src/rtc2/install
-* $ ./step1...
-* $ ./step2... 
+* $ ./step1_Install_ROS2_Hawksbill.sh
+* $ ./step2_Install_turtlebot_pkg.sh
 
 ### usage
 build and run simple publisher "say_temp"

@@ -23,7 +23,7 @@ export LANG=en_US.UTF-8
 locale  # verify settings
 
 # ensure that the Ubuntu Universe repository is enabled
-sudo apt install software-properties-common
+sudo apt install software-properties-common -y 
 sudo add-apt-repository universe
 
 # add the ROS 2 GPG key with apt.
@@ -38,11 +38,11 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-a
 # Install ROS 2 packages
 sudo apt update 
 sudo apt upgrade
-sudo apt install ros-humble-desktop
-sudo apt install ros-humble-ros-base
-sudo apt install ros-dev-tools
+sudo apt install ros-humble-desktop -y 
+sudo apt install ros-humble-ros-base -y 
+sudo apt install ros-dev-tools -y 
 # für die Praktika
-sudo apt install ros-humble-turtlesim
+sudo apt install ros-humble-turtlesim -y 
 
 # Environment setup
 # Replace ".bash" with your shell if you're not using bash
