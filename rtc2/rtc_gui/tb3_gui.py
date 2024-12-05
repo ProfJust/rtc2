@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
-# edited WHS, KK+KZ , 07.02.2023
+# last edited by OJ , 05.12.2024
+# 
+# ggf. sudo apt install pyqt5-dev-tools
+#
 # now with Tabs and more options
 # usage
-# $rosrun robocop_ros robocop_gui.py
+# $ ros2 run rtc2 rtc_gui 
 
 from PyQt5.QtWidgets import (QWidget, QApplication,
                              QPushButton, QComboBox,
@@ -18,11 +21,11 @@ import subprocess
 import socket
 import cv2 as cv
 import shutil
-
+import rclpy
 
 class MainWindow(QTabWidget):
     myFilePath = os.path.dirname(os.path.abspath(__file__))
-    basedir='/home/robotik-l2/catkin_ws/src/robocop_ros'
+    basedir='/home/oju/turtlenot3_ws/src/rtc2'
     filepath = ''
 
     def __init__(self, parent=None):
@@ -462,8 +465,11 @@ class MainWindow(QTabWidget):
             self.filepath = ''
 
 
-if __name__ == '__main__':
+def main():   
     app = QApplication(sys.argv)
     mw = MainWindow()
     mw.show()
     sys.exit(app.exec_())
+
+if __name__=="__main__":
+    main()
