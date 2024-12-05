@@ -1,6 +1,4 @@
 #include <micro_ros_arduino.h>
-#include "Adafruit_VL53L0X.h"
-Adafruit_VL53L0X lox = Adafruit_VL53L0X();
 
 #include <stdio.h>
 #include <rcl/rcl.h>
@@ -24,8 +22,6 @@ rcl_timer_t timer;
 #define RCSOFTCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){}}
 
 
-
-
 void error_loop(){
   while(1){
     digitalWrite(LED_PIN, !digitalRead(LED_PIN));
@@ -37,7 +33,8 @@ void timer_callback(rcl_timer_t * timer, int64_t last_call_time)
 {  
   RCLC_UNUSED(last_call_time);
   if (timer != NULL) {
-    RCSOFTCHECK(rcl_publish(&publisher, &msg, NULL));    
+    RCSOFTCHECK(rcl_publish(&publisher, &msg, NULL));
+    msg.data++;
   }
 }
 
@@ -77,22 +74,9 @@ void setup() {
   RCCHECK(rclc_executor_add_timer(&executor, &timer));
 
   msg.data = 0;
-
-  lox.begin();
 }
 
 void loop() {
-
-   VL53L0X_RangingMeasurementData_t measure;
-   lox.rangingTest(&measure, false); // pass in 'true' to get debug data printout!
-
-   if (measure.RangeStatus != 4) {  // phase failures have incorrect data
-    msg.data = measure.RangeMilliMeter;
-  }
-  else{
-    msg.data=0; 
-  }
-  
   delay(100);
   RCSOFTCHECK(rclc_executor_spin_some(&executor, RCL_MS_TO_NS(100)));
 }
