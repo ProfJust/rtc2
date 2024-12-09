@@ -5,7 +5,7 @@
 #
 # now with Tabs and more options
 # usage
-# $ ros2 run rtc2 rtc_gui 
+# $ ros2 run rtc2 tb3_gui 
 
 from PyQt5.QtWidgets import (QWidget, QApplication,
                              QPushButton, QComboBox,
