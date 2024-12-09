@@ -12,6 +12,7 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        # ('share/' + package_name + '/rtc_gui'),
         # Include all launch files.
         # https://docs.ros.org/en/foxy/Tutorials/Intermediate/Launch/Launch-system.html
         (os.path.join('share', package_name, 'launch'), glob(os.path.join('launch', '*launch.[pxy][yma]*')))
@@ -39,7 +40,7 @@ setup(
         'qt_robot_steering= rtc2.qt_robot_steering:main',
         'rtc_gui= rtc2.tb3_gui:main',
         'tb3_joypad_steering= rtc2.tb3_0_Joypad:main',
-        'nav2_simple_commander_test= rtc2.nav2_simple_commander_test:main',        
+        'nav2_simple_commander_test= rtc2.nav2_simple_commander_test:main',      
         ],
     },
 )

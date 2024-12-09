@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 ##pyqt_sw12_QTimer.py
+# ggf. sudo apt install python3-pyqt5.qtmultimedia
 
 import sys
 from PyQt5.QtCore import (Qt, QTimer)
