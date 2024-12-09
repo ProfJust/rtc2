@@ -78,6 +78,13 @@ source ~/.bashrc
  printf "$2 ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=True map:=$HOME/turtlebot3_ws/src/rtc2/maps/map.yaml"
  printf "Als erstes in Gazebo ein Pose Estimate durchführen!"
 
+ printf " Qt und PyQt installieren "
+ # Fehlermeldungen in VSCode Terminal 
+ sudo apt install qtwayland5
+ unset GTK_PATH
+ sudo apt install libcanberra-gtk-module
+
+
 
 
 
