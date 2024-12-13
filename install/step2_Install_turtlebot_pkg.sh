@@ -12,7 +12,7 @@ sudo apt install ros-humble-cartographer-ros -y
 sudo apt install ros-humble-navigation2 -y
 sudo apt install ros-humble-nav2-bringup -y
 sudo apt install ros-humble-rmw-cyclonedds-cpp -y
-echo 'export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp' >> ~/.bashrc
+# echo 'export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp' >> ~/.bashrc
 
 sudo apt install python3-transforms3d 
 sudo apt install ros-humble-tf-transformations
