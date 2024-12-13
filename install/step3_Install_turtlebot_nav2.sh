@@ -6,10 +6,10 @@
 sudo apt install ros-humble-cartographer -y
 sudo apt install ros-humble-cartographer-ros -y
 
-# cyclone DDS installieren
-sudo apt install ros-humble-rmw-cyclonedds-cpp -y
+# cyclone DDS installieren (workaround not needed anymore)
+# sudo apt install ros-humble-rmw-cyclonedds-cpp -y
 # ---> bashrc Eintrag
-echo 'export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp' >> ~/.bashrc
+# echo 'export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp' >> ~/.bashrc
 
 sudo apt install python3-transforms3d 
 sudo apt install ros-humble-tf-transformations
