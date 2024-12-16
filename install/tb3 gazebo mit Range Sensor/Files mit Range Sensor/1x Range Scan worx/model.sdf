@@ -182,10 +182,9 @@
       <collision name="range_sensor_collision">
         <pose>0.05 0 0.04 0 0 0</pose>
         <geometry>
-          <cylinder>
-            <radius>0.0508</radius>
-            <length>0.055</length>
-          </cylinder>
+          <box>
+            <size>0.01 0.03 0.02</size>
+          </box>
         </geometry>
       </collision>
 
@@ -206,10 +205,10 @@
         <ray>
           <scan>
             <horizontal>
-              <samples>10</samples>
+              <samples>20</samples>
               <resolution>1.000000</resolution>
-              <min_angle>-0.010000</min_angle>
-              <max_angle>+0.010000</max_angle>
+              <min_angle>-0.030000</min_angle>
+              <max_angle>+0.030000</max_angle>
             </horizontal>
           </scan>
           <range>
