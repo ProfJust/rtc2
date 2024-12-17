@@ -47,7 +47,7 @@ class micro_ROS_Node(Node):
     def publish_cmd(self):        
         msg = LaserScan()  # Leer msg instanzieren
         # ... und füllen
-        # msg.header.stamp = rclpy.time()
+        # https://github.com/mikeferguson/ros2_cookbook/blob/main/rclpy/time.md
         t = self.get_clock().now()
         msg.header.stamp = t.to_msg()
         msg.header.frame_id = "base_link"
