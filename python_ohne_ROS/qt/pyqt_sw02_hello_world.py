@@ -2,7 +2,8 @@
 import sys
 # Hello World mit den Aenderungen fuer Qt5
 # ggf. sudo apt install qtwayland5
-# unset GTK_PATH
+# Wenn es nicht aus VS Code zu starten ist:
+# $ unset GTK_PATH
 # sudo apt install libcanberra-gtk-module
 
 
