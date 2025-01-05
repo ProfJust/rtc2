@@ -1,27 +1,20 @@
-// Erster Test des Sensors VL53L0X 
-// an einem ESP32
-// OJ 16.12.24
+/// Mikro-ROS2 mit 2 Sensoren VL53L0X 
+//  an einem ESP32DevModule
+// Ausgabe der gemessenen Distanz per Serial Monitor 115k2 Baud
+// D22 SCL Gelb
+// D21 SDA Grün
+// D19  XSHUT_1
+// D18  XSHUT_2
+// GND  braun
+// 3V3 rot
+// OJ 2.1.25
+//##############################################################################################################
+// can not be tested: 5.5.2025 15:42 because of 
+// Error downloading https://raw.githubusercontent.com/espressif/arduino-esp32/gh- pages/package_esp32_index.json
+//##############################################################################################################
+// ggf. $ pip install pyserial
 //---------------------------------------------------
-/*Die `ROSDOMAINID` ist eine Umgebungsvariable, die im Robot Operating System 2 (ROS 2) verwendet wird. Sie wird genutzt, um Netzwerkkonflikte zu vermeiden, wenn mehrere unabhängige ROS 2 Netze im selben physischen Netzwerk laufen. Die `ROSDOMAINID` funktioniert als ein Logik-Filter, der sicherstellt, dass nur Knoten, die dieselbe Domain ID teilen, miteinander kommunizieren können.
 
-Standardmäßig ist die `ROSDOMAINID` auf `0` gesetzt. Wenn du jedoch mehrere separate ROS 2 Systeme in der gleichen Netzwerkumgebung betreiben möchtest, kannst du für jedes System eine unterschiedliche `ROSDOMAINID` einstellen, um Interferenzen zwischen den Systemen zu vermeiden.
-
-Um die `ROSDOMAINID` zu setzen, kannst du in der Shell, aus der du dein ROS 2 System startest, den folgenden Befehl verwenden:
-*/
-// usage:
-// $ export ROS_DOMAIN_ID=0
-
-// ROS_DOMAIN_ID auf 30 ändern (wie beim tb3)  siehe
-// https://micro.ros.org/docs/tutorials/programming_rcl_rclc/node/
-
-// ggf: 
-// git clone https://github.com/micro-ROS/micro-ROS-Agent.git -b humble
-// rosdep install --from-paths src --ignore-src -r -y
-// build & source
-// $ ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyUSB0
-// check Topic with rqt Topic Monitor Plugin
-
-//---------------------------------------------------
 #include "Adafruit_VL53L0X.h"
 #include <micro_ros_arduino.h>
 #include <stdio.h>
@@ -31,21 +24,80 @@ Um die `ROSDOMAINID` zu setzen, kannst du in der Shell, aus der du dein ROS 2 Sy
 #include <rclc/executor.h>
 #include <std_msgs/msg/int32.h>
 
-rcl_publisher_t publisher;
-std_msgs__msg__Int32 msg;
-rclc_executor_t executor;
-rclc_support_t support;
-rcl_allocator_t allocator;
-rcl_init_options_t init_options;
-rcl_node_t node;
-rcl_timer_t timer;
+// address we will assign if dual sensor is present
+#define LOX1_ADDRESS 0x30
+#define LOX2_ADDRESS 0x31
+
+// set the XSHUT - Pins 
+#define SHT_LOX1 18
+#define SHT_LOX2 19
 
 #define LED_PIN 13
 #define RCCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){error_loop();}}
 #define RCSOFTCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){}}
 
-Adafruit_VL53L0X lox = Adafruit_VL53L0X();
-uint32_t range=0;
+// objects for the vl53l0x
+//Adafruit_VL53L0X lox = Adafruit_VL53L0X();
+Adafruit_VL53L0X lox1 = Adafruit_VL53L0X();
+Adafruit_VL53L0X lox2 = Adafruit_VL53L0X();
+
+// this holds the measurement
+VL53L0X_RangingMeasurementData_t measure1;
+VL53L0X_RangingMeasurementData_t measure2;
+uint32_t range1=0;
+uint32_t range2=0;
+
+rcl_publisher_t publisher;
+rcl_publisher_t publisher2;
+std_msgs__msg__Int32 msg;
+std_msgs__msg__Int32 msg2;
+rclc_executor_t executor;
+rclc_support_t support;
+rclc_support_t support2;
+rcl_allocator_t allocator;
+rcl_init_options_t init_options;
+rcl_node_t node;
+rcl_timer_t timer;
+
+
+void setID() {
+  // all reset
+  digitalWrite(SHT_LOX1, LOW);    
+  digitalWrite(SHT_LOX2, LOW);
+  delay(10);
+  // all unreset
+  digitalWrite(SHT_LOX1, HIGH);
+  digitalWrite(SHT_LOX2, HIGH);
+  delay(10);
+
+  // activating LOX1 and resetting LOX2
+  digitalWrite(SHT_LOX1, HIGH);
+  digitalWrite(SHT_LOX2, LOW);
+
+  // initing LOX1
+  if(!lox1.begin(LOX1_ADDRESS)) {
+    //Serial.println(F("Failed to boot first VL53L0X"));
+    while(1);
+  }
+  delay(10);
+
+  // activating LOX2
+  digitalWrite(SHT_LOX2, HIGH);
+  delay(10);
+
+  //initing LOX2
+  if(!lox2.begin(LOX2_ADDRESS)) {
+    //Serial.println(F("Failed to boot second VL53L0X"));
+    while(1);
+  }
+}
+
+void read_dual_sensors() {
+  
+  lox1.rangingTest(&measure1, false); // pass in 'true' to get debug data printout!
+  lox2.rangingTest(&measure2, false); // pass in 'true' to get debug data printout!
+}
+
 
 void error_loop(){
   while(1){
@@ -60,16 +112,31 @@ void timer_callback(rcl_timer_t * timer, int64_t last_call_time)
   if (timer != NULL) {
     RCSOFTCHECK(rcl_publish(&publisher, &msg, NULL));
     //msg.data++;
-    msg.data = range;
+    msg.data = range1;
+    RCSOFTCHECK(rcl_publish(&publisher2, &msg2, NULL));
+    //msg.data++;
+    msg2.data = range2;
   }
 }
 
-void setup() {
-  set_microros_transports();
-  
-  pinMode(LED_PIN, OUTPUT);
-  digitalWrite(LED_PIN, HIGH);  
 
+void setup() {
+  // ---- set I2C-Adresses  ----
+  pinMode(SHT_LOX1, OUTPUT);
+  pinMode(SHT_LOX2, OUTPUT);
+  //Serial.println(F("Shutdown pins inited..."));
+  digitalWrite(SHT_LOX1, LOW);
+  digitalWrite(SHT_LOX2, LOW);
+ //Serial.println(F("Both in reset mode...(pins are low)"));
+ //Serial.println(F("Starting..."));
+  setID();
+  // ---- set I2C-Adresses  END ----
+
+  set_microros_transports();
+
+  pinMode(LED_PIN, OUTPUT);
+  digitalWrite(LED_PIN, HIGH); 
+    
   allocator = rcl_get_default_allocator();
   //-------  Set ROS_DOMAIN_ID to 30 ----------------
   //create init_options
@@ -91,6 +158,13 @@ void setup() {
     ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
     "range"));
 
+  // create publisher 2
+  RCCHECK(rclc_publisher_init_default(
+    &publisher2,
+    &node,
+    ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
+    "range2"));
+
   // create timer,
   const unsigned int timer_timeout = 100;
   RCCHECK(rclc_timer_init_default(
@@ -98,25 +172,35 @@ void setup() {
     &support,
     RCL_MS_TO_NS(timer_timeout),
     timer_callback));
-
+  
   // create executor
   RCCHECK(rclc_executor_init(&executor, &support.context, 1, &allocator));
   RCCHECK(rclc_executor_add_timer(&executor, &timer));
 
+
   msg.data = 0;
 
-  if (!lox.begin()) {
+  if (!lox1.begin()) {
       //Serial.println(F("Failed to boot VL53L0X"));
       while(1);
   }
-  lox.startRangeContinuous();
+  lox1.startRangeContinuous();
+
+  if (!lox2.begin()) {
+      //Serial.println(F("Failed to boot VL53L0X"));
+      while(1);
+  }
+  lox2.startRangeContinuous();
   
 }
 
 void loop() {
   //delay(100);
   RCSOFTCHECK(rclc_executor_spin_some(&executor, RCL_MS_TO_NS(100)));
-  if (lox.isRangeComplete()) {
-    range = lox.readRange();
+  if (lox1.isRangeComplete()) {
+    range1 = lox1.readRange();
+  }
+  if (lox2.isRangeComplete()) {
+    range2 = lox2.readRange();
   }
 }

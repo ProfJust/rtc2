@@ -3,6 +3,8 @@
 // Ausgabe der gemessenen Distanz per Serial Monitor 115k2 Baud
 // D22 SCL Gelb
 // D21 SDA Grün
+// D19  XSHUT_1
+// D18  XSHUT_2
 // GND  braun
 // 3V3 rot
 // OJ 2.1.25
