@@ -1,10 +1,11 @@
 // Erster Test des Sensors VL53L0X 
-// an einem Arduino Mega 
-// E-Block EB22
-// Anschluss (D8-D15 - D-Sub-Pin 7 und 8)
-// D21 SCL Gelb
-// D20 SDA Grün
-// OJ 17.12.24
+// an einem ESP32
+// Ausgabe der gemessenen Distanz per Serial Monitor 115k2 Baud
+// D22 SCL Gelb
+// D21 SDA Grün
+// GND  braun
+// 3V3 rot
+// OJ 2.1.25
 // ggf. $ pip install pyserial
 //---------------------------------------------------
 
