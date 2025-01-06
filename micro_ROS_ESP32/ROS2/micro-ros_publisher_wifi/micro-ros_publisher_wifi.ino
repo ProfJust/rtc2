@@ -4,6 +4,8 @@
 // Serial Version: $ ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyUSB0
 // Wifi Version:   $ ros2 run micro_ros_agent micro_ros_agent udp4 --port 8888 -v6
 
+// see https://github.com/micro-ROS/micro_ros_setup/issues/532
+
 #include <micro_ros_arduino.h>
 
 #include <stdio.h>
@@ -14,9 +16,9 @@
 
 #include <std_msgs/msg/int32.h>
 //################################## SET SSID here !! ######################
-#define WIFI_SSID "TP_ROBOTIK"
-#define WIFI_PASS "123456"
-#define IP "192.168.1.57"
+/*#define WIFI_SSID "TP-Link_Robotik"
+#define WIFI_PASS "4809565"
+#define IP "192.168.0.184"*/
 //################################## SET SSID here !! ######################
 
 #if !defined(ESP32) && !defined(TARGET_PORTENTA_H7_M7) && !defined(ARDUINO_NANO_RP2040_CONNECT) && !defined(ARDUINO_WIO_TERMINAL)
@@ -52,8 +54,10 @@ void timer_callback(rcl_timer_t * timer, int64_t last_call_time)
 }
 
 void setup() {
-  set_microros_wifi_transports(WIFI_SSID, WIFI_PASS, IP , 8888);
-
+  //set_microros_wifi_transports("WIFI SSID", "WIFI PASS", "192.168.1.57", 8888);
+  // get IP from Server-Client List (Browser with 192.168.0.1)
+  set_microros_wifi_transports("TP-Link_Robotik", "48095655", "192.168.0.84" , 8888); 
+  
   pinMode(LED_PIN, OUTPUT);
   digitalWrite(LED_PIN, HIGH);
 

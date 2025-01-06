@@ -8,12 +8,19 @@
 // GND  braun
 // 3V3 rot
 // OJ 2.1.25
-//##############################################################################################################
-// can not be tested: 5.5.2025 15:42 because of 
-// Error downloading https://raw.githubusercontent.com/espressif/arduino-esp32/gh- pages/package_esp32_index.json
-//##############################################################################################################
-// ggf. $ pip install pyserial
+// Starting Mikro-ROS Agent
+// Serial Version: $ ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyUSB0
 //---------------------------------------------------
+
+
+
+
+
+//##############################################################################################################
+// does not work yet: 6.5.2025 12:07 because of 
+// Topic appears but no data
+
+//##############################################################################################################
 
 #include "Adafruit_VL53L0X.h"
 #include <micro_ros_arduino.h>
@@ -92,13 +99,6 @@ void setID() {
   }
 }
 
-void read_dual_sensors() {
-  
-  lox1.rangingTest(&measure1, false); // pass in 'true' to get debug data printout!
-  lox2.rangingTest(&measure2, false); // pass in 'true' to get debug data printout!
-}
-
-
 void error_loop(){
   while(1){
     digitalWrite(LED_PIN, !digitalRead(LED_PIN));
@@ -110,17 +110,18 @@ void timer_callback(rcl_timer_t * timer, int64_t last_call_time)
 {  
   RCLC_UNUSED(last_call_time);
   if (timer != NULL) {
-    RCSOFTCHECK(rcl_publish(&publisher, &msg, NULL));
-    //msg.data++;
-    msg.data = range1;
+    /*RCSOFTCHECK(rcl_publish(&publisher, &msg, NULL));
+    msg.data++;
+    //msg.data = range1;*/
     RCSOFTCHECK(rcl_publish(&publisher2, &msg2, NULL));
-    //msg.data++;
-    msg2.data = range2;
+    msg2.data++;
+    //msg2.data = range2;
   }
 }
 
 
 void setup() {
+  set_microros_transports();
   // ---- set I2C-Adresses  ----
   pinMode(SHT_LOX1, OUTPUT);
   pinMode(SHT_LOX2, OUTPUT);
@@ -129,10 +130,10 @@ void setup() {
   digitalWrite(SHT_LOX2, LOW);
  //Serial.println(F("Both in reset mode...(pins are low)"));
  //Serial.println(F("Starting..."));
-  setID();
+  //setID();
   // ---- set I2C-Adresses  END ----
 
-  set_microros_transports();
+  
 
   pinMode(LED_PIN, OUTPUT);
   digitalWrite(LED_PIN, HIGH); 
@@ -149,14 +150,14 @@ void setup() {
   //-------  End set ROS_DOMAIN_ID to 30 ----------------
   
   // create node
-  RCCHECK(rclc_node_init_default(&node, "micro_ros_range_node", "", &support));
+  RCCHECK(rclc_node_init_default(&node, "micro_ros_range_node2", "", &support));
 
   // create publisher
-  RCCHECK(rclc_publisher_init_default(
+  /*RCCHECK(rclc_publisher_init_default(
     &publisher,
     &node,
     ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
-    "range"));
+    "range"));*/
 
   // create publisher 2
   RCCHECK(rclc_publisher_init_default(
@@ -178,7 +179,8 @@ void setup() {
   RCCHECK(rclc_executor_add_timer(&executor, &timer));
 
 
-  msg.data = 0;
+  msg.data  = 0;
+  msg2.data = 0;
 
   if (!lox1.begin()) {
       //Serial.println(F("Failed to boot VL53L0X"));
@@ -192,7 +194,7 @@ void setup() {
   }
   lox2.startRangeContinuous();
   
-}
+} //END Setup
 
 void loop() {
   //delay(100);
