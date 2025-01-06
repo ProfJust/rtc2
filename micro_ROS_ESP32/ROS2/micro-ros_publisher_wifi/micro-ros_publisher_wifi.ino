@@ -5,6 +5,7 @@
 // Wifi Version:   $ ros2 run micro_ros_agent micro_ros_agent udp4 --port 8888 -v6
 
 // see https://github.com/micro-ROS/micro_ros_setup/issues/532
+//     https://robofoundry.medium.com/esp32-micro-ros-actually-working-over-wifi-and-udp-transport-519a8ad52f65
 
 #include <micro_ros_arduino.h>
 

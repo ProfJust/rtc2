@@ -52,7 +52,7 @@ class micro_ROS_Node(Node):
         msg.header.stamp = t.to_msg()
         msg.header.frame_id = "base_link"
         msg.angle_min = -0.01 # start angle of the scan [rad] 
-        msg.angle_max = -0.01 # start angle of the scan [rad]  
+        msg.angle_max =  0.01 # start angle of the scan [rad]  
         msg.angle_increment = 0.01 # angular distance between measurements [rad]
         msg.time_increment = 0.001 # time between measurements [seconds] - if your scanner
                            # # is moving, this will be used in interpolating position
