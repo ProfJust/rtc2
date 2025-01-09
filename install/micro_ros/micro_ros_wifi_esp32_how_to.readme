@@ -1,0 +1,100 @@
+micro_ros_wifi_esp32_how_to.readme
+
+
+1.) docker installieren und testen
+
+    https://docs.docker.com/engine/install/ubuntu/
+
+    # Add Docker's official GPG key:
+    sudo apt-get update
+    sudo apt-get install ca-certificates curl
+    sudo install -m 0755 -d /etc/apt/keyrings
+    sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+    sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+    # Add the repository to Apt sources:
+    echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+    sudo apt-get update
+
+    sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    
+    Chek Docker Version installed 
+        $ docker --version
+
+    ###### Enable Docker ############
+     ===>>>    $ sudo systemctl start docker
+    Run Hello World
+      $ sudo docker run hello-world
+
+2.) ESP32 — micro-ROS actually working over WiFi and UDP Transport
+https://robofoundry.medium.com/esp32-micro-ros-actually-working-over-wifi-and-udp-transport-519a8ad52f65
+
+    $ sudo chmod 666 /dev/ttyUSB0
+    $ cd esp32/microROS/micro_ros_espidf_component/
+    $ sudo docker run -it --rm --user espidf --volume="/etc/timezone:/etc/timezone:ro" -v  $(pwd):/micro_ros_espidf_component -v  /dev:/dev --privileged --workdir /micro_ros_espidf_component microros/esp-idf-microros:latest /bin/bash  -c "cd examples/int32_publisher; idf.py menuconfig build flash monitor"
+    
+
+    Agent starten und Topic anzeigen lassen:
+        $ docker run -it --rm --net=host microros/micro-ros-agent:humble udp4 --port 8888 -v6
+        $ ros2 topic echo /freertos_int32_publisher 
+    oder wenn micro-ros installiert (tested OK) 
+        $ ros2 run micro_ros_agent micro_ros_agent udp4 --port 8888 -v6
+        $ ros2 topic echo /freertos_int32_publisher 
+
+        Installation AGent:  git clone -b $ROS_DISTRO https://github.com/micro-ROS/micro_ros_setup.git src/micro_ros_setup
+         ?$ build
+         ?$ ros2 run micro_ros_setup create_agent_ws.sh
+         ?$ ros2 run micro_ros_setup build_agent.sh
+
+3.) Programmieren des ESP32
+ROS_LOCALHOST_ONLY = 0 
+ROS_DOMAIN_ID = 0 
+            $ cd esp32/microROS/micro_ros_espidf_component/
+            $ sudo chmod 666 /dev/ttyUSB0
+        starten des Espressif IoT Development Framework Configuration - Tool 
+            $ sudo docker run -it --rm --user espidf --volume="/etc/timezone:/etc/timezone:ro" -v  $(pwd):/micro_ros_espidf_component -v  /dev:/dev --privileged --workdir /micro_ros_espidf_component microros/esp-idf-microros:latest /bin/bash  -c "cd examples/int32_publisher; idf.py menuconfig build flash monitor"
+        dort unter micro ROS Settings die IP und den Host -> Wifi Configuratin konfiguieren bzw. checken    
+            mit Q beenden, 
+            dabei Boot Button auf dem ESP32 gedrückt halten, damit Programm (Firmware) auf den ESP32 hochgeladen werden kann.
+            nach upload loslassen und  EN - Button betätigen
+            Programm laufen lassen
+            ...
+                Publishing: 0
+                Publishing: 2
+                Publishing: 4
+                Publishing: 6
+            ...
+
+
+        In neuem Tab den Agent starten, EN - Button betätigen
+            $2 ros2 run micro_ros_agent micro_ros_agent udp4 --port 8888 -v6
+            ...
+            [1736418068.316942] debug    | UDPv4AgentLinux.cpp | send_message             | [** <<UDP>> **]        | client_key: 0x4B93AB48, len: 13, data: 
+            0000: 81 00 00 00 0A 01 05 00 EA 00 00 00 80
+            ...
+
+        Topic vom ESP32 empfangen
+            $3 ros2 topic echo /freertos_int32_publisher
+
+
+4.) Änderung des ESP32 -Codes  msg+=2;  funktioniert !!!!
+
+/home/oj/esp32/microROS/micro_ros_espidf_component/examples/int32_publisher/main.c
+
+void timer_callback(rcl_timer_t * timer, int64_t last_call_time)
+{
+	RCLC_UNUSED(last_call_time);
+	if (timer != NULL) {
+		printf("Publishing: %d\n", (int) msg.data);
+		RCSOFTCHECK(rcl_publish(&publisher, &msg, NULL));
+		msg.data++;
+		msg.data++;
+	}
+}
+
+
+5.) ohne Docker => https://docs.espressif.com/projects/esp-idf/en/stable/esp32/get-started/linux-macos-setup.html
