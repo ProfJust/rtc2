@@ -6,7 +6,7 @@
 
 // see https://github.com/micro-ROS/micro_ros_setup/issues/532
 //     https://robofoundry.medium.com/esp32-micro-ros-actually-working-over-wifi-and-udp-transport-519a8ad52f65
-
+#include "Adafruit_VL53L0X.h"
 #include <micro_ros_arduino.h>
 
 #include <stdio.h>
@@ -19,7 +19,7 @@
 //################################## SET SSID here !! ######################
 /*#define WIFI_SSID "TP-Link_Robotik"
 #define WIFI_PASS "4809565"
-#define IP "192.168.0.184"*/
+#define IP "192.168.0.183"*/
 //################################## SET SSID here !! ######################
 
 #if !defined(ESP32) && !defined(TARGET_PORTENTA_H7_M7) && !defined(ARDUINO_NANO_RP2040_CONNECT) && !defined(ARDUINO_WIO_TERMINAL)
@@ -33,10 +33,11 @@ rcl_allocator_t allocator;
 rcl_node_t node;
 
 #define LED_PIN 13
-
 #define RCCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){error_loop();}}
 #define RCSOFTCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){}}
 
+Adafruit_VL53L0X lox = Adafruit_VL53L0X();
+uint32_t range=0;
 
 void error_loop(){
   while(1){
@@ -50,14 +51,13 @@ void timer_callback(rcl_timer_t * timer, int64_t last_call_time)
   RCLC_UNUSED(last_call_time);
   if (timer != NULL) {
     RCSOFTCHECK(rcl_publish(&publisher, &msg, NULL));
-    msg.data++;
+    msg.data = range;
   }
 }
 
 void setup() {
-  //set_microros_wifi_transports("WIFI SSID", "WIFI PASS", "192.168.1.57", 8888);
-  // get IP from Server-Client List (Browser with 192.168.0.1)
-  set_microros_wifi_transports("TP-Link_Robotik", "48095655", "192.168.0.84" , 8888); 
+  // ############################# IP Adresse des PCs auf dem der µROS-Agent läuft !!! #####
+  set_microros_wifi_transports("TP-Link_Robotik", "48095655", "192.168.0.183", 8888); 
   
   pinMode(LED_PIN, OUTPUT);
   digitalWrite(LED_PIN, HIGH);
@@ -77,12 +77,19 @@ void setup() {
     &publisher,
     &node,
     ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
-    "topic_name"));
+    "range"));
 
-  msg.data = 0;
+  //msg.data = 0;
+  if (!lox.begin()) {
+      //Serial.println(F("Failed to boot VL53L0X"));
+      while(1);
+  }
+  lox.startRangeContinuous();
 }
 
 void loop() {
     RCSOFTCHECK(rcl_publish(&publisher, &msg, NULL));
-    msg.data++;
+    if (lox.isRangeComplete()) {
+    range = lox.readRange();
+  }
 }
