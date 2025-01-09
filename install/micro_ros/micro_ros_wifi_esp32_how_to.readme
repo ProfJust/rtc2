@@ -206,3 +206,12 @@ dazu folgende Befehle eingegeben:
         cd /home/oj/esp/hello_world
         idf.py build
         idf.py flash
+
+7.) Direktes micro-ros kompilieren ohne Docker
+        sudo chmod 666 /dev/ttyUSB0
+        sudo chmod -R 777 ~/esp32
+        . $HOME/esp/esp-idf/export.sh
+        cd ~/esp32/microROS/micro_ros_espidf_component/examples/int32_publisher
+        idf.py menuconfig
+        idf.py build
+        idf.py flash
