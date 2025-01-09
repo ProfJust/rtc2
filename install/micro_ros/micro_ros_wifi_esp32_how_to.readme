@@ -202,6 +202,7 @@ dazu folgende Befehle eingegeben:
         2025  python -m esptool --chip esp32 -b 460800 --before default_reset --after hard_reset write_flash "@flash_args"
 
 6.) Build and flash hello world
+        . $HOME/esp/esp-idf/export.sh
         cd /home/oj/esp/hello_world
         idf.py build
         idf.py flash
