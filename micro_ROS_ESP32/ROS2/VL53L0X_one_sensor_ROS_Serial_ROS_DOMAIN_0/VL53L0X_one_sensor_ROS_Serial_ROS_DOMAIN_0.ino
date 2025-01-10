@@ -6,7 +6,7 @@
 
 Standardmäßig ist die `ROSDOMAINID` auf `0` gesetzt. Wenn du jedoch mehrere separate ROS 2 Systeme in der gleichen Netzwerkumgebung betreiben möchtest, kannst du für jedes System eine unterschiedliche `ROSDOMAINID` einstellen, um Interferenzen zwischen den Systemen zu vermeiden.
 
-Um die `ROSDOMAINID` zu setzen, kannst du in der Shell, aus der du dein ROS 2 System startest, den folgenden Befehl verwenden:
+Um die `ROS_DOMAIN_ID` zu setzen, kannst du in der Shell, aus der du dein ROS 2 System startest, den folgenden Befehl verwenden:
 */
 // usage:
 // $ export ROS_DOMAIN_ID=0
@@ -18,7 +18,10 @@ Um die `ROSDOMAINID` zu setzen, kannst du in der Shell, aus der du dein ROS 2 Sy
 // git clone https://github.com/micro-ROS/micro-ROS-Agent.git -b humble
 // rosdep install --from-paths src --ignore-src -r -y
 // build & source
-// $ ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyUSB0
+// $ ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyUSB0 ROS_DOMAIN_ID=0
+// Ensure ROS_DOMAIN_ID is 0, e.g.  export ROS_DOMAIN_ID=0 in .bashrc  
+// Ensure ROS_LOCALHOST_ONLY is 0, see export in .bashrc  
+
 
 //---------------------------------------------------
 #include "Adafruit_VL53L0X.h"
@@ -70,17 +73,9 @@ void setup() {
   digitalWrite(LED_PIN, HIGH);  
 
   allocator = rcl_get_default_allocator();
-  //-------  Set ROS_DOMAIN_ID to 30 ----------------
-  //create init_options
-    //Default Version ROS_DOMAIN_ID = 0
+  
   RCCHECK(rclc_support_init(&support, 0, NULL, &allocator)); 
-  /*init_options = rcl_get_zero_initialized_init_options();
-  rcl_init_options_init(&init_options, allocator);
-  rcl_init_options_set_domain_id(&init_options, 30);
-  RCCHECK(rclc_support_init_with_options(&support, 0, NULL, &init_options, &allocator));
-  //-------  End set ROS_DOMAIN_ID to 30 ----------------
-  */
-
+  
   // create node
   RCCHECK(rclc_node_init_default(&node, "micro_ros_range_node", "", &support));
 
@@ -119,4 +114,5 @@ void loop() {
   if (lox.isRangeComplete()) {
     range = lox.readRange();
   }
+  msg.data = range;
 }

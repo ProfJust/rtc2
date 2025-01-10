@@ -7,6 +7,7 @@
 // 3V3 rot
 // OJ 2.1.25
 // ggf. $ pip install pyserial
+// tested OK 10.1.25
 //---------------------------------------------------
 
 #include "Adafruit_VL53L0X.h"

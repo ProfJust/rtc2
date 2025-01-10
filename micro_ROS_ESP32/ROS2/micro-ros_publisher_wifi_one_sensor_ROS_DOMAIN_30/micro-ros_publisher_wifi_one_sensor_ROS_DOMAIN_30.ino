@@ -2,7 +2,7 @@
 // Starting Mikro-ROS Agent
 // Wifi Version:   $ ros2 run micro_ros_agent micro_ros_agent udp4 --port 8888 -v6
 
-// tested with Hardwareas OK!! 9.1.2025
+// tested with Hardware as OK!! 9.1.2025
 
 #include "Adafruit_VL53L0X.h"
 #include <micro_ros_arduino.h>

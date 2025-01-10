@@ -11,7 +11,7 @@ Um die `ROSDOMAINID` zu setzen, kannst du in der Shell, aus der du dein ROS 2 Sy
 // usage:
 // $ export ROS_DOMAIN_ID=0
 
-// ROS_DOMAIN_ID auf 30 ändern (wie beim tb3)  siehe
+// ROS_DOMAIN_ID auf 30 ändern (entspricht der ID vom TurtleBot3)  siehe
 // https://micro.ros.org/docs/tutorials/programming_rcl_rclc/node/
 
 // ggf: 
@@ -119,4 +119,5 @@ void loop() {
   if (lox.isRangeComplete()) {
     range = lox.readRange();
   }
+  msg.data = range;
 }

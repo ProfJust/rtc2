@@ -215,3 +215,9 @@ dazu folgende Befehle eingegeben:
         idf.py menuconfig
         idf.py build
         idf.py flash
+
+
+8.)  Korrekte IP im Arduino Code (die des Remote PCs !!) löst das Problem  
+ ROS_LOCALHOST_ONLY = 0 
+ ROS_DOMAIN_ID = 0
+ RMW_IMPLEMENTATION = FAST_DDS
