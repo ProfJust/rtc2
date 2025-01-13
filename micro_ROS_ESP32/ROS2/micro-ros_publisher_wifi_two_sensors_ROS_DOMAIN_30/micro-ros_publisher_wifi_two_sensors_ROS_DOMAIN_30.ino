@@ -162,7 +162,10 @@ void loop() {
   RCSOFTCHECK(rcl_publish(&publisher2, &msg2, NULL));
   
   if (lox1.isRangeComplete()) {  range1 = lox1.readRange(); }
+  if (range1 < 2000)  // if not out of range
+    msg1.data = range1; 
+ 
   if (lox2.isRangeComplete()) {  range2 = lox2.readRange(); }
-  msg1.data = range1;
-  msg2.data = range2;
+  if (range2 < 2000)  // if not out of range
+    msg2.data = range2;
 }
