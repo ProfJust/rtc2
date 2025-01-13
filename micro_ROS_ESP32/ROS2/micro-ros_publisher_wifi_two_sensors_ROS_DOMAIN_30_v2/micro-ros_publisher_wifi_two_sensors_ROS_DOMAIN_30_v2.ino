@@ -2,6 +2,13 @@
 // an einem ESP32
 // sendet über Micro-ROS-Wifiauf ROS_DOMAIN_ID 30
 // OJ 10.1.25
+// D22 SCL Gelb
+// D21 SDA Grün
+// D19  XSHUT_1
+// D18  XSHUT_2
+// GND  braun
+// 3V3 rot
+
 //---------------------------------------------------
 // tested @ Home Office 
 /// Starting Mikro-ROS Agent
@@ -104,7 +111,9 @@ void setup() {
 
   // ############################# IP Adresse des PCs auf dem der µROS-Agent läuft !!! #####
   //WHS 
-  set_microros_wifi_transports("TP-Link_Robotik", "48095655", "192.168.0.183", 8888); 
+  //set_microros_wifi_transports("TP-Link_Robotik", "48095655", "192.168.0.183", 8888); 
+  set_microros_wifi_transports("TP-Link_6F5A", "13078553", "192.168.0.183", 8888);
+  
   //HomeOffice
   //set_microros_wifi_transports("just_a_FRITZbox", "PASSWORD", "192.168.178.37", 8888); 
   
@@ -162,10 +171,8 @@ void loop() {
   RCSOFTCHECK(rcl_publish(&publisher2, &msg2, NULL));
   
   if (lox1.isRangeComplete()) {  range1 = lox1.readRange(); }
-  // if not out of range
-  if (range1 < 2000) {  msg1.data = range1; } 
+  msg1.data = range1; 
  
   if (lox2.isRangeComplete()) {  range2 = lox2.readRange(); }
-  // if not out of range
-  if (range2 < 2000) {  msg2.data = range2; }
+  msg2.data = range2;
 }

@@ -120,9 +120,9 @@ class micro_ROS_Node(Node):
         t1 = self.get_clock().now()
         msg1.header.stamp = t1.to_msg()
         msg1.header.frame_id = "sensor1_frame" #"base_link"
-        msg1.angle_min = -0.02 # start angle of the scan [rad] 
-        msg1.angle_max =  0.02 # start angle of the scan [rad]  
-        msg1.angle_increment = 0.01 # angular distance between measurements [rad]
+        msg1.angle_min = -0.04 # start angle of the scan [rad] 
+        msg1.angle_max =  0.04 # start angle of the scan [rad]  
+        msg1.angle_increment = 0.02 # angular distance between measurements [rad]
         msg1.time_increment = 0.001 # time between measurements [seconds] - if your scanner
                            # # is moving, this will be used in interpolating position
                            # # of 3d points
@@ -140,9 +140,9 @@ class micro_ROS_Node(Node):
         msg2 = LaserScan()  # Leer msg instanzieren
         msg2.header.stamp = t2.to_msg()
         msg2.header.frame_id = "sensor2_frame" #"base_link"
-        msg2.angle_min = -0.02 # start angle of the scan [rad] 
+        msg2.angle_min = -0.04 # start angle of the scan [rad] 
         msg2.angle_max =  0.02 # start angle of the scan [rad]  
-        msg2.angle_increment = 0.01 # angular distance between measurements [rad]
+        msg2.angle_increment = 0.02 # angular distance between measurements [rad]
         msg2.time_increment = 0.001 # time between measurements [seconds] - if your scanner
                            # # is moving, this will be used in interpolating position
                            # # of 3d points

@@ -8,7 +8,7 @@
 // GND  braun
 // 3V3 rot
 // OJ 2.1.25
-// tested OK 2.5.2025 19:55
+// tested OK 5.1.2025 19:55
 // ggf. $ pip install pyserial
 //---------------------------------------------------
 
