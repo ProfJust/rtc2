@@ -68,10 +68,12 @@ class micro_ROS_Node(Node):
            t.header.frame_id = 'base_link'
            t.child_frame_id = 'sensor_frame'
            
-           t.transform.translation.x = 1.0
-           t.transform.translation.y = 0.0
-           t.transform.translation.z = 0.0
-           q = tf_transformations.quaternion_from_euler(0, 0, math.pi / 4)  # Roll, pitch, yaw
+           t.transform.translation.x = 0.065  # ca. 6,5cm
+           t.transform.translation.y = 0.065
+           t.transform.translation.z = 0.04   # ca. 4cm
+           winkel_deg = -20 # Grad
+           winkel_rad = winkel_deg /180.0 * math.pi
+           q = tf_transformations.quaternion_from_euler(0, 0, winkel_rad)  # Roll, pitch, yaw
            t.transform.rotation.x = q[0]
            t.transform.rotation.y = q[1]
            t.transform.rotation.z = q[2]
