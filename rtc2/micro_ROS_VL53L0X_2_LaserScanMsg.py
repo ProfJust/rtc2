@@ -20,6 +20,9 @@ from sensor_msgs.msg import LaserScan
 from std_msgs.msg import Int32
 #from turtlesim.msg import Pose
 #from math import pow, atan2, sqrt, pi
+from rclpy.qos import ReliabilityPolicy, QoSProfile
+qos_profile = QoSProfile(depth=10)
+qos_profile.reliability = ReliabilityPolicy.BEST_EFFORT
 
 class micro_ROS_Node(Node):
     def __init__(self):
@@ -27,22 +30,35 @@ class micro_ROS_Node(Node):
         self.cmd_vel_publisher_ = self.create_publisher(
                                     LaserScan,
                                     "Lrange",
-                                    10)
+                                    qos_profile)  
+        # the number `10` you are trying to pass seems to represent the depth, but since you are already specifying it in the `qos_profile`, it's unnecessary and will result in a syntax error.
+
         self.cmd_timer_ = self.create_timer(
                             0.5,
                             self.publish_cmd)
         
-        self.subscription = self.create_subscription(
+        self.sub1 = self.create_subscription(
                               Int32,
-                              'range',
-                              self.listener_callback,
-                              10)
-        self.subscription  # prevent unused variable warning
-        self.my_range = 0.0
+                              'range1',
+                              self.listener_callback1,
+                              qos_profile)
+        self.sub2 = self.create_subscription(
+                              Int32,
+                              'range2',
+                              self.listener_callback2,
+                              qos_profile)
+        self.sub1  # prevent unused variable warning
+        self.sub2  # prevent unused variable warning
+        self.my_range1 = 0.0
+        self.my_range2 = 0.0
 
-    def listener_callback(self, msg):
-        self.my_range = msg.data/1000 # msg in mm, range in m
-        self.get_logger().info(' Sensor gives Position in m "%f"' % self.my_range)
+    def listener_callback1(self, msg):
+        self.my_range1 = msg.data/1000 # msg in mm, range in m
+        self.get_logger().info(' Sensor1 gives Position in m "%f"' % self.my_range1)
+
+    def listener_callback2(self, msg):
+        self.my_range2 = msg.data/1000 # msg in mm, range in m
+        self.get_logger().info(' Sensor2 gives Position in m "%f"' % self.my_range2)
 
     def publish_cmd(self):        
         msg = LaserScan()  # Leer msg instanzieren
@@ -51,16 +67,16 @@ class micro_ROS_Node(Node):
         t = self.get_clock().now()
         msg.header.stamp = t.to_msg()
         msg.header.frame_id = "base_link"
-        msg.angle_min = -0.01 # start angle of the scan [rad] 
-        msg.angle_max =  0.01 # start angle of the scan [rad]  
+        msg.angle_min = -0.02 # start angle of the scan [rad] 
+        msg.angle_max =  0.02 # start angle of the scan [rad]  
         msg.angle_increment = 0.01 # angular distance between measurements [rad]
         msg.time_increment = 0.001 # time between measurements [seconds] - if your scanner
                            # # is moving, this will be used in interpolating position
                            # # of 3d points
         msg.scan_time = 0.0 # time between scans [seconds]
         msg.range_min = 0.02 # minimum range value [m]
-        msg.range_max = 9.0   # maximum range value [m]
-        msg.ranges = [self.my_range, self.my_range, self.my_range ] # range data [m]
+        msg.range_max = 2.0   # maximum range value [m]
+        msg.ranges = [self.my_range1, self.my_range1, self.my_range1, self.my_range2, self.my_range2  ] # range data [m]
         # # (Note: values < range_min or > range_max should be discarded)
         msg.intensities = [] # intensity data [device-specific units]. If your
         # # device does not provide intensities, please leave
