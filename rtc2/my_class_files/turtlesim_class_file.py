@@ -13,7 +13,7 @@
 # Let Turtle Move a given distance 
 # (relative from start posotion)
 # -------------------------------------------
-# ==>> /opt/ros/humble/local/lib/python3.10/dist-packages
+# ==>> /opt/ros/jazzy/local/lib/python3.10/dist-packages
 
  
 import rclpy

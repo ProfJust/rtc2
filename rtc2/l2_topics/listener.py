@@ -1,7 +1,7 @@
 # listener.py
-# subscribes Hello World on ROS2 Humble
+# subscribes Hello World on ROS2 jazzy
 # see:
-# https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html
+# https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html
 #
 # OJ, 15.10.2023
 

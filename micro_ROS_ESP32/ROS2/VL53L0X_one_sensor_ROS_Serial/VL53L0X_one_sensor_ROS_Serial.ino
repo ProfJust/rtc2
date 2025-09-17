@@ -15,7 +15,7 @@ Um die `ROSDOMAINID` zu setzen, kannst du in der Shell, aus der du dein ROS 2 Sy
 // https://micro.ros.org/docs/tutorials/programming_rcl_rclc/node/
 
 // ggf: 
-// git clone https://github.com/micro-ROS/micro-ROS-Agent.git -b humble
+// git clone https://github.com/micro-ROS/micro-ROS-Agent.git -b jazzy
 // rosdep install --from-paths src --ignore-src -r -y
 // build & source
 // $ ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyUSB0

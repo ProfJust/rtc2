@@ -1,6 +1,6 @@
     cd ~
-    mkdir turtlebot_ws
-    cd turtlebot_ws/
+    mkdir turtlebot3_ws
+    cd turtlebot3_ws/
     mkdir src
     cd src
     sudo apt install git

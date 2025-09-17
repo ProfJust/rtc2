@@ -1,7 +1,7 @@
 Install  Camera Driver on tB3:
 
 Ubuntu 22.04. Jammy Jellyfish with Desktop !
-and ROS2-Humble Instaallation
+and ROS2-jazzy Instaallation
 
 
 Step 1. *Pull the repository.*

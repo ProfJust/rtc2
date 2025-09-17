@@ -6,7 +6,7 @@ from rclpy.duration import Duration
 
 # for euler => quaternions install
 # sudo apt install python3-transforms3d 
-# sudo apt install ros-humble-tf-transformations
+# sudo apt install ros-jazzy-tf-transformations
 
 # Example from
 # https://github.com/ros-planning/navigation2/blob/main/nav2_simple_commander/nav2_simple_commander/example_nav_to_pose.py

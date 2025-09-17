@@ -34,7 +34,7 @@ export ROS_DOMAIN_ID=30 #TURTLEBOT3
 export TURTLEBOT3_MODEL=burger
 export ROS_LOCALHOST_ONLY=0  # 0 = Communication allowed
 # this environment variable allows you to limit ROS 2 communication to localhost only.
-source /opt/ros/humble/setup.bash
+source /opt/ros/jazzy/setup.bash
 source ~/turtlebot3_ws/install/setup.bash
 
 

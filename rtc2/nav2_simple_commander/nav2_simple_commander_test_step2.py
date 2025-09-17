@@ -5,7 +5,7 @@ from geometry_msgs.msg import PoseStamped
 
 # for euler => quaternions install
 # sudo apt install python3-transforms3d 
-# sudo apt install ros-humble-tf-transformations
+# sudo apt install ros-jazzy-tf-transformations
 import tf_transformations
 
 

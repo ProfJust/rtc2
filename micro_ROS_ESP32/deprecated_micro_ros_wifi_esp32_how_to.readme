@@ -39,7 +39,7 @@ https://robofoundry.medium.com/esp32-micro-ros-actually-working-over-wifi-and-ud
     
 
     Agent starten und Topic anzeigen lassen:
-        $ docker run -it --rm --net=host microros/micro-ros-agent:humble udp4 --port 8888 -v6
+        $ docker run -it --rm --net=host microros/micro-ros-agent:jazzy udp4 --port 8888 -v6
         $ ros2 topic echo /freertos_int32_publisher 
     oder wenn micro-ros installiert (tested OK) 
         $ ros2 run micro_ros_agent micro_ros_agent udp4 --port 8888 -v6
