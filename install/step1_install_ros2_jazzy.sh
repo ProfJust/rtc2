@@ -4,7 +4,7 @@
     mkdir src
     cd src
     sudo apt install git
-    git clone https://github.com/ProfJust/rtc2.git   # -b jazzy
+    git clone https://github.com/ProfJust/rtc2.git   # -b jazzy_branch
     locale  # check for UTF-8
     sudo apt update && sudo apt install locales
     sudo apt install software-properties-common
