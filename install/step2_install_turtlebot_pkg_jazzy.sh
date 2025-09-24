@@ -19,7 +19,7 @@ else
   echo 'export ROS_AUTOMATIC_DISCOVERY_RANGE=192.168.172.0/16' >> ~/.bashrc  
   echo '# Der Wert 192.168.0.0/16 ist eine CIDR-Notation und steht ' >> ~/.bashrc 
   echo '# für alle IP-Adressen von 192.168.0.0 bis 192.168.255.255. ' >> ~/.bashrc 
-  echo "alias build='cd ~/turtlebot3_ws && colcon build --symlink-install'" >> ~/.bashrc 
+  echo "alias build='cd ~/turtlebot3_ws && colcon build --symlink-install  && source install/setup.bash'" >> ~/.bashrc 
   source /opt/ros/jazzy/setup.bash
     
   cd ~/turtlebot3_ws/src/
