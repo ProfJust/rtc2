@@ -1,3 +1,4 @@
+    printf "Install ROS2Jazyy auf Ubuntu Noble"
     cd ~
     mkdir turtlebot3_ws
     cd turtlebot3_ws/
@@ -16,6 +17,9 @@
     sudo apt update && sudo apt install ros-dev-tools
     sudo apt update
     sudo apt upgrade
-    sudo apt install ros-jazzy-desktop
+    sudo apt install ros-jazzy-desktop -y
+    sudo apt install ros-jazzy-ros-gz-sim -y
+    sudo apt install gedit -y
     source /opt/ros/jazzy/setup.bash
+
    

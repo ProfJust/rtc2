@@ -17,8 +17,8 @@ else
   echo 'export TURTLEBOT3_MODEL=burger' >> ~/.bashrc
   echo "TURTLEBOT3_MODEL wurde auf 'burger' gesetzt"
   echo 'export ROS_AUTOMATIC_DISCOVERY_RANGE=192.168.172.0/16' >> ~/.bashrc  
-  echo 'export # Der Wert 192.168.0.0/16 ist eine CIDR-Notation und steht ' >> ~/.bashrc 
-  echo 'export # für alle IP-Adressen von 192.168.0.0 bis 192.168.255.255. ' >> ~/.bashrc 
+  echo '# Der Wert 192.168.0.0/16 ist eine CIDR-Notation und steht ' >> ~/.bashrc 
+  echo '# für alle IP-Adressen von 192.168.0.0 bis 192.168.255.255. ' >> ~/.bashrc 
   source /opt/ros/jazzy/setup.bash
     
   cd ~/turtlebot3_ws/src/
