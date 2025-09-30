@@ -1,4 +1,6 @@
     printf "Install ROS2Jazyy auf Ubuntu Noble"
+    timedatectl set-local-rtc 1 # Konfiguriert die Hardwareuhr auf lokale Zeit
+
     cd ~
     mkdir turtlebot3_ws
     cd turtlebot3_ws/
