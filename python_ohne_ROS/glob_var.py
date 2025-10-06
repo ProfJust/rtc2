@@ -1,26 +1,25 @@
-summe = 0  # globale Variable
+def func():
+    # global glob_var
+    glob_var = 2
+    print('glob_var in func =', glob_var)
 
 
-def add(su):
-    # nur mit Keyword global kann eine globale Variable
-    # verändert werden
-    global summe 
-    summe = summe + 1
+glob_var = 1
+print("glob_var =", glob_var)
 
-my_range = range(1, 10, 2 )   # [ 1, 3, 5, 7]
-print(my_range)
-for i in my_range:
-    print(i)
 
-print("\n")
-my_list = [1 ,2, 3, 5.3, "sieben" ,9, "ü"]   #ü
-ü=2
-print(ü)
+func()
+print("glob_var after func =", glob_var)
 
-my_list[0] = 77
-for i in my_list:
-    print(i)
+gewicht = input("Geben Sie Ihr Gewicht in kg an \n")
+print("Ihr Gewicht ist", gewicht, "kg")
 
-my_tupel = ("Heinz", 77, 6.7)
-for i in my_tupel:
-    print(i)
+while True:
+    eingabe = input("Bitte gib eine ganze Zahl ein: ")
+    try:
+        zahl = int(eingabe)
+        print(f"Du hast die Zahl {zahl} eingegeben.")
+        break
+    except ValueError:
+        print("Fehler: Bitte gib eine gültige ganze Zahl ein!")
+
