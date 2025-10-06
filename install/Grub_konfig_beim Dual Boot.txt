@@ -1,0 +1,11 @@
+## Das ist eine sehr sinnvolle Einstellung — besonders bei Dual-Boot-Systemen (z. B. Linux + Windows), wenn du willst, dass GRUB automatisch das zuletzt gewählte Betriebssystem startet.
+
+## Oeffne die Datei mit sudo
+sudo nano /etc/default/grub
+
+## Aendere / Ergaenze  => Speichern
+GRUB_DEFAULT=saved
+GRUB_SAVEDEFAULT=true
+
+## Grub updtaen, dann Reboot
+sudo update-grub
