@@ -3,6 +3,7 @@ from rclpy.node import Node
 from geometry_msgs.msg import Twist  # falls du Twist verwendest
 # ggf. weitere Imports, z. B. from turtlesim.msg import Pose
 from turtlesim.msg import Pose
+from math import pow, atan2, sqrt, pi # neu bei Jazzy
 
 class MoveTurtlesimNode(Node):
     def __init__(self):
@@ -63,6 +64,7 @@ class MoveTurtlesimNode(Node):
     def timer_cb_move_distance(self):  # wird durch Timer regelmäßig aufgerufen
         # self.get_logger().info('Timer CB:  state is "%s"' % self.state)
         vel_msg = Twist() # Instanziiere Message mit cmd_vel
+        print("State: ", self.state)
         # ====== State Machine =======
         if self.state == 0:
             self.get_user_input()

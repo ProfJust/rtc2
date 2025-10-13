@@ -1,11 +1,11 @@
 # rtc2
 ![RTC-Logo sehr klein](https://github.com/user-attachments/assets/770f9a44-890e-4c6b-9a44-0eb2e61a87c7)
 
-Ruhr Turtlebot Competition, TurtleBot3 mit ROS2 jazzy auf Ubuntu 22.04 - Jammy Jellyfish
+Ruhr Turtlebot Competition, TurtleBot3 mit ROS2 Jazzy auf Ubuntu 24.04 - Noble Numbat
 
 ## Installation RTC2-Turtlebot3 - Paket
 ### Voraussetzung
-Ubuntu 22.04 ist installiert (als Dual Boot System, keine Virtual Box o.ä.) , 
+Ubuntu 24.04 ist installiert (als Dual Boot System, keine Virtual Box o.ä.) , 
 
 ### Öffnen einer Shell mit STRG+ALT+T
 erstelle den Ordner `~/turtlebot3_ws/src` mit folgende Shell-Befehlen => $
@@ -27,8 +27,8 @@ mache step1....sh und step2....sh ausführbar
 und führe sie aus
 
 * $ cd ~/turtlebot3_ws/src/rtc2/install
-* $ ./step1_Install_ROS2_Hawksbill.sh
-* $ ./step2_Install_turtlebot_pkg.sh
+* $ ./step1_Install_ros2_jazzy.sh
+* $ ./step2_Install_turtlebot_pkg_jazzy.sh
 
 ### usage
 build and run simple publisher "say_temp"
