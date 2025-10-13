@@ -21,12 +21,16 @@ from turtlesim.msg import Pose
 from math import pow, atan2, sqrt, pi
 
 
-import MoveTurtlesimNode
+# import MoveTurtlesimNode
+# absolute Paket-Import (bevorzugt)
+# from rtc2.p2_turtlesim_move import MoveTurtlesimNode
+
+from rtc2.p2_turtlesim_move.MoveTurtlesimNode import MoveTurtlesimNode
 
         
 def main(args=None):
     rclpy.init(args=args)    
-    node = MoveTurtlesimNode()  # Instanzierung
+    node = MoveTurtlesimNode()  # Instanzierung 
     while True:
         try:
             rclpy.spin(node)

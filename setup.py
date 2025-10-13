@@ -31,10 +31,10 @@ setup(
         #              Name des Files (ohne py) : Funktion die starten soll 
         'say_temp= rtc2.pub_temp:main',
         # 'min_pub= rtc2.publisher_member_function:main',
-        'talk= rtc2.talker:main',
-        'listen= rtc2.listener:main',
+        'talk= rtc2.l2_topics.talker:main',
+        'listen= rtc2.l2_topics.listener:main',
         'move_turtlesim= rtc2.move_turtle:main',
-        'p2_turtlesim_move_distance= rtc2.move_turtle_distance:main',
+        'p2_turtlesim_move_distance= rtc2.p2_turtlesim_move.move_turtle_distance:main',
         #'p2_turtlesim_move_distance_import= rtc2.move_turtle_distance_import:main',
         'p3_turtlesim_move_2_goal= rtc2.move_turtle_2_goal:main',
         'qt_robot_steering= rtc2.qt_robot_steering:main',

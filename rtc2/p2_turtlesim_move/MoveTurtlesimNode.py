@@ -1,3 +1,9 @@
+import rclpy
+from rclpy.node import Node
+from geometry_msgs.msg import Twist  # falls du Twist verwendest
+# ggf. weitere Imports, z. B. from turtlesim.msg import Pose
+from turtlesim.msg import Pose
+
 class MoveTurtlesimNode(Node):
     def __init__(self):
         super().__init__("move_turtlesim_dist_node")
