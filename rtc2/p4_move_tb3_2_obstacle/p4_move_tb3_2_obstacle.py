@@ -1,24 +1,20 @@
 #!/usr/bin/env python3
 #
-#   move_turtle_2_goal.py
+#   move_tb3_2_obstacle.py
 # -------------------------------------------
 #   for rtc2
-#   by oj, 25.10.23
+#   by oj, 16.10.25
 #   Westfälische Hochschule - Campus Bocholt
-#   see also http://wiki.ros.org/turtlesim/Tutorials/Go%20to%20Goal
 # -------------------------------------------
 # usage
-# $1 ros2 run turtlesim turtlesim_node 
-# $2 ros2 run rtc2 p4_tb3_move_2_goal
-# ==> setup.py
-# -------------------------------------------
-# Let Turtle Move a given distance 
-# (relative from start posotion)
+# $1 rros2 launch turtlebot3_gazebo turtlebot3_house.launch.py
+# $2 ros2 run rtc2 p4_move_tb3_2_obstacle
+
 # -------------------------------------------
 
 import rclpy
 from rclpy.node import Node
-from geometry_msgs.msg import Twist
+from geometry_msgs.msg import TwistStamped
 from turtlesim.msg import Pose
 from nav_msgs.msg import Odometry
 from sensor_msgs.msg import LaserScan
@@ -31,13 +27,18 @@ class clTurtleBot(Node):  # erbt von Node
         super().__init__("move_tb3_node")
         self.pose = Pose()  # aktuelle pose vom CB update_pose
         self.goal = Pose()  # das gewünschte Ziel, hier auch als Pose
-        self.vel_msg = Twist() # Instanziiere Message mit cmd_vel
+        self.vel_msg = TwistStamped() # Instanziiere Message mit cmd_vel
         self.ranges = [0.1, 0.2, 0.3 ] # 
-
+        # self.cmd_vel_publisher_ = self.create_publisher(
+        #                             Twist,
+        #                             '/cmd_vel',
+        #                             10)
+        # TwistStamped für TurtleBot3 ab Jazzy
         self.cmd_vel_publisher_ = self.create_publisher(
-                                    Twist,
+                                    TwistStamped,  
                                     '/cmd_vel',
                                     10)
+        
         
         timer_period = 0.2  # 200 msec
         self.cmd_timer_ = self.create_timer(
@@ -67,8 +68,7 @@ class clTurtleBot(Node):  # erbt von Node
 
     def get_scan(self, scan):       
         self.ranges = 0 # HIER CODE EINFÜGEN
-        
-     
+          
 
     def euclidean_distance(self, goal):
         x = goal.x - self.pose.x
@@ -107,19 +107,32 @@ class clTurtleBot(Node):  # erbt von Node
         end_programm_flag = False
         if not self.obstacle_detected():
             if self.euclidean_distance(self.goal) >= self.distance_tolerance:
-               # HIER CODE EINFÜGEN
                 print(" move robot ")
-                self.get_logger().info(f"Current lin_vel_x= {self.vel_msg.linear.x} ang_vel_z ={self.vel_msg.angular.z}")
+                # HIER CODE EINFÜGEN
+                self.vel_msg.header.stamp = self.get_clock().now().to_msg()
+                self.vel_msg.header.frame_id = "odom"
+                self.vel_msg.twist.linear.x = self.linear_vel(0.2)
+                self.vel_msg.twist.angular.z = self.angular_vel(0.0)
+                print(self.vel_msg)        
+               # ########################
+                self.get_logger().info(f"Current lin_vel_x= {self.vel_msg.twist.linear.x} ang_vel_z ={self.vel_msg.twist.angular.z}")
+               
             else: 
                 # Stopping our robot after the movement is over.
-               # HIER CODE EINFÜGEN
                 print(" stop robot - end programm ")
+                # HIER CODE EINFÜGEN
+
+                # ########################
+              
                 end_programm_flag = True
         else:
             # Stopping our robot because an obstacle is in the way
-               # HIER CODE EINFÜGEN
-                print(" stop robot - obstacle detected ") 
-                # end_programm_flag = True               
+            print(" stop robot - obstacle detected ") 
+            # HIER CODE EINFÜGEN
+
+            # ########################
+                
+            # end_programm_flag = True               
 
         self.cmd_vel_publisher_.publish(self.vel_msg)  # ..senden
 
@@ -168,8 +181,7 @@ class clTurtleBot(Node):  # erbt von Node
 def main(args=None):
     rclpy.init(args=args)    
     node = clTurtleBot()
-    node.get_user_input() # only at the beginning
-    # this way => no statemachine needed
+    # node.get_user_input() # Not needed here
     
     while True:
         try:
