@@ -4,13 +4,17 @@
 # -------------------------------------------
 #   for rtc2
 #   by oj, 20.10.23
+#   tested OK 16.10.25
 #   Westfälische Hochschule - Campus Bocholt
+#   
+#   Moves the TurtleSim a given distance
+#   (relative from start position)
 # -------------------------------------------
 # usage
 # $1 ros2 run turtlesim turtlesim_node 
 # $2 ros2 run rtc2 p2_turtlesim_move_distance
 # -------------------------------------------
-# Let Turtle Move a given distance 
+# Let TurtleSim Move a given distance 
 # (relative from start position)
 # -------------------------------------------
 import rclpy

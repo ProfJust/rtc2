@@ -34,7 +34,7 @@ setup(
         'talk= rtc2.l2_topics.talker:main',
         'listen= rtc2.l2_topics.listener:main',
         'move_turtlesim= rtc2.move_turtle:main',
-        'p1_turtlesim_move_distance= rtc2.p1_turtlesim_move.move_turtle_distance:main',
+        'p2_turtlesim_move_distance= rtc2.p2_turtlesim_move.p2_turtlesim_move_distance:main',
         'p4_turtlesim_move_2_goal= rtc2.p4_move_tb3_2_obstacle.p4_move_tb3_2_obstacle:main',
         'qt_robot_steering= rtc2.qt_robot_steering:main',
         'tb3_gui= rtc2.tb3_gui:main',
