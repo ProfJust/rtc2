@@ -6,10 +6,15 @@
 #   by oj, 16.10.25
 #   Westfälische Hochschule - Campus Bocholt
 # -------------------------------------------
+# Bewegt den TurtleBot3 zu einem vorgegebenen Zielpunkt
+# Stoppt, wenn ein Hindernis im Weg ist
+# Nutzt Odometry Daten für die aktuelle Position
+# Nutzt cmd_vel (TwistStamped) um den Roboter zu bewegen
+# TurtleBot3 Burger im Gazebo Haus Szenario
+# -------------------------------------------
 # usage
 # $1 rros2 launch turtlebot3_gazebo turtlebot3_house.launch.py
 # $2 ros2 run rtc2 p4_move_tb3_2_obstacle
-
 # -------------------------------------------
 
 import rclpy
@@ -96,12 +101,11 @@ class clTurtleBot(Node):  # erbt von Node
 
     def get_user_input(self):
         # Get the input from the user. Must be float!! do not use int
-        self.goal.x = float(input("Set your x goal: "))
-        self.goal.y = float(input("Set your y goal: "))
+        self.goal.x = float(input("Set your x goal:  (e.g. 2.0) "))
+        self.goal.y = float(input("Set your y goal:  (e.g. 0.0) "))
 
-        # Please, insert a number slightly greater than 0 (e.g. 0.01).
-        print("Please, insert a number slightly greater than 0 (e.g. 0.01)")
-        self.distance_tolerance = float(input("Set your tolerance: "))
+        # print("Please, insert a number slightly greater than 0 (e.g. 0.01)")
+        self.distance_tolerance = 0.05 # float(input("Set your tolerance: "))
 
     def timer_cb_move_turtle(self):   # wird durch Timer regelmäßig aufgerufen
         end_programm_flag = False
@@ -111,9 +115,9 @@ class clTurtleBot(Node):  # erbt von Node
                 # HIER CODE EINFÜGEN
                 self.vel_msg.header.stamp = self.get_clock().now().to_msg()
                 self.vel_msg.header.frame_id = "odom"
-                self.vel_msg.twist.linear.x = self.linear_vel(0.2)
-                self.vel_msg.twist.angular.z = self.angular_vel(0.0)
-                print(self.vel_msg)        
+                self.vel_msg.twist.linear.x = self.linear_vel(self.goal)
+                self.vel_msg.twist.angular.z = self.angular_vel(self.goal)
+                # print(self.vel_msg)        
                # ########################
                 self.get_logger().info(f"Current lin_vel_x= {self.vel_msg.twist.linear.x} ang_vel_z ={self.vel_msg.twist.angular.z}")
                
@@ -121,6 +125,10 @@ class clTurtleBot(Node):  # erbt von Node
                 # Stopping our robot after the movement is over.
                 print(" stop robot - end programm ")
                 # HIER CODE EINFÜGEN
+                self.vel_msg.header.stamp = self.get_clock().now().to_msg()
+                self.vel_msg.header.frame_id = "odom"
+                self.vel_msg.twist.linear.x = 0.0
+                self.vel_msg.twist.angular.z = 0.0 
 
                 # ########################
               
@@ -181,7 +189,8 @@ class clTurtleBot(Node):  # erbt von Node
 def main(args=None):
     rclpy.init(args=args)    
     node = clTurtleBot()
-    # node.get_user_input() # Not needed here
+    print("Gazebo starten")
+    node.get_user_input() 
     
     while True:
         try:
