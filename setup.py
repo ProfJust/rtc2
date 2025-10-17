@@ -33,6 +33,7 @@ setup(
         # 'min_pub= rtc2.publisher_member_function:main',
         'talk= rtc2.l2_topics.talker:main',
         'listen= rtc2.l2_topics.listener:main',
+        'turtlesim_controller= rtc2.l3_python_oop.TurtlesimController:main',
         'move_turtlesim= rtc2.move_turtle:main',
         'p2_turtlesim_move_distance= rtc2.p2_turtlesim_move.p2_turtlesim_move_distance:main',
         'p4_turtlesim_move_2_goal= rtc2.p4_move_tb3_2_obstacle.p4_move_tb3_2_obstacle:main',

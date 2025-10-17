@@ -192,7 +192,7 @@ def main():
         # 2) 90° links drehen
         node.rotate(math.pi / 2, angular_speed=1.0)
         # 3) Zum Punkt (x=5.5, y=5.5) fahren
-        node.go_to_goal(2.5, -2.5)
+        node.go_to_goal(2.5, 2.5)
     finally:
         node.shutdown()
         rclpy.shutdown()
