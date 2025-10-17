@@ -1,0 +1,20 @@
+GRUB-Start Dual Boot System
+Windows als default seztzen
+
+Durchzählen der Menu Entrys, Beginn bei 0
+sudo grep menuentry /boot/grub/grub.cfg
+
+BESSER:
+‘GRUB_SAVEDEFAULT’
+
+    If this option is set to ‘true’, then, when an entry is selected, save it as a new default entry for use by future runs of GRUB. 
+
+
+sudo nano -B /etc/default/grub
+
+
+Eintrag ändern
+    GRUB_DEFAULT=3       
+    # war 0 für Ubuntu
+
+sudo update-grub
