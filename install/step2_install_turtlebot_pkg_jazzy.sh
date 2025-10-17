@@ -29,6 +29,7 @@ else
   git clone -b jazzy https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
   sudo apt install python3-colcon-common-extensions -y
   sudo apt install ros-jazzy-ros-gz-bridge
+  sudo apt install ros-jazzy-turtlesim ros-jazzy-joy-linux ros-jazzy-teleop-twist-joy
   cd ~/turtlebot3_ws
   colcon build --symlink-install
 
