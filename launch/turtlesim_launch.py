@@ -24,7 +24,7 @@ def generate_launch_description():
  
     move = Node(
         package="rtc2",
-        executable="move_turtlesim",
+        executable="import_test",
         name='move_node'
     )
  
