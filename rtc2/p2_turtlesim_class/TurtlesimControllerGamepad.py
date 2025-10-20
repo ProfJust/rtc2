@@ -1,27 +1,12 @@
 #!/usr/bin/env python3
-#
-#   p1_turtlesim_class.py
-# -------------------------------------------
-#   for rtc2
-#   by oj and Chat 16.10.25
-#   Westfälische Hochschule - Campus Bocholt#   
-#   Moves the TurtleSim a given distance
-#   (relative from start position)
-# -------------------------------------------
-# usage
-# don't forget to run first: $ build
-# $1 ros2 run turtlesim turtlesim_node 
-# $2 ros2 run rtc2 p1_turtlesim_class
-# -------------------------------------------
-# Let TurtleSim Move a given distance 
-# (relative from start position)
-# -------------------------------------------
+import subprocess
 import math
 import time
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
 from turtlesim.msg import Pose
+from sensor_msgs.msg import Joy
 
 class TurtlesimController(Node):
     """
@@ -33,6 +18,7 @@ class TurtlesimController(Node):
 
     def __init__(self, rate_hz: float = 30.0, dist_tol: float = 0.01, ang_tol: float = 0.01):
         super().__init__('turtlesim_controller')
+        time.sleep(2.0)  # kurze Pause zum Initialisieren
         self.cmd_pub = self.create_publisher(Twist, '/turtle1/cmd_vel', 10)
         self.pose_sub = self.create_subscription(Pose, '/turtle1/pose', self._pose_cb, 10)
 
@@ -44,7 +30,7 @@ class TurtlesimController(Node):
         self.pose = None  # wird im Callback gesetzt
         self._last_pose_time = time.time()
 
-        self.get_logger().info('TurtlesimController bereit.')
+        self.get_logger().info('TurtlesimController bereit. Warte auf Pose...')
 
     # -------------------- Callbacks & Helpers --------------------
 
@@ -73,6 +59,8 @@ class TurtlesimController(Node):
     def stop(self):
         """Sofort stoppen (linear & angular = 0)."""
         msg = Twist()
+        msg.linear.x = 0.0
+        msg.angular.z = 0.0
         self.cmd_pub.publish(msg)
 
     def set_cmd(self, lin_x: float = 0.0, ang_z: float = 0.0):
@@ -85,13 +73,10 @@ class TurtlesimController(Node):
     # -------------------- Blocking Motion Primitives --------------------
 
     def move_forward(self, distance: float, speed: float = 1.0):
-        self.get_logger().info(' Move forward %.2f units at speed %.2f' % (distance, speed))
-
         """
         Geradeaus um 'distance' Meter fahren (vorwärts bei distance>0, rückwärts bei distance<0).
         Begrenzung: |speed| <= 2.0
         """
-
         self._wait_for_pose()
         speed = max(min(abs(speed), 2.0), 0.05) * (1.0 if distance >= 0 else -1.0)
 
@@ -123,7 +108,6 @@ class TurtlesimController(Node):
         In Place rotieren um 'angle_rad' (positiv = gegen Uhrzeiger).
         Begrenzung: |angular_speed| <= 3.0
         """
-        self.get_logger().info(' Rotate %.2f rad at angular speed %.2f' % (angle_rad, angular_speed))
         self._wait_for_pose()
         angular_speed = max(min(abs(angular_speed), 3.0), 0.1) * (1.0 if angle_rad >= 0 else -1.0)
 
@@ -154,7 +138,6 @@ class TurtlesimController(Node):
         - w = kp_w * Winkel-Fehler (gesättigt auf w_max)
         """
         self._wait_for_pose()
-        self.get_logger().info(' Go to goal (%.2f, %.2f)' % (goal_x, goal_y))
 
         while rclpy.ok():
             rclpy.spin_once(self, timeout_sec=0.0)
@@ -194,6 +177,58 @@ class TurtlesimController(Node):
         self.destroy_node()
 
 
+class JoyTeleop(Node):
+    """
+    ROS2 node: Abonniert /joy und veröffentlicht Twist auf /turtle1/cmd_vel.
+    Konfigurierbare Achsen/Skalierung ermöglichen einfache Anpassung an verschiedene Gamepads.
+    """
+    def __init__(self,
+                 topic_cmd: str = '/turtle1/cmd_vel',
+                 axis_linear: int = 1,
+                 axis_angular: int = 0,
+                 scale_linear: float = 2.0,
+                 scale_angular: float = 3.0,
+                 deadzone: float = 0.12):
+        super().__init__('joy_teleop')
+        self.pub = self.create_publisher(Twist, topic_cmd, 10)
+        self.sub = self.create_subscription(Joy, '/joy', self._joy_cb, 10)
+        self.axis_linear = int(axis_linear)
+        self.axis_angular = int(axis_angular)
+        self.scale_linear = float(scale_linear)
+        self.scale_angular = float(scale_angular)
+        self.deadzone = float(deadzone)
+        self.get_logger().info(f'JoyTeleop bereit. axes lin={self.axis_linear}, ang={self.axis_angular}')
+
+    def _apply_deadzone(self, v: float) -> float:
+        return 0.0 if abs(v) < self.deadzone else v
+
+    def _joy_cb(self, msg: Joy):
+        # Safely index axes
+        ax_lin = msg.axes[self.axis_linear] if len(msg.axes) > self.axis_linear else 0.0
+        ax_ang = msg.axes[self.axis_angular] if len(msg.axes) > self.axis_angular else 0.0
+
+        ax_lin = self._apply_deadzone(ax_lin)
+        ax_ang = self._apply_deadzone(ax_ang)
+
+        # joystick forward usually negative
+        lin = -ax_lin * self.scale_linear
+        ang = -ax_ang * self.scale_angular
+
+        twist = Twist()
+        twist.linear.x = float(lin)
+        twist.angular.z = float(ang)
+
+        # Button 0 (A) immediate stop if present
+        try:
+            if len(msg.buttons) > 0 and msg.buttons[0]:
+                twist.linear.x = 0.0
+                twist.angular.z = 0.0
+        except Exception:
+            pass
+
+        self.pub.publish(twist)
+
+
 # -------------------- Beispielnutzung --------------------
 
 def main():
@@ -202,14 +237,83 @@ def main():
     try:
         # Beispiele:
         # 1) 1 Meter vorwärts
-        node.move_forward(1.0, speed=1.0)
+        #node.move_forward(1.0, speed=1.0)
         # 2) 90° links drehen
-        node.rotate(math.pi / 2, angular_speed=1.0)
+        #node.rotate(math.pi / 2, angular_speed=1.0)
         # 3) Zum Punkt (x=5.5, y=5.5) fahren
-        node.go_to_goal(2.5, 2.5)
+        node.go_to_goal(1, 7)
     finally:
         node.shutdown()
         rclpy.shutdown()
 
 if __name__ == "__main__":
-    main()
+    rclpy.init()
+    node = TurtlesimController(rate_hz=30.0, dist_tol=0.02, ang_tol=0.01)
+
+    try:
+        # Versuche pygame zu importieren und ein Gamepad zu benutzen.
+        try:
+            import pygame
+        except Exception:
+            node.get_logger().warn('pygame nicht gefunden. Starte stattdessen JoyTeleop (erwartet einen laufenden joy_node).')
+            joy_node = JoyTeleop()
+            try:
+                rclpy.spin(joy_node)
+            except KeyboardInterrupt:
+                pass
+            finally:
+                joy_node.destroy_node()
+        else:
+            # pygame erfolgreich importiert -> nutze direkt Gamepad
+            pygame.init()
+            if pygame.joystick.get_count() == 0:
+                node.get_logger().warn('Kein Gamepad gefunden. Führe Beispiel go_to_goal aus.')
+                node.go_to_goal(1, 7)
+            else:
+                js = pygame.joystick.Joystick(0)
+                js.init()
+                node.get_logger().info(f'Gamepad verbunden: {js.get_name()}')
+
+                # Konfiguration: Achsen-Mapping und Limits
+                MAX_LIN = 2.0    # maximale lineare Geschwindigkeit
+                MAX_ANG = 3.0    # maximale Winkelgeschwindigkeit
+                DEADZONE = 0.12  # kleine Achsenwerte ignorieren
+                rate = node.rate_hz
+
+                def dz(v):
+                    return 0.0 if abs(v) < DEADZONE else v
+
+                node.get_logger().info('Steuerung: linker Stick vor/zurück = vorwärts/rückwärts, links/rechts = drehen')
+                while rclpy.ok():
+                    pygame.event.pump()
+                    # Typical mapping: axis 1 = left stick vertical, axis 0 = left stick horizontal
+                    try:
+                        ax_y = js.get_axis(1)
+                        ax_x = js.get_axis(0)
+                    except Exception:
+                        ax_y = 0.0
+                        ax_x = 0.0
+
+                    ax_y = dz(ax_y)
+                    ax_x = dz(ax_x)
+
+                    # Achsen-Normen: joystick nach vorn gibt negative Werte -> invertieren
+                    lin = -ax_y * MAX_LIN
+                    ang = -ax_x * MAX_ANG
+
+                    # Button 0 (meist A) stoppt sofort
+                    try:
+                        if js.get_numbuttons() > 0 and js.get_button(0):
+                            node.stop()
+                        else:
+                            node.set_cmd(lin_x=lin, ang_z=ang)
+                    except Exception:
+                        node.set_cmd(lin_x=lin, ang_z=ang)
+
+                    rclpy.spin_once(node, timeout_sec=0.0)
+                    time.sleep(1.0 / rate)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        node.shutdown()
+        rclpy.shutdown()
