@@ -17,12 +17,6 @@ class TurtlesimController(Node):
 
     def __init__(self, rate_hz: float = 30.0, dist_tol: float = 0.01, ang_tol: float = 0.01):
         super().__init__('turtlesim_controller')
-        # # Turtlesim starten, falls er nicht läuft
-        # self.get_logger().info("Starte turtlesim_node...")
-        # self.sim_process = subprocess.Popen(
-        #     ['ros2', 'run', 'turtlesim', 'turtlesim_node']
-        # )
-
         time.sleep(2.0)  # kurze Pause zum Initialisieren
         self.cmd_pub = self.create_publisher(Twist, '/turtle1/cmd_vel', 10)
         self.pose_sub = self.create_subscription(Pose, '/turtle1/pose', self._pose_cb, 10)
@@ -64,6 +58,8 @@ class TurtlesimController(Node):
     def stop(self):
         """Sofort stoppen (linear & angular = 0)."""
         msg = Twist()
+        msg.linear.x = 0.0
+        msg.angular.z = 0.0
         self.cmd_pub.publish(msg)
 
     def set_cmd(self, lin_x: float = 0.0, ang_z: float = 0.0):
@@ -188,11 +184,11 @@ def main():
     try:
         # Beispiele:
         # 1) 1 Meter vorwärts
-        node.move_forward(1.0, speed=1.0)
+        #node.move_forward(1.0, speed=1.0)
         # 2) 90° links drehen
-        node.rotate(math.pi / 2, angular_speed=1.0)
+        #node.rotate(math.pi / 2, angular_speed=1.0)
         # 3) Zum Punkt (x=5.5, y=5.5) fahren
-        node.go_to_goal(2.5, 2.5)
+        node.go_to_goal(1, 7)
     finally:
         node.shutdown()
         rclpy.shutdown()
