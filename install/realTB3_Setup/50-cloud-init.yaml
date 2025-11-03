@@ -1,0 +1,13 @@
+network:
+  version: 2
+  renderer: networkd
+  wifis:
+    wlan0:
+      dhcp4: true
+      optional: true
+      access-points:
+        "TP-Link_Robotik":
+          hidden: true
+          auth:
+            key-management: "psk"
+            password: "939ce700f78bcababfe65a39456c78a2d9e6d53c1f693c654b0fba47816d6431"
