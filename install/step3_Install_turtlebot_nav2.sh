@@ -5,6 +5,7 @@
 sudo apt install ros-jazzy-cartographer -y
 sudo apt install ros-jazzy-cartographer-ros -y
 sudo apt install ros-jazzy-nav2-map-server -y
+sudo apt install ros-jazzy-nav2-route -y
 
 
 # cyclone DDS installieren (workaround not needed anymore)
