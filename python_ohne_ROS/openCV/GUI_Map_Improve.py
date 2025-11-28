@@ -122,26 +122,6 @@ class MapEnhanceGUI(QWidget):
         self.last_filtered = self.proc.copy()
         self.updateLabel(self.label_proc, self.proc)
 
-    # Zur starkes Erodieren
-    # def applyErode(self):
-    #     if self.proc is None:
-    #         return
-    #     iterations = self.slider_erode.value()
-    #     kernel = np.ones((3, 3), np.uint8)
-
-    #     # Hindernisse sind schwarz (0), freier Raum hell/weiß (nahe 255)
-    #     # Um Erosion auf „schwarze Hindernisse“ anzuwenden:
-    #     # 1. Invertieren -> Hindernisse werden weiß
-    #     # 2. Erosion auf invertiertem Bild
-    #     # 3. Zurück invertieren
-    #     inv = 255 - self.proc
-    #     eroded_inv = cv2.erode(inv, kernel, iterations=iterations)
-    #     eroded = 255 - eroded_inv
-
-    #     self.proc = eroded
-    #     self.last_filtered = self.proc.copy()
-    #     self.updateLabel(self.label_proc, self.proc)
-
     def applyErode(self):
         if self.proc is None:
             return
@@ -241,62 +221,21 @@ class MapEnhanceGUI(QWidget):
             QMessageBox.critical(self, "Fehler",
                                  f"Speichern fehlgeschlagen:\n{file}")
             
-    # def fill_small_gray_holes(self, checked=False, 
-    #                           gray_min=200, 
-    #                           gray_max=210, 
-    #                           kernel_size=11):
-    #     """
-    #     Nur kleine hellgraue Löcher im freien (weißen) Raum auffüllen:
-    #     - Schwarz (Hindernisse) bleiben unverändert.
-    #     - Nur Pixel, die vorher in [gray_min, gray_max] lagen, dürfen auf Weiß gesetzt werden.
-    #     """
-    #     if self.proc is None:
-    #         return
-
-    #     img = self.proc.copy()
-
-    #     # 1) Maske der hellgrauen Flächen (Kandidaten, die weiß werden dürfen)
-    #     gray_mask = cv2.inRange(img, gray_min, gray_max)  # 255 = hellgrau, 0 = sonst
-    #     # cv2.imshow("gray_mask", gray_mask)
-
-    #     # 2) Binärbild für weißen freien Raum (weiß + hellgrau)
-    #     _, binary = cv2.threshold(img, gray_min, 255, cv2.THRESH_BINARY)
-    #     # cv2.imshow("binary", binary)
-
-    #     # 3) Morphological Closing auf diesem Binärbild
-    #     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (kernel_size, kernel_size))
-    #     cv2.imshow("kernel", kernel)
-    #     closed = cv2.morphologyEx(binary, cv2.MORPH_CLOSE, kernel)
-    #     #cv2.imshow("closed", closed)
-
-    #     # 4) Neue weiße Pixel: Stellen, die vorher NICHT binär-weiß waren, nach Closing aber schon
-    #     new_white = cv2.bitwise_and(closed, cv2.bitwise_not(binary))
-    #     #cv2.imshow("new_white_raw", cv2.bitwise_and(closed, cv2.bitwise_not(binary)))
-    #     # Auf hellgraue Kandidaten einschränken
-    #     new_white = cv2.bitwise_and(new_white, gray_mask)
-    #     #cv2.imshow("new_white_final", new_white)
-
-    #     # 5) Nur diese neuen weißen Pixel in die Karte übernehmen
-    #     img[new_white == 255] = 255
-
-    #     self.proc = img
-    #     self.last_filtered = self.proc.copy()
-    #     self.updateLabel(self.label_proc, self.proc)
-
-    #     cv2.waitKey(0)
-    #     cv2.destroyAllWindows()
-
     def gray_2_white(self, checked=False, gray_min=200, gray_max=210):
-        if self.proc is None:
+        """Die Funktion gray_2_white ersetzt gezielt alle Pixel im Graubereich 
+           zwischen gray_min und gray_max durch reines Weiß 
+           und lässt alle anderen Bildbereiche unverändert."""
+        
+        if self.proc is None:  # Abbruch, falls kein Bild geladen
             return
-        img = self.proc.copy()
+        img = self.proc.copy()  # Arbeitskopie des Bilds anlegen
+        # Bild nur  mit grauen Pixeln erzeugen
         gray_mask = cv2.inRange(img, gray_min, gray_max)
-        img[gray_mask == 255] = 255
-        self.proc = img
-        self.last_filtered = self.proc.copy()
-        self.updateLabel(self.label_proc, self.proc)
-
-
+        # Nur diese Pixel  auf weiß setzen
+        img[gray_mask == 255] = 255  # Python's List Comprehension
+        self.proc = img  # Ergebnis übernehmen, neuer Arbeitsstand
+        self.last_filtered = self.proc.copy()  # übernehmen zum Speichern
+        self.updateLabel(self.label_proc, self.proc)  # GUI aktualisieren
 
     def reinforce_obstacles_with_canny(self, checked=False,
                                              low_thresh=50, high_thresh=150,
