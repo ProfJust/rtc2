@@ -159,10 +159,21 @@ class MapEnhanceGUI(QWidget):
     def applyCanny(self):
         if self.proc is None:
             return
-        low = 50
-        high = 150
+        low = 50  # Untere Schwellwertgrenze für den Canny-Algorithmus. 
+        # Gradienten unterhalb dieses Werts werden als „kein Edge“ verworfen.
+        
+        high = 150  # Obere Schwellwertgrenze. 
+        # Gradienten oberhalb werden als „sichere Kanten“ akzeptiert.
+        # Werte zwischen den Schwellwerten gelten als „unsichere Kanten“
+        # und werden nur übernommen, wenn mit sicheren Kanten verbunden
+        # (Hysterese-Prinzip von Canny).​
+
         edges = cv2.Canny(self.proc, low, high)
-        self.last_filtered = edges
+        # Führt die Canny-Kantendetektion auf dem aktuellen Graustufenbild self.proc aus.
+        # Ergebnis edges ist ein Binärbild:
+        # 255 = erkannte Kante
+        # 0 = kein Kante-Pixel
+        self.last_filtered = edges  # Speichere Ergebnis
         self.updateLabel(self.label_proc, edges)
 
     def resetImage(self):
