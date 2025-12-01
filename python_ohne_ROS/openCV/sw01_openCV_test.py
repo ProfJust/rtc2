@@ -1,4 +1,15 @@
 import cv2
+import os
+# WICHTIG: Visual Studio Code darf NICHT! über Snap installiert sein.
+# Sonst gibt es Probleme mit der GUI von OpenCV.
+# Test: $ which code
+# Sollte nicht in /snap/... liegen.
+# Ansonsten: Deinstallieren $ sudo snap remove code
+# und über .deb Paket installieren. Download:
+# https://code.visualstudio.com/docs/?dv=linux64_deb
+# Installation: $ sudo dpkg -i <datei>.deb
+# oder mit Anwendungszentrum öffnen.
+
 #https://blog.codecentric.de/2017/06/einfuehrung-in-computer-vision-mit-opencv-und-python/
 # === usage ===
 # sudo apt install libopencv-dev python3-opencv
@@ -6,6 +17,11 @@ import cv2
 # Ausführbar machen
 # python3 sw01_openCV_test.py 
 
+# Python sucht das File im aktuellen Arbeitsordner, 
+# nicht unbedingt im Ordner des Skripts.
+# ==> In den Arbeitsordner wechseln 
+script_dir = os.path.dirname(os.path.abspath(__file__))
+os.chdir(script_dir)
  
 # lese Bild von Festplatte
 image = cv2.imread("test.png")

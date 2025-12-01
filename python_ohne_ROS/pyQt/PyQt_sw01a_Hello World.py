@@ -4,6 +4,7 @@
 # -----------------------------------------
 # OJ am 29.09.2025
 # ggf. notwendig  >pip install PyQt6
+# Ubuntu: >sudo apt install pyqt6-dev-tools
 from PyQt6.QtWidgets import QApplication, QWidget, QLabel
 
 # Only needed for access to command line arguments
