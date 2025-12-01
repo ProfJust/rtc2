@@ -1,22 +1,20 @@
-#!/usr/bin/env python3
 # ---------------------------------------------------------------------
-# pyqt_sw07_LCD_Slider.py
+# PyQt_sw03_Slider_LCD.py
 # Beispiel fuer Signal Slot Konzept
 # ---------------------------------------------------------------------
-# -*- coding: utf-8 -*-
-
-from PyQt5.QtWidgets import (QWidget, QSlider,
-                             QLCDNumber, QApplication, QPushButton)
-from PyQt5.QtCore import Qt
+from PyQt6.QtWidgets import (
+    QWidget, QSlider, QLCDNumber,
+    QApplication, QPushButton, QHBoxLayout, QVBoxLayout
+)
+from PyQt6.QtCore import Qt
 import sys
-
 
 class MainWindow(QWidget):
     def __init__(self, parent=None):
-        super(MainWindow, self).__init__(parent)
-        # --- Slider erstellen -----
-        self.mySlider = QSlider(Qt.Horizontal, self)
-        self.mySlider.setFocusPolicy(Qt.NoFocus)
+        super().__init__(parent)
+
+        self.mySlider = QSlider(Qt.Orientation.Horizontal, self)
+        self.mySlider.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.mySlider.setGeometry(30, 40, 180, 30)  # x,y,w,h
         self.mySlider.setValue(20)
 
@@ -30,10 +28,10 @@ class MainWindow(QWidget):
         self.mySlider.valueChanged[int].connect(self.myLcd.display)
 
         # --- zwei PushButtons
-        myPBmore = QPushButton(self)
-        myPBmore.setText('>')
-        myPBmore.setGeometry(0, 0, 40, 40)   # x,y,w,h
-        myPBmore.clicked.connect(self.plus)
+        self.myPBmore = QPushButton(self)
+        self.myPBmore.setText('>')
+        self.myPBmore.setGeometry(0, 0, 40, 40)   # x,y,w,h
+        self.myPBmore.clicked.connect(self.plus)
 
         self.myPBless = QPushButton(self)
         self.myPBless.setText('<')
@@ -42,24 +40,22 @@ class MainWindow(QWidget):
 
         # --- Window konfigurieren
         self.setGeometry(300, 300, 280, 170)
-        self.setWindowTitle('Robotik Bocholt - Slider LCD')
+        self.setWindowTitle('PyQt6 - Slider LCD')
         self.show()
 
-    # --- Die beiden Slot-Methoden
+    # --- Slot Methoden mit Wertebegrenzung ---
     def plus(self):
-        wert = self.mySlider.value()  # Slider Wert holen
-        wert = wert+1
-        self.mySlider.setValue(wert)  # Slider Wert setzen
+        wert = self.mySlider.value()
+        if wert < self.mySlider.maximum():
+            self.mySlider.setValue(wert + 1)
 
     def minus(self):
         wert = self.mySlider.value()
-        wert = wert-1
-        self.mySlider.setValue(wert)
-
+        if wert > self.mySlider.minimum():
+            self.mySlider.setValue(wert - 1)
 
 if __name__ == '__main__':
-
     app = QApplication(sys.argv)
     mw = MainWindow()
-    sys.exit(app.exec_())
-
+    mw.show()
+    sys.exit(app.exec())
