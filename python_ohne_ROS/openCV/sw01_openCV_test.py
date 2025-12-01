@@ -7,8 +7,10 @@ import os
 # Ansonsten: Deinstallieren $ sudo snap remove code
 # und über .deb Paket installieren. Download:
 # https://code.visualstudio.com/docs/?dv=linux64_deb
+#
 # Installation: $ sudo dpkg -i <datei>.deb
-# oder mit Anwendungszentrum öffnen.
+# oder die DEB-Datei mit dem Anwendungszentrum öffnen 
+# (im Nautilus per RMB)
 
 #https://blog.codecentric.de/2017/06/einfuehrung-in-computer-vision-mit-opencv-und-python/
 # === usage ===
