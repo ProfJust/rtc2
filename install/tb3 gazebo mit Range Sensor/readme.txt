@@ -1,9 +1,11 @@
 Zu ändernde Files
 
-/home/oju/turtlebot3_ws/src/turtlebot3_simulations/turtlebot3_gazebo/urdf/turtlebot3_burger.urdf
+~/turtlebot3_ws/src/turtlebot3_simulations/turtlebot3_gazebo/urdf/turtlebot3_burger.urdf
+
+Achtung Humble => JAzzy hat sich Gazebo Classic in Gazebo 8.10. Harmonic gewandelt
 
 und 
-/home/oju/turtlebot3_ws/src/turtlebot3_simulations/turtlebot3_gazebo/models/turtlebot3_burger/model.sdf 
+~/turtlebot3_ws/src/turtlebot3_simulations/turtlebot3_gazebo/models/turtlebot3_burger/model.sdf 
 
 
 Gazebo-Spawnen nutzt model.sdf
@@ -20,9 +22,11 @@ ros2 launch turtlebot3_gazebo turtlebot3_house.launch.py extra_gazebo_args:="--v
 
 Ergänze in Datei /home/oj/turtlebot3_ws/src/turtlebot3/turtlebot3_navigation2/param/burger.yaml
 
-ab Zeile 170:
+ab Zeile 191:
 
 local_costmap:
+
+im Obstacle Layer
 ...
  observation_sources: scan range
         scan:

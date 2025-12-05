@@ -1,0 +1,6 @@
+sudo apt install ros-jazzy-urdf-tutorial
+
+ros2 launch urdf_tutorial display.launch.py model:=/home/oj/turtlebot3_ws/src/rtc2/rtc2/my_urdf/my_robot.urdf
+
+
+https://docs.ros.org/en/jazzy/Tutorials/Intermediate/URDF/Building-a-Visual-Robot-Model-with-URDF-from-Scratch.html
