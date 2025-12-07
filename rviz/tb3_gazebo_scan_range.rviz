@@ -10,6 +10,9 @@ Panels:
         - /LaserScan1/Topic1
         - /Odometry1
         - /LaserScan2
+        - /LaserScan2/Status1
+        - /LaserScan2/Topic1
+        - /LaserScan2/Autocompute Value Bounds1
         - /RobotModel1
       Splitter Ratio: 0.5
     Tree Height: 491
@@ -134,8 +137,8 @@ Visualization Manager:
       Axis: Z
       Channel Name: intensity
       Class: rviz_default_plugins/LaserScan
-      Color: 255; 255; 255
-      Color Transformer: Intensity
+      Color: 0; 255; 0
+      Color Transformer: FlatColor
       Decay Time: 0
       Enabled: true
       Invert Rainbow: false
@@ -147,14 +150,14 @@ Visualization Manager:
       Position Transformer: XYZ
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.009999999776482582
-      Style: Flat Squares
+      Size (m): 0.10000000149011612
+      Style: Points
       Topic:
         Depth: 5
         Durability Policy: Volatile
         Filter size: 10
         History Policy: Keep Last
-        Reliability Policy: Reliable
+        Reliability Policy: Best Effort
         Value: /range
       Use Fixed Frame: true
       Use rainbow: true
@@ -269,7 +272,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 1.6777502298355103
+      Distance: 2.9567694664001465
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
