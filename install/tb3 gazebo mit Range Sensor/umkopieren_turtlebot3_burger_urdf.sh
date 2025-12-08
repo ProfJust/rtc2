@@ -2,14 +2,15 @@
 set -e
 
 # Pfade definieren
+HOME_DIR="$HOME"
 # Originales File das wir ändern wollen
-SRC_FILE="/home/oj/turtlebot3_ws/src/turtlebot3_simulations/turtlebot3_gazebo/urdf/turtlebot3_burger.urdf"
+SRC_FILE="$HOME_DIR/turtlebot3_ws/src/turtlebot3_simulations/turtlebot3_gazebo/urdf/turtlebot3_burger.urdf"
 # Backup File des Originals
-BACKUP_FILE="/home/oj/turtlebot3_ws/src/turtlebot3_simulations/turtlebot3_gazebo/urdf/turtlebot3_burger.urdf.bak"
+BACKUP_FILE="$HOME_DIR/turtlebot3_ws/src/turtlebot3_simulations/turtlebot3_gazebo/urdf/turtlebot3_burger.urdf.bak"
 # Neue Datei die wir anstelle des Originals einfügen wollen
-NEW_FILE="/home/oj/turtlebot3_ws/src/rtc2/install/tb3 gazebo mit Range Sensor/Jazzy Version with Gazebo Harmonic/turtlebot3_burger.urdf"
+NEW_FILE="$HOME_DIR/turtlebot3_ws/src/rtc2/install/tb3 gazebo mit Range Sensor/Jazzy Version with Gazebo Harmonic/turtlebot3_burger.urdf"
 # Zielort der neuen Datei
-TARGET_FILE="/home/oj/turtlebot3_ws/src/turtlebot3_simulations/turtlebot3_gazebo/urdf/turtlebot3_burger.urdf"
+TARGET_FILE="$HOME_DIR/turtlebot3_ws/src/turtlebot3_simulations/turtlebot3_gazebo/urdf/turtlebot3_burger.urdf"
 
 # 1. Existierende test.urdf umbenennen
 if [ -f "$SRC_FILE" ]; then
