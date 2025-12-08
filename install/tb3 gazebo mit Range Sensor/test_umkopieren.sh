@@ -2,10 +2,11 @@
 set -e
 
 # Pfade definieren
-SRC_FILE="/home/oj/Dokumente/test.urdf"
-BACKUP_FILE="/home/oj/Dokumente/test(copy).urdf"
-NEW_FILE="/home/oj/Dokumente/testordner/test_neu.urdf"
-TARGET_FILE="/home/oj/Dokumente/test.urdf"
+HOME_DIR="$HOME"
+SRC_FILE="$HOME_DIR/Dokumente/test.urdf"
+BACKUP_FILE="$HOME_DIR/Dokumente/test(copy).urdf"
+NEW_FILE="$HOME_DIR/Dokumente/testordner/test_neu.urdf"
+TARGET_FILE="$HOME_DIR/Dokumente/test.urdf"
 
 # 1. Existierende test.urdf umbenennen
 if [ -f "$SRC_FILE" ]; then
