@@ -44,7 +44,7 @@ rcl_timer_t timer;
 #define RCCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){error_loop();}}
 #define RCSOFTCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){}}
 
-Adafruit_VL53L0X lox = Adafruit_VL53L0X();
+//Adafruit_VL53L0X lox = Adafruit_VL53L0X();
 uint32_t range=0;
 
 void error_loop(){
@@ -105,19 +105,21 @@ void setup() {
 
   msg.data = 0;
 
+/*
   if (!lox.begin()) {
       //Serial.println(F("Failed to boot VL53L0X"));
       while(1);
   }
-  lox.startRangeContinuous();
+  lox.startRangeContinuous(); */
   
 }
 
 void loop() {
   //delay(100);
   RCSOFTCHECK(rclc_executor_spin_some(&executor, RCL_MS_TO_NS(100)));
-  if (lox.isRangeComplete()) {
+  /*if (lox.isRangeComplete()) {
     range = lox.readRange();
-  }
+  }*/
+  range++;
   msg.data = range;
 }
