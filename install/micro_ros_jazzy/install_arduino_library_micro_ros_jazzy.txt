@@ -2,21 +2,22 @@ sudo snap install arduino
 sudo usermod -a -G dialout oj     <= your USERNAME
 sudo usermod -a -G dialout oj     <= your USERNAME
 
+Precompiled libraries über Arduino IDE installieren
+adafruit VL53LX
+micro ros jazzy über ZIP-File
+
+Board Manager => esp32 v2.02 !!!! nicht neuer!!!
 
 
-cd ~/Arduino/libraries
-rm -rf micro_ros_arduino
-git clone -b jazzy https://github.com/micro-ROS/micro_ros_arduino.git
-cd micro_ros_arduino
- 
-Prüfen, ob 
-     ls ~/Arduino/libraries/micro_ros_arduino/extras/library_generation/library_generation.sh 
-existiert und  ausführbar ist  (grün) 
-dann den Docker‑Befehl wie oben ausführen
+# Serial micro-ROS Agent
+  docker run -it --rm -v /dev:/dev --privileged --net=host microros/micro-ros-agent:jazzy serial --dev [YOUR BOARD PORT] -v6
+also
+$ docker run -it --rm -v /dev:/dev --privileged --net=host microros/micro-ros-agent:jazzy serial --dev [/dev/ttyUSB0] -v6
 
-   # wenn diese Datei existiert, dann:
-cd /home/oj/Arduino/libraries/micro_ros_arduino 
 
+
+
+PRECOMPILED nicht vorhanden, dann
 docker run -it --rm -v $(pwd):/project \
   --env MICROROS_LIBRARY_FOLDER=extras \
   microros/micro_ros_static_library_builder:jazzy -p esp32
