@@ -1,4 +1,21 @@
 docker run -it --rm -v /dev:/dev --privileged --net=host microros/micro-ros-agent:jazzy serial --dev /dev/ttyUSB0 -v6
+
+tested: 
+
+docker run -it --rm --net=host   -e ROS_DOMAIN_ID=30   microros/micro-ros-agent:jazzy   udp4 --port 7777 -v6
+
+
+Im ESP32: IP Adresse des PCs auf dem der µROS-Agent läuft 
+void setup() {
+  // ########################### IP Adresse des PCs auf dem der µROS-Agent läuft , !!!!nicht der ESP32 im Router!!! #####
+  set_microros_wifi_transports("TP-Link_Robotik", "48095655", "192.168.0.57", 7777);  
+
+
+
+### deprecated
 docker run -it --rm -v /dev:/dev --privileged --net=host microros/micro-ros-agent:jazzy udp4 --port 8888 -v6
+docker run -it --rm -p 8888:8888/udp  microros/micro-ros-agent:jazzy udp4 --port 8888 -v6
+
+
 
 

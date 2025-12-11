@@ -1,0 +1,9 @@
+docker run -it --rm -v /dev:/dev --privileged --net=host microros/micro-ros-agent:jazzy serial --dev /dev/ttyUSB0 -v6
+docker run -it --rm -v /dev:/dev --privileged --net=host microros/micro-ros-agent:jazzy udp4 --port 8888 -v6
+
+
+mit ROS DOMAIN ID???
+docker run -it --rm --net=host   -e ROS_DOMAIN_ID=30   microros/micro-ros-agent:jazzy   udp4 --port 7777 -v6
+
+
+

@@ -53,8 +53,10 @@ void timer_callback(rcl_timer_t * timer, int64_t last_call_time)
 }
 
 void setup() {
-  // ########################### IP Adresse des PCs auf dem der µROS-Agent läuft , siehe Router!!! #####
-  set_microros_wifi_transports("TP-Link_Robotik", "48095655", "192.168.0.20", 8888); 
+  // ########################### IP Adresse des PCs auf dem der µROS-Agent läuft , !!!!nicht der ESP32 im Router!!! #####
+  set_microros_wifi_transports("TP-Link_Robotik", "48095655", "192.168.0.57", 7777);    
+  // Mit ping 192.168.0.182 testen!!
+
   //set_microros_wifi_transports("TP-Link_6F5A", "13078553", "192.168.0.183", 8888);
   //  set_microros_wifi_transports("AEJJ", "81202126", "192.168.1.107", 8888);
 
