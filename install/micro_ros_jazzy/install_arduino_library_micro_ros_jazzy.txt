@@ -1,0 +1,26 @@
+sudo snap install arduino
+sudo usermod -a -G dialout oj     <= your USERNAME
+sudo usermod -a -G dialout oj     <= your USERNAME
+
+
+
+cd ~/Arduino/libraries
+rm -rf micro_ros_arduino
+git clone -b jazzy https://github.com/micro-ROS/micro_ros_arduino.git
+cd micro_ros_arduino
+ 
+Prüfen, ob 
+     ls ~/Arduino/libraries/micro_ros_arduino/extras/library_generation/library_generation.sh 
+existiert und  ausführbar ist  (grün) 
+dann den Docker‑Befehl wie oben ausführen
+
+   # wenn diese Datei existiert, dann:
+cd /home/oj/Arduino/libraries/micro_ros_arduino 
+
+docker run -it --rm -v $(pwd):/project \
+  --env MICROROS_LIBRARY_FOLDER=extras \
+  microros/micro_ros_static_library_builder:jazzy -p esp32
+
+
+Danach sollten im extras‑Ordner die frisch gebauten libmicroros.a für ESP32 liegen 
+und deine Linker‑Fehler (undefined reference to rmw_uros_set_custom_transport, rclc_*, rosidl_typesupport_c_*) verschwinden.
