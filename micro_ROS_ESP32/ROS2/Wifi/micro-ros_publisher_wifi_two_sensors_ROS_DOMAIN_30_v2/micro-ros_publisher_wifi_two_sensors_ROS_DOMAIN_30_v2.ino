@@ -226,17 +226,13 @@ void loop() {
 //Messwerte der VL53L0X zuweisen
   laserScanMsg.ranges.data[0] = msg1.data / 1000.0; //mm in m
   laserScanMsg.ranges.data[1] = msg2.data / 1000.0; //mm in m
-  laserScanMsg.ranges.size = 0;
-  laserScanMsg.ranges.capacity = BUF_LEN;
 
- for (int i = 0; i < BUF_LEN; i++) {
-    ranges_buf[i] = base;
-    intensities_buf[i] = 1.0f;  // konstante Intensität
-  }
-
-  laserScanMsg.intensities.data = intensities_buf;
-  laserScanMsg.intensities.size = 0;
-  laserScanMsg.intensities.capacity = BUF_LEN;
+  laserScanMsg.ranges.intensities[0] = 
+  //laserScanMsg.ranges.size = BUF_LEN;
+  //laserScanMsg.ranges.capacity = BUF_LEN;
+ 
+  //  Leave Empty laserScanMsg.intensities.data 
+  
 
 /*
   for (int i = 0; i < BUF_LEN; i++) {
@@ -280,4 +276,3 @@ void loop() {
 */
 
 }
-
