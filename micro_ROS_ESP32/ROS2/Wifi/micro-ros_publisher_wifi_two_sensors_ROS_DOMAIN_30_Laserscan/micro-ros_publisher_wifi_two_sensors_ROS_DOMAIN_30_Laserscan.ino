@@ -29,6 +29,9 @@
 #include <rclc/executor.h>
 #include <std_msgs/msg/int32.h>
 #include <sensor_msgs/msg/laser_scan.h>
+#include <rosidl_runtime_c/string_functions.h>
+#include <rosidl_runtime_c/primitives_sequence_functions.h>
+
 
 rcl_publisher_t publisher1;
 rcl_publisher_t publisher2;
@@ -36,8 +39,7 @@ rcl_publisher_t publisher3;
 std_msgs__msg__Int32 msg1;
 std_msgs__msg__Int32 msg2;
 sensor_msgs__msg__LaserScan laserScanMsg;
-static float ranges_buf[N]; 
-static float intensities_buf[N];
+
 // Anzahl Messstrahlen mit VL53L0X
 #define BUF_LEN        2
 
@@ -110,6 +112,31 @@ void timer_callback(rcl_timer_t * timer, int64_t last_call_time)
   }
 }
 
+void init_laserscan_msg()
+{
+  // Message init (setzt Defaultwerte, initialisiert Strings/Sequences strukturell)
+  sensor_msgs__msg__LaserScan__init(&laserScanMsg);
+
+  // frame_id einmalig setzen
+  rosidl_runtime_c__String__assign(&laserScanMsg.header.frame_id, "range_scan");
+
+  // Sequences für ranges/intensities allokieren
+  rosidl_runtime_c__float32__Sequence__init(&laserScanMsg.ranges, BUF_LEN);
+  rosidl_runtime_c__float32__Sequence__init(&laserScanMsg.intensities, BUF_LEN);
+
+  // Metadaten (Beispielwerte)
+  laserScanMsg.angle_min = -0.01f;
+  laserScanMsg.angle_max =  0.01f;
+  laserScanMsg.angle_increment = (laserScanMsg.angle_max - laserScanMsg.angle_min) / (float)(BUF_LEN - 1);
+
+  laserScanMsg.range_min = 0.02f;
+  laserScanMsg.range_max = 2.00f;
+
+  // optional:
+  laserScanMsg.time_increment = 0.0f;
+  laserScanMsg.scan_time = 0.1f;  // 10 Hz
+}
+
 void setup() {
   // ---- set I2C-Adresses  ----
   pinMode(SHT_LOX2, OUTPUT);
@@ -123,8 +150,13 @@ void setup() {
   digitalWrite(LED_PIN, HIGH);
 
   // ############################# IP Adresse des PCs auf dem der µROS-Agent läuft !!! #####
-  //WHS 
-  set_microros_wifi_transports("TP-Link_Robotik", "48095655", "192.168.0.183", 8888); 
+  char ssid[] = "TP-Link_Robotik";
+  char pass[] = "48095655";
+  char agent_ip[] = "192.168.0.183";
+  set_microros_wifi_transports(ssid, pass, agent_ip, 7777);
+
+  //set_microros_wifi_transports(ssid, pass, agent_ip, 8888);
+  //set_microros_wifi_transports("TP-Link_Robotik", "48095655", "192.168.0.183", 8888); 
   //HomeOffice
   //set_microros_wifi_transports("just_a_FRITZbox", "PASSWORD", "192.168.178.37", 8888); 
   
@@ -132,34 +164,49 @@ void setup() {
 
   allocator = rcl_get_default_allocator();
   //-------  Set ROS_DOMAIN_ID to 30 ----------------
-  init_options = rcl_get_zero_initialized_init_options();
-  rcl_init_options_init(&init_options, allocator);
-  rcl_init_options_set_domain_id(&init_options, 30);
-  RCCHECK(rclc_support_init_with_options(&support, 0, NULL, &init_options, &allocator));
+    init_options = rcl_get_zero_initialized_init_options();
+    RCCHECK(rcl_init_options_init(&init_options, allocator));
+    RCCHECK(rcl_init_options_set_domain_id(&init_options, 30));    
+    RCCHECK(rclc_support_init_with_options(&support, 0, NULL, &init_options, &allocator));
   //-------  End set ROS_DOMAIN_ID to 30 ----------------
 
    // create node
-  RCCHECK(rclc_node_init_default(&node, "uros_wifi_range_node", "", &support));
+    RCCHECK(rclc_node_init_default(&node, "uros_wifi_range_node", "", &support));
 
   // create publisher 1
-  RCCHECK(rclc_publisher_init_best_effort(
-    &publisher1,
-    &node,
-    ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
-    "range1"));
-    // create publisher 2
+    RCCHECK(rclc_publisher_init_best_effort(
+      &publisher1,
+      &node,
+      ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
+      "range1"));
+  // create publisher 2
+    RCCHECK(rclc_publisher_init_best_effort(
+      &publisher2,
+      &node,
+      ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
+      "range2"));
+      
+  
+  /*sensor_msgs__msg__LaserScan__init(&laserScanMsg);
+  //rosidl_runtime_c__float__Sequence__init(&laserScanMsg.ranges, BUF_LEN);
+  //rosidl_runtime_c__float__Sequence__init(&laserScanMsg.intensities, BUF_LEN);
 
-  RCCHECK(rclc_publisher_init_best_effort(
-    &publisher2,
-    &node,
-    ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
-    "range2"));
+  rosidl_runtime_c__float32__Sequence__init(&laserScanMsg.ranges, BUF_LEN);
+  rosidl_runtime_c__float32__Sequence__init(&laserScanMsg.intensities, BUF_LEN);
+  rosidl_runtime_c__String__assign(&laserScanMsg.header.frame_id, "range_scan");  // ==> ins URDF für den RealBot eintragen
 
-  RCCHECK(rclc_publisher_init_best_effort(
-    &publisher3,
-    &node,
-    ROSIDL_GET_MSG_TYPE_SUPPORT(sensor_msgs, msg, LaserScan),
-    "range_scan"));
+  // create publisher 3
+  RCCHECK( rclc_publisher_init_best_effort(
+              &publisher3,
+              &node,
+              ROSIDL_GET_MSG_TYPE_SUPPORT(sensor_msgs, msg, LaserScan),
+              "scan_range"  )
+  );
+        
+  // Optional: frame_id setzen
+  rosidl_runtime_c__String__assign(&laserScanMsg.header.frame_id, "range_scan");*/
+
+   init_laserscan_msg();
 
   // create timer,
   const unsigned int timer_timeout = 100;
@@ -196,15 +243,16 @@ void loop() {
   // if not out of range
   if (range2 < 2000) {  msg2.data = range2; }
 
-//####### Create LaserScanMessage ###############
+
+ 
+/*####### Create LaserScanMessage ###############
 // Vgl. https://docs.ros2.org/foxy/api/sensor_msgs/msg/LaserScan.html
 // ----------------------------------------------------------------------
 // Zeitstempel setzen (sehr grob mit millis(); für produktiv besser Time-Sync)
   uint32_t now_ms = millis();
   laserScanMsg.header.stamp.sec = now_ms / 1000;
   laserScanMsg.header.stamp.nanosec = (now_ms % 1000) * 1000000;
-  laserScanMsg.header.frame_id = "range_scan"; // ==> ins URDF für den RealBot eintragen
-
+ 
 // Parameter (hier zurzeit nur Dummy-Werte)
   laserScanMsg.angle_min = -0.03;
   laserScanMsg.angle_max =  0.03;
@@ -221,58 +269,15 @@ void loop() {
 
 
   laserScanMsg.ranges.size = BUF_LEN;
-  laserScanMsg.intensities.size = BUF_LEN;
+  laserScanMsg.intensities.size = BUF_LEN;*/
 
-//Messwerte der VL53L0X zuweisen
+  //Messwerte der VL53L0X zuweisen
   laserScanMsg.ranges.data[0] = msg1.data / 1000.0; //mm in m
   laserScanMsg.ranges.data[1] = msg2.data / 1000.0; //mm in m
 
-  laserScanMsg.ranges.intensities[0] = 
-  //laserScanMsg.ranges.size = BUF_LEN;
-  //laserScanMsg.ranges.capacity = BUF_LEN;
+  laserScanMsg.intensities.data[0] = 0.0f;
+  laserScanMsg.intensities.data[1] = 0.0f;
+  
  
-  //  Leave Empty laserScanMsg.intensities.data 
-  
-
-/*
-  for (int i = 0; i < BUF_LEN; i++) {
-    float base = 2.0f + 1.5f * sinf(phase + i * 0.05f);
-    if (base < laserScanMsg.range_min) base = laserScanMsg.range_min;
-    if (base > laserScanMsg.range_max) base = laserScanMsg.range_max;
-    ranges_buf[i] = base;
-    intensities_buf[i] = 1.0f;  // konstante Intensität
-  }
-
-  // LaserScan-Message nullen und Felder initialisieren
-  memset(&laserScanMsg, 0, sizeof(laserScanMsg));
-
-  // Frame-ID setzen (als statischer String)
-  static char frame_id[] = FRAME_ID;
-  laserScanMsg.header.frame_id.data = frame_id;
-  laserScanMsg.header.frame_id.size = strlen(frame_id);
-  laserScanMsg.header.frame_id.capacity = strlen(frame_id);
-
-  // Winkelbereich (0 .. 2*pi)
-  laserScanMsg.angle_min = 0.0f;
-  laserScanMsg.angle_max = 2.0f * 3.1415926f;
-  
-
-  // Zeitparameter (hier nur Dummy-Werte)
-  laserScanMsg.time_increment = 0.0f;
-  laserScanMsg.scan_time = 0.1f;    // 10 Hz
-
-  // Reichweitenbegrenzung
-  laserScanMsg.range_min = 0.12f;
-  laserScanMsg.range_max = 10.0f;
-
-  // statische Speicherbereiche für ranges/intensities zuweisen
-  laserScanMsg.ranges.data = ranges_buf;
-  laserScanMsg.ranges.size = 0;
-  laserScanMsg.ranges.capacity = BUF_LEN;
-
-  laserScanMsg.intensities.data = intensities_buf;
-  laserScanMsg.intensities.size = 0;
-  laserScanMsg.intensities.capacity = BUF_LEN;
-*/
-
 }
+  
