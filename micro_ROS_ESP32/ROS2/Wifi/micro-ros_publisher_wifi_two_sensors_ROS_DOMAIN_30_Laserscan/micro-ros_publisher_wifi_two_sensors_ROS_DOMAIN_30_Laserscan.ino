@@ -210,11 +210,19 @@ void setup() {
 
   // create timer,
   const unsigned int timer_timeout = 100;
-  RCCHECK(rclc_timer_init_default(
+  /*RCCHECK(rclc_timer_init_default(
     &timer,
     &support,
     RCL_MS_TO_NS(timer_timeout),
-    timer_callback));
+    timer_callback));*/
+
+  RCCHECK(rclc_timer_init_default2(
+    &timer,
+    &support,
+    RCL_MS_TO_NS(timer_timeout),
+    timer_callback,
+    true));   // oder false – je nach gewünschtem Verhalten (autostart)
+
   
   // create executor
   RCCHECK(rclc_executor_init(&executor, &support.context, 1, &allocator));
