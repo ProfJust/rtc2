@@ -186,26 +186,6 @@ void setup() {
       ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
       "range2"));
       
-  
-  /*sensor_msgs__msg__LaserScan__init(&laserScanMsg);
-  //rosidl_runtime_c__float__Sequence__init(&laserScanMsg.ranges, BUF_LEN);
-  //rosidl_runtime_c__float__Sequence__init(&laserScanMsg.intensities, BUF_LEN);
-
-  rosidl_runtime_c__float32__Sequence__init(&laserScanMsg.ranges, BUF_LEN);
-  rosidl_runtime_c__float32__Sequence__init(&laserScanMsg.intensities, BUF_LEN);
-  rosidl_runtime_c__String__assign(&laserScanMsg.header.frame_id, "range_scan");  // ==> ins URDF für den RealBot eintragen
-
-  // create publisher 3
-  RCCHECK( rclc_publisher_init_best_effort(
-              &publisher3,
-              &node,
-              ROSIDL_GET_MSG_TYPE_SUPPORT(sensor_msgs, msg, LaserScan),
-              "scan_range"  )
-  );
-        
-  // Optional: frame_id setzen
-  rosidl_runtime_c__String__assign(&laserScanMsg.header.frame_id, "range_scan");*/
-
    init_laserscan_msg();
 
   // create timer,
@@ -253,39 +233,13 @@ void loop() {
 
 
  
-/*####### Create LaserScanMessage ###############
-// Vgl. https://docs.ros2.org/foxy/api/sensor_msgs/msg/LaserScan.html
-// ----------------------------------------------------------------------
-// Zeitstempel setzen (sehr grob mit millis(); für produktiv besser Time-Sync)
-  uint32_t now_ms = millis();
-  laserScanMsg.header.stamp.sec = now_ms / 1000;
-  laserScanMsg.header.stamp.nanosec = (now_ms % 1000) * 1000000;
- 
-// Parameter (hier zurzeit nur Dummy-Werte)
-  laserScanMsg.angle_min = -0.03;
-  laserScanMsg.angle_max =  0.03;
-
-  laserScanMsg.time_increment = 0.0f;
-  laserScanMsg.angle_increment =
-      (laserScanMsg.angle_max - laserScanMsg.angle_min) / BUF_LEN;
-
-  laserScanMsg.scan_time = 0.1f;    // 10 Hz
-
-  // Reichweitenbegrenzung
-  laserScanMsg.range_min = 0.12f;
-  laserScanMsg.range_max = 1.50f; //Meter
-
-
-  laserScanMsg.ranges.size = BUF_LEN;
-  laserScanMsg.intensities.size = BUF_LEN;*/
-
+//####### Create LaserScanMessage ###############
   //Messwerte der VL53L0X zuweisen
   laserScanMsg.ranges.data[0] = msg1.data / 1000.0; //mm in m
   laserScanMsg.ranges.data[1] = msg2.data / 1000.0; //mm in m
 
   laserScanMsg.intensities.data[0] = 0.0f;
-  laserScanMsg.intensities.data[1] = 0.0f;
-  
+  laserScanMsg.intensities.data[1] = 0.0f;  
  
 }
   
