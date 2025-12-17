@@ -30,5 +30,10 @@
     #sudo apt install ./code_1.107.0-1765353552_amd64.deb #ggf. ändert sich der Name des Files
     sudo apt install ~/Downloads/code.deb
     code  # startet Visual Studio Code
+    sudo apt update
+    sudo apt install gnome-keyring libsecret-1-0 libsecret-1-dev -y
+
+
+
 
    
