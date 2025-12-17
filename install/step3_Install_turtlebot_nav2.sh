@@ -87,6 +87,10 @@ source ~/.bashrc
  unset GTK_PATH
  sudo apt install libcanberra-gtk-module
 
+ printf " ros2 launch turtlebot3_gazebo turtlebot3_house.launch.py x_pose:=-1 y_pose:=1"
+ printf " ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=true map:=$HOME/turtlebot3_ws/src/rtc2/maps/turtlebot3_house/map_tb3_house_03.yaml"
+
+
 
 
 
