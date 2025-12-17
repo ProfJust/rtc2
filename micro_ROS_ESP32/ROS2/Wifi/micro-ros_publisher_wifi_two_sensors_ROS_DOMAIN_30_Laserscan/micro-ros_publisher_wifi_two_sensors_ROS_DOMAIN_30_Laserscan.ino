@@ -152,7 +152,7 @@ void setup() {
   // ############################# IP Adresse des PCs auf dem der µROS-Agent läuft !!! #####
   char ssid[] = "TP-Link_Robotik";
   char pass[] = "48095655";
-  char agent_ip[] = "192.168.0.183";
+  char agent_ip[] = "192.168.0.57";
   set_microros_wifi_transports(ssid, pass, agent_ip, 7777);
 
   //set_microros_wifi_transports(ssid, pass, agent_ip, 8888);
