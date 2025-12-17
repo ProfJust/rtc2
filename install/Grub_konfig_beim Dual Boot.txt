@@ -7,5 +7,9 @@ sudo nano /etc/default/grub
 GRUB_DEFAULT=saved
 GRUB_SAVEDEFAULT=true
 
-## Grub updtaen, dann Reboot
+FONTSIZE="16x32"
+
+# Grub updaten, 
 sudo update-grub
+# dann Reboot
+sudo reboot
