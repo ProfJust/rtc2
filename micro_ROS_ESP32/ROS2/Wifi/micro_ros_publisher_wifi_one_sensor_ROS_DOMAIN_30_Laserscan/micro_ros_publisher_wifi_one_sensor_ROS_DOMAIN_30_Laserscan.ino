@@ -10,6 +10,23 @@
 // GND  braun
 // 3V3 rot
 
+// Wichtig! Sonst bekommt RVIZ Timing Probleme  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// Auf dem realen TB3 den Frame setzen
+// ubuntu@tb3: cd ~/turtlebot3_ws/src/turtlebot3/turtlebot3_description/urdf
+// ubuntu@tb3: nano turtlebot3_burger.urdf
+// Dort einfügen:
+""" 
+      <!-- Range sensor frame -->
+        <link name="range_scan"/>
+
+        <joint name="range_scan_joint" type="fixed">
+                <parent link="base_link"/>
+                <child link="range_scan"/>
+                <!-- Position und Orientierung anpassen! -->
+                <origin xyz="0.10 0.0 0.15" rpy="0 0 0"/>
+        </joint>
+"""
+
 #include "Adafruit_VL53L0X.h"
 #include <micro_ros_arduino.h>
 #include <stdio.h>
