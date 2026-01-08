@@ -10,12 +10,13 @@
 // GND  braun
 // 3V3 rot
 
+""" 
 // Wichtig! Sonst bekommt RVIZ Timing Probleme  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 // Auf dem realen TB3 den Frame setzen
 // ubuntu@tb3: cd ~/turtlebot3_ws/src/turtlebot3/turtlebot3_description/urdf
 // ubuntu@tb3: nano turtlebot3_burger.urdf
 // Dort einfügen:
-""" 
+
       <!-- Range sensor frame -->
         <link name="range_scan"/>
 
