@@ -46,6 +46,7 @@ char agent_ip[] = "192.168.0.57"; // IP des Remote PCs mit Agent
 #include <rosidl_runtime_c/string_functions.h>
 #include <rosidl_runtime_c/primitives_sequence_functions.h>
 #include <rmw_microros/time_sync.h>
+#include <limits>
 
 #if !defined(ESP32) && !defined(TARGET_PORTENTA_H7_M7) && !defined(ARDUINO_NANO_RP2040_CONNECT) && !defined(ARDUINO_WIO_TERMINAL)
 #error This example is only avaible for Arduino Portenta, Arduino Nano RP2040 Connect, ESP32 Dev module and Wio Terminal
@@ -69,8 +70,70 @@ rcl_timer_t timer;
 #define RCCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){error_loop();}}
 #define RCSOFTCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){}}
 
-Adafruit_VL53L0X lox = Adafruit_VL53L0X();
-uint32_t range=0;
+// address we will assign if dual sensor is present
+#define LOX1_ADDRESS 0x30
+#define LOX2_ADDRESS 0x31
+
+// set the XSHUT - Pins 
+#define SHT_LOX1 18
+#define SHT_LOX2 19
+
+// objects for the vl53l0x
+Adafruit_VL53L0X lox1 = Adafruit_VL53L0X();
+Adafruit_VL53L0X lox2 = Adafruit_VL53L0X();
+
+// this holds the measurement
+uint32_t range1=0;
+uint32_t range2=0;
+
+void setID() 
+{
+  // beide aus
+  digitalWrite(SHT_LOX1, LOW);
+  digitalWrite(SHT_LOX2, LOW);
+  delay(10);
+
+  // LOX1 an, LOX2 bleibt aus
+  digitalWrite(SHT_LOX1, HIGH);
+  delay(10);
+  if (!lox1.begin(0x29)) { while(1){} }          // erst am Default
+  lox1.setAddress(LOX1_ADDRESS);                // dann umadressieren
+  delay(10);
+
+  // LOX2 an
+  digitalWrite(SHT_LOX2, HIGH);
+  delay(10);
+  if (!lox2.begin(0x29)) { while(1){} }          // wieder am Default
+  lox2.setAddress(LOX2_ADDRESS);                // dann umadressieren
+  delay(10);
+}
+
+/*{
+  // all reset
+  digitalWrite(SHT_LOX1, LOW);    
+  digitalWrite(SHT_LOX2, LOW);
+  delay(10);
+  // all unreset
+  digitalWrite(SHT_LOX1, HIGH);
+  digitalWrite(SHT_LOX2, HIGH);
+  delay(10);
+
+  // activating LOX1 and resetting LOX2
+  digitalWrite(SHT_LOX1, HIGH);
+  digitalWrite(SHT_LOX2, LOW);
+
+  // initing LOX1
+  if(!lox1.begin(LOX1_ADDRESS)) {while(1);}
+  delay(10);
+
+  // activating LOX2
+  digitalWrite(SHT_LOX2, HIGH);
+  delay(10);
+
+  //initing LOX2
+  if(!lox2.begin(LOX2_ADDRESS)) {while(1);}
+}*/
+
 
 void error_loop(){
   while(1){
@@ -148,11 +211,13 @@ void setup() {
   "range_scan"));
   
   // Starte VL53L0X
-  if (!lox.begin()) {
-      //Serial.println(F("Failed to boot VL53L0X"));
-      error_loop();
-  }
-  lox.startRangeContinuous();
+  pinMode(SHT_LOX1, OUTPUT);
+  pinMode(SHT_LOX2, OUTPUT);
+  digitalWrite(SHT_LOX1, LOW);
+  digitalWrite(SHT_LOX2, LOW);
+  setID();
+  lox1.startRangeContinuous(); 
+  lox2.startRangeContinuous(); 
 }
 
 void loop() {
@@ -160,10 +225,9 @@ void loop() {
   static uint32_t last_pub = 0;
   if (millis() - last_pub >= 50) {   // 50 ms -> 20 Hz
     last_pub = millis();  
-    // Messwert holen
-      if (lox.isRangeComplete()) {
-          range = lox.readRange();
-      }
+    // Messwerte holen
+    if (lox1.isRangeComplete()) {  range1 = lox1.readRange(); }
+    if (lox2.isRangeComplete()) {  range2 = lox2.readRange(); }
       
     //  ####### Create LaserScanMessage ###############
       // Time Stamp setzen (Epoch Time, matches TF)
@@ -178,15 +242,37 @@ void loop() {
       laserScanMsg.header.stamp.sec    = (int32_t)(now_ns / 1000000000ULL); //ns => sec
       laserScanMsg.header.stamp.nanosec = (uint32_t)(now_ns % 1000000000ULL); 
       //Messwerte der VL53L0X zuweisen
-      laserScanMsg.ranges.data[0] = range / 1000.0; //mm in m wandeln
-      laserScanMsg.ranges.data[1] = range / 1000.0; //mm in m wandeln
+           
+      float range_m  = range1 / 1000.0f; // mm → m
+      float range_m2 = range2 / 1000.0f; // mm → m
+      // if not out of range
+      if (range_m >= laserScanMsg.range_min && range_m <= laserScanMsg.range_max){
+          laserScanMsg.ranges.data[0] = range_m;
+      }
+      else  
+        if (range_m > laserScanMsg.range_max){
+          laserScanMsg.ranges.data[0] = std::numeric_limits<float>::infinity();
+        }
+        else { // range_m < range_min 
+          laserScanMsg.ranges.data[0] = -std::numeric_limits<float>::infinity();
+        }
+      
+      // if not out of range
+      if (range_m2 >= laserScanMsg.range_min && range_m2 <= laserScanMsg.range_max){
+          laserScanMsg.ranges.data[1] = range_m2;
+      }
+      else  
+        if (range_m2 > laserScanMsg.range_max){
+          laserScanMsg.ranges.data[1] = std::numeric_limits<float>::infinity();
+        }
+        else { // range_m2 < range_min 
+          laserScanMsg.ranges.data[1] = -std::numeric_limits<float>::infinity();
+        } 
+        
+      // Intensities auf 0 wenn man nichts weis
       laserScanMsg.intensities.data[0] = 0.0f;
       laserScanMsg.intensities.data[1] = 0.0f;  
     //===> PUBLISH
       rcl_ret_t rc = rcl_publish(&publisher3, &laserScanMsg, NULL);
-    //if (rc != RCL_RET_OK) {
-      // LED dauerhaft an oder Serial print, damit Sie es sehen
-    //  digitalWrite(LED_PIN, HIGH);
-    //}
-  }
+  } //end if
 }
