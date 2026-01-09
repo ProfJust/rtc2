@@ -1,2 +1,3 @@
 micro_ROS_ESP32/ROS2/Wifi/micro_ros_publisher_wifi_one_sensor_ROS_DOMAIN_30_Laserscan/secrets.h
 micro_ROS_ESP32/ROS2/Wifi/micro_ros_publisher_wifi_two_sensor_ROS_DOMAIN_30_Laserscan/secrets.h
+micro_ROS_ESP32/ROS2/Wifi/micro_ros_publisher_wifi_two_sensor_msgs_Range/secrets2.h
