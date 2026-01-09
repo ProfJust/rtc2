@@ -163,6 +163,7 @@
           <frame_name>base_scan</frame_name>
         </plugin>
       </sensor>
+      
     </link>
 
     <link name="wheel_left_link">
