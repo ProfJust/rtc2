@@ -20,19 +20,21 @@
 <!-- Range sensor frame -->
    <link name="range_left_link"/>
    <link name="range_right_link"/>
+<!-- Range sensor frame -->
+   <link name="range_left_link"/>
+   <link name="range_right_link"/>
    <joint name="range_left_joint" type="fixed">
           <parent link="base_link"/>
           <child link="range_left_link"/>
           <!-- Position und Orientierung anpassen! -->
-          <origin xyz="0.03 0.08 0.15" rpy="0 0 -0.2"/>
+          <origin xyz="0.03 0.07 0.05" rpy="0 0 -0.3"/>
    </joint>
    <joint name="range_right_joint" type="fixed">
           <parent link="base_link"/>
           <child link="range_right_link"/>
           <!-- Position und Orientierung anpassen! -->
-          <origin xyz="0.03 -0.08 0.15" rpy="0 0 0.2"/>
+          <origin xyz="0.03 -0.07 0.05" rpy="0 0 0.3"/>
    </joint>
-</robot>
 
 */
 // ################## Konfiguration des Netzwerkes ##############
