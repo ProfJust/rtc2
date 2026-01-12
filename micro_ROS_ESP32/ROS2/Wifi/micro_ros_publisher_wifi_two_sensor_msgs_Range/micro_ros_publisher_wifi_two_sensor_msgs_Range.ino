@@ -260,7 +260,7 @@ void loop() {
         }
 
     float range_m2 = range1 / 1000.0f;
-    if (range_m2 >= range_msg_right.min_range &&  range_m <= range_msg_right.max_range){
+    if (range_m2 >= range_msg_right.min_range &&  range_m2 <= range_msg_right.max_range){
           range_msg_right.range = range_m2;
     } else 
       if (range_m2 > range_msg_right.max_range){
