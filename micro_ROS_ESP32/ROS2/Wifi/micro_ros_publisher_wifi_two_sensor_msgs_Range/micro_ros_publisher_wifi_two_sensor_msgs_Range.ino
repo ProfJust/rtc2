@@ -19,11 +19,8 @@
 
 <!-- Range sensor links -->
    <link name="range_left_link"/>
-   <link name="range_right_link"/>
-   
+   <link name="range_right_link"/>   
 <!-- Range sensor joints -->
-   <link name="range_left_link"/>
-   <link name="range_right_link"/>
    <joint name="range_left_joint" type="fixed">
           <parent link="base_link"/>
           <child link="range_left_link"/>
