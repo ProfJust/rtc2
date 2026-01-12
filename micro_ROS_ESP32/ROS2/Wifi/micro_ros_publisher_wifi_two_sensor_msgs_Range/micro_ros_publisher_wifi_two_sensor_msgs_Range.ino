@@ -10,17 +10,18 @@
 // GND  braun
 // 3V3 rot
 
-/*
+/* FRAMES müssen gesendet werden (hier vom realen TB3)
 // Wichtig! Sonst bekommt RVIZ Timing Probleme  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 // Auf dem realen TB3 den Frame setzen
 // ubuntu@tb3: cd ~/turtlebot3_ws/src/turtlebot3/turtlebot3_description/urdf
 // ubuntu@tb3: nano turtlebot3_burger.urdf
 // Dort einfügen:
 
-<!-- Range sensor frame -->
+<!-- Range sensor links -->
    <link name="range_left_link"/>
    <link name="range_right_link"/>
-<!-- Range sensor frame -->
+   
+<!-- Range sensor joints -->
    <link name="range_left_link"/>
    <link name="range_right_link"/>
    <joint name="range_left_joint" type="fixed">
@@ -40,7 +41,7 @@
 // ################## Konfiguration des Netzwerkes ##############
 // ===>>> secrets.h
 
-#include "secrets2.h"
+#include "secrets.h"
 #include "Adafruit_VL53L0X.h"
 #include <micro_ros_arduino.h>
 #include <stdio.h>
@@ -230,8 +231,8 @@ void loop() {
   if (millis() - last_pub >= 50) {   // 50 ms -> 20 Hz
     last_pub = millis();  
     //###  Messwerte holen
-    if (lox1.isRangeComplete()) {  range1 = lox1.readRange(); }
-    if (lox2.isRangeComplete()) {  range2 = lox2.readRange(); }
+    if (lox1.isRangeComplete()) {  range2 = lox1.readRange(); }
+    if (lox2.isRangeComplete()) {  range1 = lox2.readRange(); }
         
     //### Time Stamp synchronisieren ###
     static uint32_t last_sync_ms = 0;
