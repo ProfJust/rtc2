@@ -246,25 +246,28 @@ void loop() {
     range_msg_right.header.stamp.nanosec = now_ns % 1000000000ULL; 
       
     //### Messwerte der VL53L0X zuweisen  ###
-    float range_m = range2 / 1000.0f;
-    if (range_m >= range_msg_left.min_range &&  range_m <= range_msg_left.max_range){
-          range_msg_left.range = range_m;
-    } else 
-      if (range_m > range_msg_left.max_range){
-        range_msg_left.range = INFINITY;       // kein Objekt im Messbereich
-      } else {
-          range_msg_left.range = -INFINITY;      // zu nah / ungültig
-        }
+    float range_l_m = range2 / 1000.0f;
+    // 0 oder NaN/Inf -> als "frei" behandeln
+    if (!isfinite(range_l_m) || range_l_m <= 0.0f) {
+      range_l_m = range_msg_left.max_range;
+    }
+    // clamp
+    if (range_l_m < range_msg_left.min_range) range_l_m = range_msg_left.min_range;
+    if (range_l_m > range_msg_left.max_range) range_l_m = range_msg_left.max_range;
 
-    float range_m2 = range1 / 1000.0f;
-    if (range_m2 >= range_msg_right.min_range &&  range_m2 <= range_msg_right.max_range){
-          range_msg_right.range = range_m2;
-    } else 
-      if (range_m2 > range_msg_right.max_range){
-        range_msg_right.range = INFINITY;       // kein Objekt im Messbereich
-      } else {
-          range_msg_right.range = -INFINITY;      // zu nah / ungültig
-        }
+    range_msg_left.range = range_l_m;
+
+
+    float range_r_m = range1 / 1000.0f;
+    if (!isfinite(range_r_m) || range_r_m <= 0.0f) {
+      range_r_m = range_msg_right.max_range;
+    }
+    // clamp
+    if (range_r_m < range_msg_right.min_range) range_r_m = range_msg_right.min_range;
+    if (range_r_m > range_msg_right.max_range) range_r_m = range_msg_right.max_range;
+          
+    range_msg_right.range = range_r_m;
+    
     //===> PUBLISH
     rcl_ret_t rc_left  = rcl_publish(&range_pub_left,  &range_msg_left,  NULL);
     rcl_ret_t rc_right = rcl_publish(&range_pub_right, &range_msg_right, NULL);
