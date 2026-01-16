@@ -43,7 +43,8 @@ setup(
         'tb3_gui= rtc2.tb3_gui:main',
         'tb3_joypad_steering= rtc2.tb3_0_Joypad:main',
         'nav2_simple_commander_test= rtc2.nav2_simple_commander_test:main', 
-        'micro_ROS_2_laserscan = rtc2.micro_ROS_VL53L0X_2_LaserScanMsg:main',     
+        'micro_ROS_2_laserscan = rtc2.micro_ROS_VL53L0X_2_LaserScanMsg:main',
+        'lane_follower= rtc2.lane_follower.lane_follower:main',     
         ],
     },
 )
