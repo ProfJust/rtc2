@@ -16,7 +16,7 @@ class LineFollower(Node):
         super().__init__('line_follower_hsv')
 
         # Topics
-        self.declare_parameter('image_topic', '/camera/color/image_raw')
+        self.declare_parameter('image_topic', '/camera/camera/color/image_raw')
         self.declare_parameter('cmd_vel_topic', '/cmd_vel')
 
         # ROI
