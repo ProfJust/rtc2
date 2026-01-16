@@ -13,6 +13,7 @@ import time
 
 class LineFollower(Node):
     def __init__(self):
+        print("Starting lane follower node...")
         super().__init__('line_follower_hsv')
 
         # Topics
@@ -62,7 +63,9 @@ class LineFollower(Node):
         self.get_logger().info(f"Subscribed: {image_topic} | Publishing: {cmd_vel_topic}")
 
     def on_image(self, msg: Image):
+        # print("Lane follower: Image received")
         frame = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+        cv2.imshow('TB3 Lane Follower Debug', frame)
         h, w, _ = frame.shape
 
         # ROI

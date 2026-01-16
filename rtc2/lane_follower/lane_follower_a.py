@@ -32,6 +32,7 @@ import time
 
 class LaneFollower(Node):
     def __init__(self):
+        print("Starting lane follower node...")
         super().__init__('lane_follower_realsense')
 
         # Parameter (einfach via ros2 param set/tunable)
@@ -62,6 +63,7 @@ class LaneFollower(Node):
         self.get_logger().info('Lane follower started.')
 
     def on_img(self, msg: Image):
+        print("Lane follower: Image received")
         # Timing
         t = time.time()
         dt = max(1e-3, t - self.t_prev)
