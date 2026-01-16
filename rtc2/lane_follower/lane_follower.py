@@ -3,7 +3,8 @@ import rclpy
 from rclpy.node import Node
 
 from sensor_msgs.msg import Image
-from geometry_msgs.msg import Twist
+#from geometry_msgs.msg import Twist
+from geometry_msgs.msg import TwistStamped
 from cv_bridge import CvBridge
 
 import cv2
@@ -55,7 +56,9 @@ class LineFollower(Node):
         cmd_vel_topic = self.get_parameter('cmd_vel_topic').value
 
         self.sub = self.create_subscription(Image, image_topic, self.on_image, 10)
-        self.pub = self.create_publisher(Twist, cmd_vel_topic, 10)
+        # self.pub = self.create_publisher(Twist, cmd_vel_topic, 10)
+        self.pub = self.create_publisher(TwistStamped, cmd_vel_topic, 10)
+
 
         self.prev_error = 0.0
         self.prev_t = time.time()
@@ -65,12 +68,15 @@ class LineFollower(Node):
     def on_image(self, msg: Image):
         # print("Lane follower: Image received")
         frame = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
-        cv2.imshow('TB3 Lane Follower Debug', frame)
+        # cv2.imshow('TB3 Lane Follower Debug', frame)
+        # cv2.waitKey(1)
         h, w, _ = frame.shape
 
         # ROI
         y0 = int(h * self.roi_y_start_ratio)
         roi = frame[y0:h, :]
+        # cv2.imshow('TB3 Lane Follower Debug', roi)
+        # cv2.waitKey(1)
 
         hsv = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
 
@@ -78,6 +84,8 @@ class LineFollower(Node):
         lower = np.array([0, 0, self.v_min], dtype=np.uint8)
         upper = np.array([179, self.s_max, 255], dtype=np.uint8)
         mask = cv2.inRange(hsv, lower, upper)
+        # cv2.imshow('TB3 Lane Follower Debug', mask)
+        # cv2.waitKey(1)
 
         # Morphology
         kernel = np.ones((5, 5), np.uint8)
@@ -85,7 +93,20 @@ class LineFollower(Node):
         mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel, iterations=1)
 
         # Find contours
-        contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)     
+
+        # ----- Alle Konturen grün einzeichnen -------
+        # Maske für Anzeige in Farbe konvertieren
+        mask_vis = cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR)
+        cv2.drawContours(
+            mask_vis,
+            contours,
+            contourIdx=-1,      # alle
+            color=(0, 255, 0),  # grün
+            thickness=2
+        )
+        cv2.imshow("Mask + Contours", mask_vis)
+        cv2.waitKey(1)
 
         # Filter by area
         candidates = []
@@ -99,7 +120,12 @@ class LineFollower(Node):
 
         if len(candidates) < 2:
             # Failsafe: Stop (für Oval ohne Kreuzungen meist besser als "suchen")
-            self.pub.publish(Twist())
+            # self.pub.publish(Twist())
+            tw = TwistStamped()
+            tw.header.stamp = self.get_clock().now().to_msg()
+            tw.twist.linear.x = 0.0
+            tw.twist.angular.z = 0.0
+            self.pub.publish(tw)
             return
 
         # Sort by x-position -> leftmost and rightmost are our lane borders
@@ -109,6 +135,7 @@ class LineFollower(Node):
 
         left_x = left[1]
         right_x = right[1]
+        print(f"Left x: {left_x:.1f}, Right x: {right_x:.1f}")
         if right_x <= left_x:
             self.pub.publish(Twist())
             return
@@ -130,9 +157,11 @@ class LineFollower(Node):
         # Speed schedule (langsamer in Kurven)
         v_cmd = self.v_fast if abs(error) < 0.20 else self.v_slow
 
-        tw = Twist()
-        tw.linear.x = float(v_cmd)
-        tw.angular.z = float(w_cmd)
+        tw = TwistStamped()
+        tw.header.stamp = self.get_clock().now().to_msg()
+        tw.header.frame_id = "base_link"   # optional, aber sauber
+        tw.twist.linear.x = float(v_cmd)
+        tw.twist.angular.z = float(w_cmd)
         self.pub.publish(tw)
 
         self.prev_error = error
@@ -147,6 +176,7 @@ def main():
     except KeyboardInterrupt:
         pass
     node.destroy_node()
+    cv2.destroyAllWindows()
     rclpy.shutdown()
 
 
