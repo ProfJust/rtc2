@@ -72,11 +72,6 @@ class LineFollower(Node):
         self.prev_t = time.time()
 
         self.get_logger().info(f"Subscribed: {image_topic} | Publishing: {cmd_vel_topic}")
-        # in __init__
-        self.last_left_x = None
-        self.last_right_x = None
-        self.last_seen_t = time.time()
-        self.hold_time = 0.4
 
     def on_image(self, msg: Image):
         # print("Lane follower: Image received")
@@ -106,19 +101,8 @@ class LineFollower(Node):
         mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel, iterations=2)
         mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel, iterations=1)
 
-        # ---- Lookahead / Regelband ----
-        lookahead_ratio = 0.85   # 0..1 innerhalb der ROI, 1 = ganz unten
-        band_height = 60         # Pixel, je nach Auflösung 40..120
-
-        rh, rw = mask.shape
-        y_la = int(rh * lookahead_ratio)
-        y1 = max(0, y_la - band_height)
-        y2 = min(rh, y_la + band_height)
-
-        mask_band = mask[y1:y2, :]
-
         # Find contours
-        contours, _ = cv2.findContours(mask_band, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)     
+        contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)     
 
         # ----- Alle Konturen grün einzeichnen -------
         # Maske für Anzeige in Farbe konvertieren
@@ -152,47 +136,20 @@ class LineFollower(Node):
             self.pub.publish(tw)
             return
 
-        mid = rw // 2
-        left_best = None   # (area, cx)
-        right_best = None
+        # Sort by x-position -> leftmost and rightmost are our lane borders
+        candidates.sort(key=lambda t: t[1])
+        left = candidates[0]
+        right = candidates[-1]
 
-        for c in contours:
-            area = cv2.contourArea(c)
-            if area < self.min_contour_area:
-                continue
-            x, y, cw, ch = cv2.boundingRect(c)
-            cx = x + cw / 2.0
+        left_x = left[1]
+        right_x = right[1]
+        print(f"Left x: {left_x:.1f}, Right x: {right_x:.1f}")
+        if right_x <= left_x:
+            self.pub.publish(Twist())
+            return
 
-            if cx < mid:
-                if (left_best is None) or (area > left_best[0]):
-                    left_best = (area, cx)
-            else:
-                if (right_best is None) or (area > right_best[0]):
-                    right_best = (area, cx)
-
-        now = time.time()
-        if left_best is None or right_best is None:
-            if (self.last_left_x is not None) and (now - self.last_seen_t < self.hold_time):
-                left_x = self.last_left_x
-                right_x = self.last_right_x
-            else:
-                # echtes Failsafe
-                stop = TwistStamped()
-                stop.header.stamp = self.get_clock().now().to_msg()
-                stop.twist.linear.x = 0.0
-                stop.twist.angular.z = 0.0
-                self.pub.publish(stop)
-                return
-        else:
-            left_x, right_x = left_best[1], right_best[1]
-            self.last_left_x, self.last_right_x = left_x, right_x
-            self.last_seen_t = now
-
-        left_x = left_best[1]
-        right_x = right_best[1]
         lane_center = 0.5 * (left_x + right_x)
-        img_center = rw / 2.0
-
+        img_center = w / 2.0
 
         error_px = lane_center - img_center
         error = error_px / (w / 2.0)  # normalize to [-1..1]
@@ -206,8 +163,7 @@ class LineFollower(Node):
         w_cmd = float(np.clip(w_cmd, -self.max_w, self.max_w))
 
         # Speed schedule (langsamer in Kurven)
-        # v_cmd = self.v_fast if abs(error) < 0.20 else self.v_slow
-        v_cmd = self.v_fast if abs(w_cmd) < 0.6 else self.v_slow
+        v_cmd = self.v_fast if abs(error) < 0.20 else self.v_slow
 
         tw = TwistStamped()
         tw.header.stamp = self.get_clock().now().to_msg()
