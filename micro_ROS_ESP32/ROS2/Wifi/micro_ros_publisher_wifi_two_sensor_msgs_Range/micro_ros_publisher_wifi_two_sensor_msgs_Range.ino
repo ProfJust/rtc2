@@ -193,7 +193,17 @@ void setup() {
   RCCHECK(rclc_node_init_default(&node, "uros_wifi_range_node", "", &support));
   
   // Hier Time Synchronisation mit uROS-Agent (Epoch Time)
-  rmw_uros_sync_session(1000);
+  // rmw_uros_sync_session(1000);
+  // --- erzwinge Zeitsynchronisation beim Start ---
+  bool synced = false;
+  while (!synced) {
+      synced = rmw_uros_sync_session(500) == RCL_RET_OK; // 500 ms Timeout
+      if (!synced) {
+          Serial.println("Waiting for time sync with micro-ROS Agent...");
+          delay(100);
+      }
+  }
+  Serial.println("Time sync successful!");
  
   // create publisher
   init_range_msg_left();
