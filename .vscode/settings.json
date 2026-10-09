@@ -11,5 +11,4 @@
         "string_view": "cpp",
         "initializer_list": "cpp"
     }
-    "plantuml.render": "Local"
 }
