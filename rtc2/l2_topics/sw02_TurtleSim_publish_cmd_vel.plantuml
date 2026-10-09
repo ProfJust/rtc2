@@ -1,0 +1,60 @@
+@startuml
+
+title ROS2 Jazzy - TurtleSim Zufallsbewegung
+
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 15
+skinparam shadowing false
+skinparam ArrowColor #4472C4
+skinparam ArrowThickness 2
+
+skinparam component {
+    BackgroundColor #D9EAF7
+    BorderColor #4472C4
+    FontColor black
+}
+
+skinparam rectangle {
+    BackgroundColor #E2F0D9
+    BorderColor #548235
+}
+
+top to bottom direction
+
+' Zufallszahlen
+rectangle "Python random\n\nv = random.uniform(0.5, 2.0)\nomega = random.uniform(-2.0, 2.0)" as RANDOM #E2F0D9
+
+' ROS2 Publisher
+component "Python Publisher\n/turtle_random" as PUB
+
+' ROS2 Topic
+rectangle "ROS2 Topic\n/turtle1/cmd_vel\n\nMessage:\ngeometry_msgs/msg/Twist" as TOPIC #FFF2CC
+
+' ROS2 Subscriber
+component "TurtleSim\n/turtlesim" as SUB
+
+' Bewegung
+rectangle "Schildkröte\nbewegt sich" as MOVE #E7E6E6
+
+' Kommunikation von oben nach unten
+RANDOM -down-> PUB : Zufallswerte
+PUB -down-> TOPIC : publish(msg)
+TOPIC -down-> SUB : Twist-Nachricht
+SUB -down-> MOVE : Bewegung
+
+note right of TOPIC
+  Twist-Nachricht:
+
+  linear.x  = v
+  angular.z = omega
+
+  Alle anderen Werte = 0
+end note
+
+note right of RANDOM
+  Neue Zufallswerte
+  jede Sekunde
+end note
+
+@enduml
