@@ -32,6 +32,7 @@
     code  # startet Visual Studio Code
     sudo apt install plantuml -y
     code --install-extension jebbs.plantuml
+    sudo apt install xterm -y
     sudo apt update
     sudo apt install gnome-keyring libsecret-1-0 libsecret-1-dev -y
 
