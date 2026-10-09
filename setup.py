@@ -45,6 +45,7 @@ setup(
         'nav2_simple_commander_test= rtc2.nav2_simple_commander_test:main', 
         'micro_ROS_2_laserscan = rtc2.micro_ROS_VL53L0X_2_LaserScanMsg:main',
         'lane_follower= rtc2.lane_follower.lane_follower:main',     
+        'sw02_TurtleSim_publish_cmd_vel= rtc2.l2_topics.sw02_TurtleSim_publish_cmd_vel:main',
         ],
     },
 )
