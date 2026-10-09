@@ -1,0 +1,53 @@
+@startuml
+
+title ROS2 Jazzy - TurtleSim Pose Subscriber
+
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 15
+skinparam shadowing false
+skinparam ArrowColor #4472C4
+skinparam ArrowThickness 2
+
+skinparam component {
+    BackgroundColor #D9EAF7
+    BorderColor #4472C4
+    FontColor black
+}
+
+skinparam rectangle {
+    BackgroundColor #E2F0D9
+    BorderColor #548235
+}
+' left to right direction
+top to bottom direction
+
+' ROS2 Publisher
+component "TurtleSim\n/turtlesim" as PUB
+
+' ROS2 Topic
+rectangle "ROS2 Topic\n/turtle1/pose\n\nMessage:\nturtlesim/msg/Pose" as TOPIC #FFF2CC
+
+' ROS2 Subscriber
+component "Python Subscriber\n/turtle_pose_subscriber" as SUB
+
+' Callback
+rectangle "Callback-Funktion\npose_callback(msg)" as CALLBACK
+
+' Konsole
+rectangle "Konsole\n\nx = 5.54\ny = 5.54\ntheta = 0.00" as CONSOLE #E7E6E6
+
+' Kommunikation
+PUB --> TOPIC : publish()
+TOPIC --> SUB : subscribe()
+SUB --> CALLBACK : Neue Nachricht
+CALLBACK --> CONSOLE : print()
+
+note bottom of TOPIC
+  Pose-Nachricht:
+  x, y, theta
+  linear_velocity
+  angular_velocity
+end note
+
+@enduml
