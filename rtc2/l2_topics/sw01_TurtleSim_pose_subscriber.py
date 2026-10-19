@@ -16,7 +16,7 @@ def main():
     rclpy.init()
 
     # ROS2 Node erstellen
-    node = rclpy.create_node("turtle_pose_subscriber")
+    node = rclpy.create_node("turtle_pose_subscriber_node")
 
     # Subscriber erstellen
     subscriber = node.create_subscription(

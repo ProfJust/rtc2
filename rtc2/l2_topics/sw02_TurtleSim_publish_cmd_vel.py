@@ -13,7 +13,7 @@ def main():
     rclpy.init()
 
     # Node erstellen
-    node = rclpy.create_node("turtle_random")
+    node = rclpy.create_node("turtle_random_node")
 
     # Publisher erstellen
     publisher = node.create_publisher(
